@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Next Code Golf</title>
+		<link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/login.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	<body>
+	<form  method="post" action="/login">
+		<div class="container">
+			<div class="header"><span class="circle">N</span></div>
+			<div class="loginform">
+			{{#if error}}
+				<h1 class="error">
+					Invalid login
+				</h1>
+			{{else}}
+				<h1>
+					Next Code Golf
+				</h1>
+			{{/if}}
+				<table>
+					<tr>
+						<td>kerberos</td>
+						<td><input type="text" class="username" name="username"></td>
+					</tr>
+					<tr>
+						<td>password</td>
+					 	<td><input type="password" name="password"></td>
+					</tr>
+				</table>
+				<input type="submit" value="login">
+				<p>
+					Questions? Forget your password? <br />
+					contact: kyc2915@mit.edu
+				</p>
+			</div>
+		</div>
+		</form>
+		<script>
+			$(".username").focus();
+		</script>
+	</body>
+</html>

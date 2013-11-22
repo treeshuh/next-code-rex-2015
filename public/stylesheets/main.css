@@ -1,0 +1,308 @@
+body {
+  font-family: sans-serif;
+  min-width: 720px; }
+
+.header {
+  background-color: #f8f8f8;
+  height: 50px;
+  font-weight: 200;
+  position: relative;
+  overflow: visible; }
+  .header .appname {
+    font-size: 18px;
+    font-weight: 400;
+    color: #333;
+    padding: 16px;
+    margin-left: 50px;
+    display: inline-block; }
+  .header .circle {
+    background-color: #47a9c4;
+    display: block;
+    width: 32px;
+    line-height: 30px;
+    height: 30px;
+    font-size: 18px;
+    padding-top: 2px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    position: absolute;
+    top: 7px;
+    left: 24px; }
+  .header .prettybar {
+    height: 6px;
+    background-color: #f3f3f3;
+    position: absolute;
+    bottom: 0px;
+    z-index: 1;
+    width: 100%; }
+  .header ul.topnav {
+    float: right;
+    display: inline-block;
+    color: #666;
+    right: 10px;
+    top: 0;
+    position: absolute; }
+    .header ul.topnav li {
+      font-weight: 200;
+      font-size: 14px;
+      line-height: 18px;
+      vertical-align: center;
+      display: inline-block;
+      margin-right: 8px;
+      position: relative;
+      z-index: 200; }
+      .header ul.topnav li.greeting {
+        margin-right: 20px; }
+      .header ul.topnav li a {
+        font-weight: 100;
+        width: 60px;
+        text-align: center;
+        text-decoration: none;
+        padding: 15px 10px 11px;
+        display: block;
+        background-color: #666;
+        border-bottom: 6px solid #333;
+        color: #fff; }
+        .header ul.topnav li a:active, .header ul.topnav li a:hover {
+          color: #eee;
+          border-bottom: 6px solid #FFAC00;
+          background-color: #777; }
+
+.sidenav {
+  font-weight: 200;
+  font-size: 14px;
+  width: 240px;
+  margin: 25px;
+  float: left; }
+  .sidenav .contact-msg {
+    font-size: 13px;
+    color: #666; }
+  .sidenav ul {
+    margin-bottom: 10px;
+    border: 1px solid #eee; }
+    .sidenav ul li {
+      border-bottom: 1px solid #ddd; }
+      .sidenav ul li a {
+        padding: 10px;
+        display: block; }
+        .sidenav ul li a:hover, .sidenav ul li a:active {
+          color: #FFAC00; }
+      .sidenav ul li.item-header {
+        border: none;
+        background-color: #eee;
+        padding: 5px 10px;
+        color: #666; }
+      .sidenav ul li.nextexec {
+        background-color: #F0E7D1; }
+      .sidenav ul li.deskworker {
+        background-color: #E3F0D1; }
+      .sidenav ul li.deskcaptain {
+        background-color: #EFE0FF; }
+      .sidenav ul li.spacer {
+        height: 10px; }
+
+.content {
+  margin-left: 290px;
+  padding: 25px;
+  font-weight: 200; }
+  .content h1 {
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 5px; }
+  .content h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 30px;
+    font-weight: 400; }
+  .content p {
+    font-size: 14px;
+    line-height: normal;
+    margin-bottom: 20px; }
+    .content p a {
+      color: #47a9c4; }
+    .content p em {
+      font-weight: 500; }
+  .content .todo {
+    background-color: #FFECDE;
+    color: #222;
+    padding: 10px;
+    border-radius: 3px;
+    font-weight: 200;
+    font-size: 14px;
+    display: inline-block;
+    line-height: normal;
+    margin-bottom: 20px; }
+    .content .todo em {
+      font-weight: 600; }
+  .content input {
+    display: block;
+    min-width: 160px;
+    margin-top: 5px;
+    margin-right: 10px; }
+  .content table {
+    text-align: left; }
+  .content ul {
+    margin-bottom: 20px;
+    border-top: 1px solid #ddd; }
+    .content ul li {
+      border-bottom: 1px solid #ddd;
+      position: relative; }
+      .content ul li a.file, .content ul li.reservation {
+        display: block;
+        padding: 10px; }
+      .content ul li a.remove {
+        display: inline;
+        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #ddd;
+        padding: 10px; }
+        .content ul li a.remove:hover {
+          background-color: #c94f4f;
+          cursor: pointer; }
+      .content ul li:hover {
+        background-color: #f3f3f3; }
+  .content .email-special p {
+    line-height: 20px; }
+  .content .email-special h2 {
+    color: #ccc; }
+
+.room-reserve {
+  margin-bottom: 20px; }
+  .room-reserve td {
+    min-width: 100px; }
+  .room-reserve input.time {
+    display: inline;
+    width: 100px;
+    min-width: 100px; }
+
+input[type="text"], input[type="password"] {
+  border: 1px solid #ccc;
+  padding: 5px;
+  outline: none; }
+  input[type="text"]:focus, input[type="password"]:focus {
+    border: 1px solid #FFAC00; }
+
+input[type="submit"] {
+  font-family: sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  padding: 7px;
+  color: #fff;
+  background-color: #a4d654;
+  border: none;
+  border-radius: 5px; }
+  input[type="submit"]:hover {
+    background-color: #94C447;
+    cursor: pointer; }
+
+fieldset {
+  font-size: 14px; }
+  fieldset label {
+    width: 140px;
+    display: inline-block; }
+
+input[type="date"] {
+  display: inline; }
+
+input[type="file"] {
+  margin-bottom: 10px; }
+
+input[type="button"] {
+  font-family: sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  padding: 5px 12px;
+  color: #333;
+  background-color: #eee;
+  width: 100px;
+  border: none;
+  display: inline;
+  border-radius: 5px;
+  margin-right: 5px; }
+  input[type="button"].slim {
+    font-size: 13px; }
+  input[type="button"].active {
+    background-color: #E3F0D1; }
+    input[type="button"].active:hover {
+      background-color: #E3F0D1; }
+  input[type="button"]:hover {
+    background-color: #ddd;
+    cursor: pointer; }
+
+textarea {
+  border: 1px solid #ccc;
+  padding: 5px;
+  outline: none;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-style: sans-serif; }
+  textarea:focus {
+    border: 1px solid #FFAC00; }
+
+.nodate {
+  font-size: 14px;
+  color: #aaa;
+  display: block; }
+
+table tr td {
+  vertical-align: middle;
+  padding-right: 10px;
+  font-size: 14px; }
+
+.alerttext {
+  margin-top: 10px;
+  color: #c94f4f; }
+
+.error-msg {
+  font-size: 14;
+  line-height: normal;
+  color: #c94f4f;
+  margin-bottom: 10px; }
+
+.success-msg {
+  color: #a4d654;
+  margin-bottom: 10px; }
+
+.invalid {
+  color: #E0BABA;
+  opacity: 0.6; }
+
+.displaytable tr {
+  background-color: #fff; }
+  .displaytable tr:nth-child(even) {
+    background-color: #E4F4F5; }
+  .displaytable tr td {
+    padding: 5px 20px 5px 5px;
+    min-width: 100px; }
+  .displaytable tr th {
+    background-color: #333;
+    color: #ccc;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: 500; }
+  .displaytable tr .invalid-blur {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+  .displaytable tr .empty {
+    opacity: 0.2; }
+
+.calendarIframe {
+  margin-top: 25px; }
+
+.permissionStatus {
+  float: right; }
+
+.manage-reservations {
+  margin-top: 10px; }
+  .manage-reservations .deny-reservation {
+    background-color: #c94f4f; }
+    .manage-reservations .deny-reservation:hover {
+      cursor: pointer; }
+  .manage-reservations textarea {
+    height: 30px; }
+  .manage-reservations li {
+    padding: 2px; }
