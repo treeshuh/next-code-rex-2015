@@ -134,3 +134,64 @@ exports.submitProblem = function(user, problem, file, callback) {
     });
   });
 }
+
+/*
+ * Schema:
+ *
+ * scoreboard
+ *   topscores
+ *     1 [rank]
+ *       username: sample-user
+ *       score: 57
+ *     2 [rank]
+ *     3 [rank]
+ *     ...
+ *   problems
+ *     problem1 [problem name]
+ *       1 [rank]
+ *         username: sample-user
+ *         score: 29
+ *       2 [rank]
+ *       3 [rank]
+ *       ...
+ *     problem2
+ *     problem3
+ *     ...
+ */
+var scoreboard;
+firebase.listener(function(users) {  // listener that updates scoreboard when firebase changes
+  // Fill in the new scoreboard data
+  var newScoreboard = {topscores: [], problems: new Object()};
+  for (var userKey in users) {
+    var user = users[userKey];
+    var userScore = 0;
+    for (var problemName in user.problems) {
+      var problem = user.problems[problemName];
+      if (!(problemName in newScoreboard.problems)) {
+        newScoreboard.problems[problemName] = [];
+      }
+      newScoreboard.problems[problemName].push({username: user.username, score: problem.score}); userScore += 1000 - Math.min(500, problem.score);  // arbitrary score aggregator
+    }
+    newScoreboard.topscores.push({username: user.username, score: userScore});
+  }
+
+  // Now sort all the lists in the scoreboard
+  for (var problemName in newScoreboard.problems) {
+    newScoreboard.problems[problemName].sort(function(item1, item2) {
+      return item2.score - item1.score;  // smaller score is better
+    });
+  }
+  newScoreboard.topscores.sort(function(item1, item2) {
+    return item1.score - item2.score;  // larger score is better
+  });
+  scoreboard = newScoreboard;  // copy to global var; hopefully almost atomic
+});
+
+exports.getProblemScoreboard = function(problem) {
+  return scoreboard.problems[problem];
+}
+
+exports.getGlobalScoreboard = function() {
+  return scoreboard.topscores;
+}
+

@@ -44,7 +44,7 @@ function getUser(username, callback) {
   root.child('users').once('value', function(data) {
     var users = data.val();
     for (var userKey in users) {
-      user = users[userKey];
+      var user = users[userKey];
       if (user.username == username) {
         callback(false, user);
         return;
@@ -79,10 +79,18 @@ function solveProblem(user, problem, score) {
   });
 };
 
+// callback is called whenever the firebase data changes
+function listener(callback) {
+  root.child('users').on('value', function(data) {
+    callback(data.val());
+  });
+}
+
 exports.createUser = createUser;
 exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
 exports.listProblems = listProblems;
 exports.solveProblem = solveProblem;
+exports.listener = listener;
 
