@@ -1,19 +1,35 @@
 <html>
     <head>
         <title>Next Code Golf Submit Problem</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <form method="post" action="/submit" enctype="multipart/form-data">
-            <h1>Next Code Golf Submit Problem</h1>
-            <p>Problem: <select name="problem">
-                {{#each problems}}
-                <option value="{{this.name}}" id="option-{{this.name}}">{{this.name}}</option>
+        <h1>Next Code Golf Submit Problem</h1>
+
+        <p>User: {{user.username}}</p>
+        <p><a href="/logout">Logout</a></p>
+
+        <div class="left-half">
+            <h3>Submit Problem</h3>
+            <form method="post" action="/submit" enctype="multipart/form-data">
+                <p>Problem: <select name="problem">
+                    {{#each problems}}
+                    <option value="{{this.name}}" id="option-{{this.name}}">{{this.name}}</option>
+                    {{/each}}
+                </select></p>
+                <p>File: <input type="file" name="file"></p>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+        <div class="right-half">
+            <h3>Scoreboard for {{problem.name}}</h3>
+            <ul>
+                {{#each problemScoreboard}}
+                <li>{{this.username}}: {{this.score}}</li>
                 {{/each}}
-            </select></p>
-            <p>File: <input type="file" name="file"></p>
-            <input type="submit" value="submit">
-        </form>
+            </ul>
+        </div>
     </body>
     <script>
         $('#option-{{problem.name}}').attr('selected', 'selected');

@@ -56,13 +56,13 @@ exports.getProblems = function(req, res) {
 }
 
 exports.readySubmit = function(req, res) {
+  var problem = req.query.problem;
   model.listProblems(req.user, function(err, problems) {
-      console.log(problems);
-      console.log(req.query.problem);
     res.render('ready_submit.html', {
       user: req.user,
-      problem: problems[req.query.problem],
-      problems: problems
+      problem: problems[problem],
+      problems: problems,
+      problemScoreboard: model.getProblemScoreboard(problem)
     });
   });
 }
