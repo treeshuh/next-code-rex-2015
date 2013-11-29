@@ -30,7 +30,7 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  */
 
 var userID = 0;  // ID of most recent user created
-root.child('users').on('value', function(data) {
+root.child('users').once('value', function(data) {
   userID = data.numChildren();
 });
 
@@ -39,8 +39,8 @@ function createUser(username, pwHash) {
   root.child('users').child(userID).set({'id': userID, 'username': username, 'pwHash': pwHash});
 };
 
-function getPassword(username, callback) {
-  root.child('users').on('value', function(data) {
+function getUser(username, callback) {
+  root.child('users').once('value', function(data) {
     var users = data.val();
     for (var userKey in users) {
       user = users[userKey];
@@ -54,19 +54,19 @@ function getPassword(username, callback) {
 };
 
 function findUser(id, callback) {
-  root.child('users').child(id).on('value', function(data) {
+  root.child('users').child(id).once('value', function(data) {
     callback(false, data.val());
   });
 }
 
 function getSolvedProblems(user, callback) {
-  root.child('users').child(user.id).child('problems').on('value', function(data) {
+  root.child('users').child(user.id).child('problems').once('value', function(data) {
     callback(data.val());
   });
 };
 
 function getProblems(user, callback) {
-  root.child('problems').on('value', function(data) {
+  root.child('problems').once('value', function(data) {
     callback(false, data.val());
   });
 };
@@ -76,7 +76,7 @@ function solveProblem(user, problem, score) {
 };
 
 exports.createUser = createUser;
-exports.getPassword = getPassword;
+exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
 exports.getProblems = getProblems;

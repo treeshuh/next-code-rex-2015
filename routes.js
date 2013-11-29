@@ -28,8 +28,14 @@ exports.readyRegister = function(req, res) {
 }
 
 exports.register = function(req, res) {
-  model.createUser(req.body.username, req.body.password);
-  res.render('register.html', {user: req.user});
+  model.createUser(req.body.username, req.body.password, req.body.passwordconfirm, function(err) {
+
+    if (err) {
+      res.render('ready_register.html', {user: req.user, error: err});
+    } else {
+      res.render('register.html', {user: req.user, error: err});
+    }
+  });
 }
 
 exports.getProblems = function(req, res) {
