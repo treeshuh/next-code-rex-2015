@@ -23,6 +23,7 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *     ...
  *   problems
  *     problem1 [problem name]
+ *       id: 1
  *       name: sample-problem
  *       type: alg [or chal]
  *     problem2
@@ -66,7 +67,7 @@ function getSolvedProblems(user, callback) {
   });
 };
 
-function getProblems(user, callback) {
+function listProblems(user, callback) {
   root.child('problems').once('value', function(data) {
     callback(false, data.val());
   });
@@ -80,6 +81,6 @@ exports.createUser = createUser;
 exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
-exports.getProblems = getProblems;
+exports.listProblems = listProblems;
 exports.solveProblem = solveProblem;
 

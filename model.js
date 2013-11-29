@@ -35,6 +35,8 @@ exports.createUser = function(username, password, passwordconfirm, callback) {
 
 exports.findUser = firebase.findUser;
 
+exports.listProblems = firebase.listProblems;
+
 exports.getProblems = function(user, callback) {
   // Returns a resource of the following form:
   // root
@@ -50,7 +52,7 @@ exports.getProblems = function(user, callback) {
   //     chal2
   //     chal3
   //     ...
-  firebase.getProblems(user, function(err, problems) {
+  firebase.listProblems(user, function(err, problems) {
     firebase.getSolvedProblems(user, function(err, solvedProblems) {
       if (!solvedProblems) {
         solvedProblems = [];

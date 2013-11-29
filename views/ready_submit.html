@@ -6,10 +6,17 @@
     <body>
         <form method="post" action="/submit">
             <h1>Next Code Golf Submit Problem</h1>
-            <p>Problem: <input type="text" name="problem"></p>
+            <p>Problem: <select name="chooseproblem">
+                {{#each problems}}
+                <option value="{{this.name}}" id="option-{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select></p>
             <p>File: <input type="file" name="file"></p>
             <input type="submit" value="submit">
         </form>
     </body>
+    <script>
+        $('#option-{{problem.id}}').attr('selected', 'selected');
+    </script>
 </html>
 
