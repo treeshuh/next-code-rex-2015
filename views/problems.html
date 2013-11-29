@@ -8,6 +8,37 @@
 
         <p>User: {{user.username}}</p>
 
-        <p>Problems go here</p>
+        <div class="left-half">
+            <h3>Algorithmic Problems</h3>
+            {{#each algProblems}}
+            <p>
+            <span><a href="/submit?problem={{this.name}}">{{this.name}}</a></span>
+            <span class="score-{{this.score}}">Score: {{this.score}}</span>
+            </p>
+            {{/each}}
+        </div>
+        <div class="right-half">
+            <h3>Challenge Problems</h3>
+            {{#each chalProblems}}
+            <p>
+            <span><a href="/submit?problem={{this.name}}">{{this.name}}</a></span>
+            <span class="score-{{this.score}}">Score: {{this.score}}</span>
+            </p>
+            {{/each}}
+        </div>
     </body>
+    <style>
+        .left-half {
+            width: 50%;
+            float: left;
+        }
+
+        .right-half {
+            width: 50%;
+            float: right;
+        }
+    </style>
+    <script>
+        $('.score-unsolved').remove();
+    </script>
 </html>

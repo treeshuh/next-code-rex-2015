@@ -34,3 +34,44 @@ exports.createUser = function(username, password, passwordconfirm, callback) {
 }
 
 exports.findUser = firebase.findUser;
+
+exports.getProblems = function(user, callback) {
+  // Returns a resource of the following form:
+  // root
+  //   algProblems
+  //     alg1 [problem name]
+  //       name: alg1
+  //       score: 57 [or 'unsolved']
+  //     alg2
+  //     alg3
+  //     ...
+  //   chalProblems
+  //     chal1
+  //     chal2
+  //     chal3
+  //     ...
+  firebase.getProblems(user, function(err, problems) {
+    firebase.getSolvedProblems(user, function(err, solvedProblems) {
+      if (!solvedProblems) {
+        solvedProblems = [];
+      }
+      resource = new Object();
+      resource.algProblems = [];
+      resource.chalProblems = [];
+      for (var problemName in problems) {
+        var problem = problems[problemName];
+        if (problemName in solvedProblems) {
+          problem.score = solvedProblems[problemName].score;
+        } else {
+          problem.score = 'unsolved';
+        }
+        if (problem.type === 'alg') {
+          resource.algProblems.push(problem);
+        } else {  // 'chal'
+          resource.chalProblems.push(problem);
+        }
+      }
+      callback(resource);
+    });
+  });
+}

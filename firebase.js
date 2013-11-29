@@ -24,6 +24,7 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *   problems
  *     problem1 [problem name]
  *       name: sample-problem
+ *       type: alg [or chal]
  *     problem2
  *     problem3
  *     ...

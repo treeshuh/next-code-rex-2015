@@ -39,7 +39,13 @@ exports.register = function(req, res) {
 }
 
 exports.getProblems = function(req, res) {
-  res.render('problems.html', {user: req.user});
+  model.getProblems(req.user, function(resource) {
+    res.render('problems.html', {
+      user: req.user,
+      algProblems: resource.algProblems,
+      chalProblems: resource.chalProblems
+    });
+  });
 }
 
 exports.readySubmit = function(req, res) {

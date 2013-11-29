@@ -38,8 +38,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.login);
 app.get('/login', routes.login);
 app.post('/login', passport.authenticate('local', {
+  successRedirect: '/problems',
   failureRedirect: '/login'
-}), routes.getProblems);
+}));
 app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
 app.get('/problems', routes.getProblems);
