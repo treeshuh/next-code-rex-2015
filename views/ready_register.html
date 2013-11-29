@@ -6,9 +6,12 @@
     <body>
         <form method="post" action="/register">
             <h1>Next Code Golf Signup</h1>
+            {{#if error}}
+            <p class="error">{{error}}</p>
+            {{/if}}
             <p>Username: <input type="text" class="username" name="username"></p>
             <p>Password: <input type="password" name="password"></p>
-            <p>Re-enter Password: <input type="password" name="password-confirm"></p>
+            <p>Re-enter Password: <input type="password" name="passwordconfirm"></p>
             <input type="submit" value="login">
         </form>
     </body>
