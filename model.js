@@ -189,11 +189,11 @@ firebase.listener(function(users) {  // listener that updates scoreboard when fi
   // Now sort all the lists in the scoreboard
   for (var problemName in newScoreboard.problems) {
     newScoreboard.problems[problemName].sort(function(item1, item2) {
-      return item2.score - item1.score;  // smaller score is better
+      return item1.score - item2.score;  // smaller score is better
     });
   }
   newScoreboard.topscores.sort(function(item1, item2) {
-    return item1.score - item2.score;  // larger score is better
+    return item2.score - item1.score;  // larger score is better
   });
   scoreboard = newScoreboard;  // copy to global var; hopefully almost atomic
 });
