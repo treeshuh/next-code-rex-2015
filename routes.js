@@ -23,6 +23,13 @@ exports.login = function(req, res) {
   }
 };
 
+exports.logout = function(req, res) {
+  req.session.regenerate(function() {
+    req.logout();
+    res.redirect('/login');
+  });
+}
+
 exports.readyRegister = function(req, res) {
   res.render('ready_register.html', {user: req.user});
 }

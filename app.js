@@ -41,6 +41,7 @@ app.post('/login', passport.authenticate('local', {
   successRedirect: '/problems',
   failureRedirect: '/login'
 }));
+app.get('/logout', routes.logout);
 app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
 app.get('/problems', routes.getProblems);
