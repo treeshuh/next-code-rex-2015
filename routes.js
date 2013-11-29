@@ -78,3 +78,10 @@ exports.submit = function(req, res) {
   });
 }
 
+exports.scoreboard = function(req, res) {
+  res.render('scoreboard.html', {
+    user: req.user,
+    globalScoreboard: model.getGlobalScoreboard()
+  });
+}
+
