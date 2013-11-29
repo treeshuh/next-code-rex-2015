@@ -7,6 +7,10 @@
     <body>
         <h1>Next Code Golf Scoreboard</h1>
 
+        <p>User: {{user.username}}</p>
+        <p><a href="/problems">Back to problems</a></p>
+        <p><a href="/logout">Logout</a></p>
+
         <ul>
           {{#each globalScoreboard}}
           <li>{{this.username}}: {{this.score}}</li>

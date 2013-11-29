@@ -5,7 +5,10 @@
     </head>
     <body>
         <h1>Results for Problem {{problem}}</h1>
+
         <p>User: {{user.username}}</p>
+        <p><a href="/scoreboard">Scoreboard</a></p>
+        <p><a href="/logout">Logout</a></p>
 
         {{#if error}}
         <p class="error">Invalid submission</p>
