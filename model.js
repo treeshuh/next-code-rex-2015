@@ -27,18 +27,22 @@ exports.localStrategy = new LocalStrategy(function(username, password, callback)
 });
 
 exports.createUser = function(username, password, passwordconfirm, callback) {
-  if (password === passwordconfirm) {
-    firebase.getUser(username, function(err, user) {
-      if (user) {
-        callback('Username already exists');
-      } else {
-        firebase.createUser(username, bcrypt.hashSync(password, 10));
-        callback(false);
-      }
-    });
-  } else {
-    callback('Passwords don\'t match');
+  if(/[^a-zA-Z0-9_]/.test(username)) {
+    callback('Invalid characters in username');
+    return;
   }
+  if (password !== passwordconfirm) {
+    callback('Passwords don\'t match');
+    return;
+  }
+  firebase.getUser(username, function(err, user) {
+    if (user) {
+      callback('Username already exists');
+    } else {
+      firebase.createUser(username, bcrypt.hashSync(password, 10));
+      callback(false);
+    }
+  });
 }
 
 exports.findUser = firebase.findUser;
@@ -119,11 +123,18 @@ exports.submitProblem = function(user, problem, file, callback) {
                 callback(true, "System error: charcount");
                 return;
               }
-              firebase.getSolvedProblems(user, function(problems) {
-                if (!problems || !(problem in problems) || score < problems[problem].score) {
-                  firebase.solveProblem(user, problem, score);
+              firebase.listProblems(user, function(err, problems) {
+                if (!(problem in problems)) {
+                  callback(true, "Invalid problem");
+                  return;
                 }
-                callback(false, 'Program successful. Score: ' + score);
+                firebase.getSolvedProblems(user, function(solvedProblems) {
+                  if (!solvedProblems || !(problem in solvedProblems) ||
+                      score < solvedProblems[problem].score) {
+                          firebase.solveProblem(user, problem, score);
+                  }
+                  callback(false, 'Program successful. Score: ' + score);
+                });
               });
             });
           } else {
