@@ -128,7 +128,7 @@ exports.submitProblem = function(user, problem, file, callback) {
                   callback(true, "Invalid problem");
                   return;
                 }
-                firebase.getSolvedProblems(user, function(solvedProblems) {
+                firebase.getSolvedProblems(user, function(err, solvedProblems) {
                   if (!solvedProblems || !(problem in solvedProblems) ||
                       score < solvedProblems[problem].score) {
                           firebase.solveProblem(user, problem, score);

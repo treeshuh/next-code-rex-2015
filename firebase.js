@@ -62,7 +62,7 @@ function findUser(id, callback) {
 
 function getSolvedProblems(user, callback) {
   root.child('users').child(user.id).child('problems').once('value', function(data) {
-    callback(data.val());
+    callback(false, data.val());
   });
 };
 
