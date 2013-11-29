@@ -9,6 +9,7 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  * next-code-golf
  *   users
  *     1 [user id]
+ *       id: 1
  *       username: sample-user
  *       pwHash: cf7d51e028...
  *       problems
@@ -35,22 +36,20 @@ root.child('users').on('value', function(data) {
 
 function createUser(username, pwHash) {
   userID++;
-  root.child('users').child(userID).set({'username': username, 'pwHash': pwHash});
+  root.child('users').child(userID).set({'id': userID, 'username': username, 'pwHash': pwHash});
 };
 
-function login(username, pwHash, callback) {
+function getPassword(username, callback) {
   root.child('users').on('value', function(data) {
     var users = data.val();
     for (var userKey in users) {
       user = users[userKey];
       if (user.username == username) {
-        if (user.pwHash == pwHash) {
-          callback(false, user);  // err, user
-        } else {
-          callback(false, false);
-        }
+        callback(false, user);
+        return;
       }
     }
+    callback(false, false);
   });
 };
 
@@ -77,7 +76,7 @@ function solveProblem(user, problem, score) {
 };
 
 exports.createUser = createUser;
-exports.login = login;
+exports.getPassword = getPassword;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
 exports.getProblems = getProblems;

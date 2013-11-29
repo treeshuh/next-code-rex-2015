@@ -1,8 +1,7 @@
-//var model = require('./model');
-var firebase = require('./firebase');
+var model = require('./model');
 
 exports.initialRouter = function(req, res, next) {
-  if (req.url === '/login' || req.url === '/createUser') {
+  if (req.url === '/login' || req.url === '/register') {
     next();
   } else if (req.user) {
     console.log(req.user.username + " " + req.url);
@@ -11,6 +10,10 @@ exports.initialRouter = function(req, res, next) {
     res.redirect('/login');
   }
 };
+
+exports.localStrategy = model.localStrategy;
+
+exports.findUser = model.findUser;
 
 exports.login = function(req, res) {
   if (req.user) {
@@ -25,6 +28,7 @@ exports.readyRegister = function(req, res) {
 }
 
 exports.register = function(req, res) {
+  model.createUser(req.body.username, req.body.password);
   res.render('register.html', {user: req.user});
 }
 

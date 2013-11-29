@@ -3,7 +3,6 @@ var http = require('http');
 var passport = require('passport');
 var hbs = require('hbs');
 var routes = require('./routes');
-var firebase = require('./firebase');
 
 var app = express();
 
@@ -27,9 +26,9 @@ app.use(passport.session());
 app.use(routes.initialRouter);
 app.use(app.router);
 
-passport.use(firebase.login);
+passport.use(routes.localStrategy);
 passport.serializeUser(function(user, done) { done(null, user.id) });
-passport.deserializeUser(firebase.findUser);
+passport.deserializeUser(routes.findUser);
 
 // development only
 if ('development' == app.get('env')) {
