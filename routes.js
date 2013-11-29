@@ -68,6 +68,13 @@ exports.readySubmit = function(req, res) {
 }
 
 exports.submit = function(req, res) {
-  res.render('submit.html', {user: req.user});
+  model.submitProblem(req.user, req.body.problem, req.files.file, function(err, result) {
+    res.render('submit.html', {
+      user: req.user,
+      problem: req.body.problem,
+      error: err,
+      result: result
+    });
+  });
 }
 

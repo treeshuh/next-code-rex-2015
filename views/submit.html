@@ -4,7 +4,15 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <p>Your problem has been submitted.</p>
+        <h1>Results for Problem {{problem}}</h1>
+        <p>User: {{user.username}}</p>
+
+        {{#if error}}
+        <p class="error">Invalid submission</p>
+        {{/if}}
+        <p>{{result}}</p>
+
+        <p><a href="/problems">Back to problems</a></p>
     </body>
 </html>
 

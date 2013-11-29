@@ -1,6 +1,14 @@
 var firebase = require('./firebase');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
+var fs = require('fs');
+var exec = require('child_process').exec;
+
+const SUBMISSION_DIRECTORY = 'submissions/';
+
+if (!fs.existsSync(SUBMISSION_DIRECTORY)) {
+  fs.mkdirSync(SUBMISSION_DIRECTORY);
+}
 
 exports.localStrategy = new LocalStrategy(function(username, password, callback) {
   firebase.getUser(username, function(err, user) {
@@ -74,6 +82,55 @@ exports.getProblems = function(user, callback) {
         }
       }
       callback(resource);
+    });
+  });
+}
+
+var submissionID = 0;
+
+exports.submitProblem = function(user, problem, file, callback) {
+  // Copy file
+  fs.readFile(file.path, function(err, data) {
+    submissionID++;
+    var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '.py';
+    fs.writeFile(dest, data, function(err) {
+      // Check for forbidden constructs
+      exec('python modules/sanitizer.py < ' + dest, function(error, stdout, stderr) {
+        if (stdout) {
+          callback(true, "Forbidden constructs: " + stdout);
+          return;
+        }
+        // Run program on judge input
+        exec('python ' + dest, function(error, stdout, stderr) {
+          if (stderr) {
+            callback(true, stderr);
+            return;
+          }
+          var success = true;  // TODO change this, obviously
+          if (success) {
+            // Do modified character count
+            exec('go run modules/charcount.go < ' + dest, function(error, stdout, stderr) {
+              if (stderr) {
+                callback(true, stderr);
+                return;
+              }
+              var score = parseInt(stdout);
+              if (score <= 0) {
+                callback(true, "System error: charcount");
+                return;
+              }
+              firebase.getSolvedProblems(user, function(problems) {
+                if (!problems || !(problem in problems) || score < problems[problem].score) {
+                  firebase.solveProblem(user, problem, score);
+                }
+                callback(false, 'Program successful. Score: ' + score);
+              });
+            });
+          } else {
+            callback(false, 'Program incorrect.');
+          }
+        });
+      });
     });
   });
 }

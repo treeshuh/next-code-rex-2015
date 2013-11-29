@@ -4,11 +4,11 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <form method="post" action="/submit">
+        <form method="post" action="/submit" enctype="multipart/form-data">
             <h1>Next Code Golf Submit Problem</h1>
-            <p>Problem: <select name="chooseproblem">
+            <p>Problem: <select name="problem">
                 {{#each problems}}
-                <option value="{{this.name}}" id="option-{{this.id}}">{{this.name}}</option>
+                <option value="{{this.name}}" id="option-{{this.name}}">{{this.name}}</option>
                 {{/each}}
             </select></p>
             <p>File: <input type="file" name="file"></p>
@@ -16,7 +16,7 @@
         </form>
     </body>
     <script>
-        $('#option-{{problem.id}}').attr('selected', 'selected');
+        $('#option-{{problem.name}}').attr('selected', 'selected');
     </script>
 </html>
 
