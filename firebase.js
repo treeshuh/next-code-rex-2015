@@ -7,6 +7,9 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  * Schema
  *
  * next-code-golf
+ *   counters
+ *     userID: 15 [ID of most recent user created]
+ *     submissionID: 29 [ID of most recent submission]
  *   users
  *     1 [user id]
  *       id: 1
@@ -30,14 +33,26 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *     ...
  */
 
-var userID = 0;  // ID of most recent user created
-root.child('users').once('value', function(data) {
-  userID = data.numChildren();
-});
-
-function createUser(username, pwHash) {
-  userID++;
-  root.child('users').child(userID).set({'id': userID, 'username': username, 'pwHash': pwHash});
+function createUser(username, pwHash, callback) {
+  root.child('counters').child('userID').transaction(function(userID) {
+    return userID + 1;
+  }, function(err, committed, data) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    if (!committed) {
+      callback('System error: create user');
+      return;
+    }
+    var userID = data.val();
+    root.child('users').child(userID).set({
+      'id': userID,
+      'username': username,
+      'pwHash': pwHash
+    });
+    callback(false);
+  });
 };
 
 function getUser(username, callback) {
@@ -72,6 +87,20 @@ function listProblems(user, callback) {
   });
 };
 
+function submitProblem(callback) {
+  root.child('counters').child('submissionID').transaction(function(submissionID) {
+    return submissionID + 1;
+  }, function(err, committed, data) {
+    if (err) {
+      callback(err);
+    } else if (!committed) {
+      callback('System error: submit problem');
+    } else {
+      callback(false, data.val());
+    }
+  });
+};
+
 function solveProblem(user, problem, score) {
   root.child('users').child(user.id).child('problems').child(problem).set({
     'name': problem,
@@ -91,6 +120,7 @@ exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
 exports.listProblems = listProblems;
+exports.submitProblem = submitProblem;
 exports.solveProblem = solveProblem;
 exports.listener = listener;
 
