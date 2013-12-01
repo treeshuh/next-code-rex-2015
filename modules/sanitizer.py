@@ -157,7 +157,7 @@ def check(source):
 
 
     for builtin in builtins:
-        p = re.compile('[^\\.]' + builtin + '[\\s\\\\]*\\(.*\\)') # Checks for open(), exec(), etc 
+        p = re.compile('([^\\.]|\A)' + builtin + '[\\s\\\\]*\\(.*\\)') # Checks for open(), exec(), etc 
         p2 = re.compile('=[\\s\\\\]*' + builtin + '([\\s\\\\]|\Z)') # Prevents aliasing: v = open
         m = p.search(source)
         m2 = p2.search(source)
