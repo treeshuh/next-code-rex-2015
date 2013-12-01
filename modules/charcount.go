@@ -36,7 +36,7 @@ func main() {
     }
 
     // Replace identifiers with '?'
-    ireg, _ := regexp.Compile("[A-Za-z0-9]+")
+    ireg, _ := regexp.Compile("[A-Za-z0-9_]+")
     source = ireg.ReplaceAllString(source,"?")
 
     // Remove all whitespace

@@ -93,7 +93,7 @@ exports.getProblems = function(user, callback) {
 
 exports.submitProblem = function(user, problemName, file, callback) {
   firebase.findProblem(problemName, function(err, problem) {
-    if (err) {
+    if (err || !problem) {
       callback(true, "Invalid problem");
       return;
     }
