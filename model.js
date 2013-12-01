@@ -192,7 +192,7 @@ firebase.listener(function(users) {  // listener that updates scoreboard when fi
       if (!(problemName in newScoreboard.problems)) {
         newScoreboard.problems[problemName] = [];
       }
-      newScoreboard.problems[problemName].push({username: user.username, score: problem.score}); userScore += 1000 - Math.min(500, problem.score);  // arbitrary score aggregator
+      newScoreboard.problems[problemName].push({username: user.username, score: problem.score}); userScore += 100 - Math.min(500, problem.score);  // arbitrary score aggregator
     }
     newScoreboard.topscores.push({username: user.username, score: userScore});
   }
