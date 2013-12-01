@@ -1,37 +1,48 @@
 <html>
     <head>
         <title>Next Code Golf Submit Problem</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </head>
     <body>
-        <h1>Next Code Golf Submit Problem</h1>
-
-        <p>User: {{user.username}}</p>
-        <p><a href="/problems">Back to problems</a></p>
-        <p><a href="/scoreboard">Scoreboard</a></p>
-        <p><a href="/logout">Logout</a></p>
-
-        <div class="left-half">
-            <h3>Submit Problem</h3>
-            <p>{{{problem.statement}}}</p>
-            <form method="post" action="/submit" enctype="multipart/form-data">
-                <p>Problem: <select name="problem">
-                    {{#each problems}}
-                    <option value="{{this.name}}" id="option-{{this.name}}">{{this.name}}</option>
-                    {{/each}}
-                </select></p>
-                <p>File: <input type="file" name="file"></p>
-                <input type="submit" value="submit">
-            </form>
-        </div>
-        <div class="right-half">
-            <h3>Scoreboard for {{problem.name}}</h3>
-            <ul>
-                {{#each problemScoreboard}}
-                <li>{{this.username}}: {{this.score}}</li>
-                {{/each}}
+        <div class="header">
+            <a href="/problems"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/problems">Next Code Golf</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">{{user.username}}</li>
+                <li><a href="/problems">Problems</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
+            <div class="prettybar"></div>
+        </div>
+        <div class="content">
+            <h1>Next Code Golf Submit Problem</h1>
+
+            <div class="left-half email-special">
+                <h3>Submit Problem</h3>
+                <p>{{{problem.statement}}}</p>
+                <form method="post" action="/submit" enctype="multipart/form-data">
+                    <p>Problem: <select name="problem">
+                        {{#each problems}}
+                        <option value="{{this.name}}" id="option-{{this.name}}">{{this.name}}</option>
+                        {{/each}}
+                    </select></p>
+                    <p>File: <input type="file" name="file"></p>
+                    <input type="submit" value="submit">
+                </form>
+            </div>
+            <div class="right-half email-special">
+                <h3>Scoreboard for {{problem.name}}</h3>
+                <ul>
+                    {{#each problemScoreboard}}
+                    <li>{{this.username}}: {{this.score}}</li>
+                    {{/each}}
+                </ul>
+            </div>
         </div>
     </body>
     <script>
