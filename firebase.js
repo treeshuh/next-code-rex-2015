@@ -20,6 +20,7 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *           score: 57
  *           timestamp: 12304592813
  *           type: alg [or example]
+ *           path: submissions/'best-submission'
  *         problem2
  *         problem3
  *         ...
@@ -139,12 +140,13 @@ function judgeSubmission(user, problem, tester, callback) {
     });
 };
 
-function solveProblem(user, problem, score) {
+function solveProblem(user, problem, score, path) {
   root.child('users').child(user.id).child('problems').child(problem.name).set({
     'name': problem.name,
     'score': score,
     'timestamp': new Date().getTime(),
-    'type': problem.type
+    'type': problem.type,
+    'path': path
   });
 };
 

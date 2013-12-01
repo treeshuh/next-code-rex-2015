@@ -147,7 +147,7 @@ exports.submitProblem = function(user, problemName, file, callback) {
                 firebase.getSolvedProblems(user, function(err, solvedProblems) {
                   if (!solvedProblems || !(problem.name in solvedProblems) ||
                     score < solvedProblems[problem.name].score) {
-                      firebase.solveProblem(user, problem, score);
+                      firebase.solveProblem(user, problem, score, dest);
                     }
                   callback(false, 'Program successful. Score: ' + score);
                 });
