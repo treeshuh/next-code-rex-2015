@@ -198,7 +198,8 @@ firebase.listener(function(users) {  // listener that updates scoreboard when fi
       newScoreboard.problems[problemName].push({
         username: user.username,
         score: problem.score,
-        timestamp: problem.timestamp
+        timestamp: problem.timestamp,
+        type: problem.type
       });
     }
   }
@@ -219,7 +220,8 @@ firebase.listener(function(users) {  // listener that updates scoreboard when fi
       var problem = newScoreboard.problems[problemName];
       var userIndex = weights.length - 1;
       for (var index in problem) {
-        if (problem[index].username === user.username) {
+        if (problem[index].username === user.username
+                && problem[index].type !== "example") {
           userIndex = index;
           break;
         }

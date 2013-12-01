@@ -18,6 +18,8 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *       problems
  *         problem1 [problem name]
  *           score: 57
+ *           timestamp: 12304592813
+ *           type: alg [or example]
  *         problem2
  *         problem3
  *         ...
@@ -26,8 +28,16 @@ var root = new Firebase('https://next-code-golf.firebaseIO.com');
  *     ...
  *   problems
  *     problem1 [problem name]
+ *       judge
+ *         1 [judge input id]
+ *           input: 5
+ *           expected: 5
+ *         2
+ *         3
+ *         ...
  *       name: sample-problem
- *       type: alg [or chal]
+ *       statement: Print out the input.
+ *       type: alg [or example]
  *     problem2
  *     problem3
  *     ...
@@ -132,7 +142,9 @@ function judgeSubmission(user, problem, tester, callback) {
 function solveProblem(user, problem, score) {
   root.child('users').child(user.id).child('problems').child(problem.name).set({
     'name': problem.name,
-    'score': score
+    'score': score,
+    'timestamp': new Date().getTime(),
+    'type': problem.type
   });
 };
 
