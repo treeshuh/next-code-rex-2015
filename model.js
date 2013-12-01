@@ -184,27 +184,49 @@ exports.submitProblem = function(user, problemName, file, callback) {
  *     ...
  */
 var scoreboard;
+const weights = [15, 12, 10, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 firebase.listener(function(users) {  // listener that updates scoreboard when firebase changes
   // Fill in the new scoreboard data
   var newScoreboard = {topscores: [], problems: new Object()};
   for (var userKey in users) {
     var user = users[userKey];
-    var userScore = 0;
     for (var problemName in user.problems) {
       var problem = user.problems[problemName];
       if (!(problemName in newScoreboard.problems)) {
         newScoreboard.problems[problemName] = [];
       }
-      newScoreboard.problems[problemName].push({username: user.username, score: problem.score}); userScore += 100 - Math.min(50, problem.score);  // arbitrary score aggregator
+      newScoreboard.problems[problemName].push({
+        username: user.username,
+        score: problem.score,
+        timestamp: problem.timestamp
+      });
     }
-    newScoreboard.topscores.push({username: user.username, score: userScore});
   }
 
   // Now sort all the lists in the scoreboard
   for (var problemName in newScoreboard.problems) {
     newScoreboard.problems[problemName].sort(function(item1, item2) {
+      if (item1.score == item2.score) {
+        return item1.timestamp - item2.timestamp;
+      }
       return item1.score - item2.score;  // smaller score is better
     });
+  }
+  for (var userKey in users) {
+    var user = users[userKey];
+    var userScore = 0;
+    for (var problemName in newScoreboard.problems) {
+      var problem = newScoreboard.problems[problemName];
+      var userIndex = weights.length - 1;
+      for (var index in problem) {
+        if (problem[index].username === user.username) {
+          userIndex = index;
+          break;
+        }
+      }
+      userScore += weights[Math.min(weights.length - 1, userIndex)];
+    }
+    newScoreboard.topscores.push({username: user.username, score: userScore});
   }
   newScoreboard.topscores.sort(function(item1, item2) {
     return item2.score - item1.score;  // larger score is better
