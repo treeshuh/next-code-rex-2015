@@ -91,30 +91,45 @@ exports.getProblems = function(user, callback) {
   });
 }
 
-exports.submitProblem = function(user, problem, file, callback) {
-  // Copy file
-  fs.readFile(file.path, function(err, data) {
-    firebase.submitProblem(function(err, submissionID) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '.py';
-      fs.writeFile(dest, data, function(err) {
-        // Check for forbidden constructs
-        exec('python modules/sanitizer.py < ' + dest, function(error, stdout, stderr) {
-          if (stdout) {
-            callback(true, "Forbidden constructs: " + stdout);
-            return;
-          }
-          // Run program on judge input
-          exec('python ' + dest, function(error, stdout, stderr) {
-            if (stderr) {
-              callback(true, stderr);
+exports.submitProblem = function(user, problemName, file, callback) {
+  firebase.findProblem(problemName, function(err, problem) {
+    if (err) {
+      callback(true, "Invalid problem");
+      return;
+    }
+    // Copy file
+    fs.readFile(file.path, function(err, data) {
+      firebase.submitProblem(function(err, submissionID) {
+        if (err) {
+          callback(true, err);
+          return;
+        }
+        var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '-' + problemName + '.py';
+        fs.writeFile(dest, data, function(err) {
+          // Check for forbidden constructs
+          exec('python modules/sanitizer.py < ' + dest, function(error, stdout, stderr) {
+            if (stdout) {
+              callback(true, "Forbidden constructs: " + stdout);
               return;
             }
-            var success = true;  // TODO change this, obviously
-            if (success) {
+            // Run program on judge input
+            firebase.judgeSubmission(user, problem, function(judgeInput, callback) {
+              exec('echo "' + judgeInput.input + '" | python ' + dest, function(error, stdout, stderr) {
+                if (stderr) {
+                  callback(true, stderr);
+                  return;
+                }
+                callback(false, stdout.trim() == judgeInput.expected.trim());
+              });
+            }, function(err, success) {
+              if (err) {
+                callback(false, err);
+                return;
+              }
+              if (!success) {
+                callback(false, 'Program incorrect.');
+                return;
+              }
               // Do modified character count
               exec('go run modules/charcount.go < ' + dest, function(error, stdout, stderr) {
                 if (stderr) {
@@ -126,23 +141,15 @@ exports.submitProblem = function(user, problem, file, callback) {
                   callback(true, "System error: charcount");
                   return;
                 }
-                firebase.listProblems(user, function(err, problems) {
-                  if (!(problem in problems)) {
-                    callback(true, "Invalid problem");
-                    return;
-                  }
-                  firebase.getSolvedProblems(user, function(err, solvedProblems) {
-                    if (!solvedProblems || !(problem in solvedProblems) ||
-                        score < solvedProblems[problem].score) {
-                            firebase.solveProblem(user, problem, score);
+                firebase.getSolvedProblems(user, function(err, solvedProblems) {
+                  if (!solvedProblems || !(problem in solvedProblems) ||
+                    score < solvedProblems[problem].score) {
+                      firebase.solveProblem(user, problem, score);
                     }
-                    callback(false, 'Program successful. Score: ' + score);
-                  });
+                  callback(false, 'Program successful. Score: ' + score);
                 });
               });
-            } else {
-              callback(false, 'Program incorrect.');
-            }
+            });
           });
         });
       });

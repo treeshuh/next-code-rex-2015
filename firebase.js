@@ -87,6 +87,12 @@ function listProblems(user, callback) {
   });
 };
 
+function findProblem(problemName, callback) {
+  root.child('problems').child(problemName).once('value', function(data) {
+    callback(false, data.val());
+  });
+};
+
 function submitProblem(callback) {
   root.child('counters').child('submissionID').transaction(function(submissionID) {
     return submissionID + 1;
@@ -101,9 +107,28 @@ function submitProblem(callback) {
   });
 };
 
+function judgeSubmission(user, problem, tester, callback) {
+  root.child('problems').child(problem.name).
+    child('judge').once('value', function(data) {
+      var counter = data.numChildren();
+      var allSuccess = true;
+      for (var judgeInputKey in data.val()) {
+        tester(data.val()[judgeInputKey], function(err, success) {
+          if (err || !success) {
+            allSuccess = false;
+          }
+          counter--;
+          if (counter == 0) {
+            callback(false, allSuccess);
+          }
+        });
+      }
+    });
+};
+
 function solveProblem(user, problem, score) {
-  root.child('users').child(user.id).child('problems').child(problem).set({
-    'name': problem,
+  root.child('users').child(user.id).child('problems').child(problem.name).set({
+    'name': problem.name,
     'score': score
   });
 };
@@ -120,7 +145,9 @@ exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedProblems = getSolvedProblems;
 exports.listProblems = listProblems;
+exports.findProblem = findProblem;
 exports.submitProblem = submitProblem;
+exports.judgeSubmission = judgeSubmission;
 exports.solveProblem = solveProblem;
 exports.listener = listener;
 
