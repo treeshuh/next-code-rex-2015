@@ -114,20 +114,23 @@ exports.submitProblem = function(user, problemName, file, callback) {
             }
             // Run program on judge input
             firebase.judgeSubmission(user, problem, function(judgeInput, callback) {
-              exec('echo "' + judgeInput.input + '" | python ' + dest, function(error, stdout, stderr) {
+              exec('echo "' + judgeInput.input + '" | timeout 3s python ' + dest, function(error, stdout, stderr) {
+                if (error) {
+                  callback(error, true);
+                  return;
+                }
                 if (stderr) {
-                  callback(true, stderr);
+                  callback(stderr, true);
                   return;
                 }
                 callback(false, stdout.trim() == judgeInput.expected.trim());
               });
-            }, function(err, success) {
+            }, function(err) {
               if (err) {
+                if (err.code === 124) {
+                  err = 'Time Limit Exceeded';
+                }
                 callback(false, err);
-                return;
-              }
-              if (!success) {
-                callback(false, 'Program incorrect.');
                 return;
               }
               // Do modified character count

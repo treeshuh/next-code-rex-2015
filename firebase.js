@@ -111,15 +111,18 @@ function judgeSubmission(user, problem, tester, callback) {
   root.child('problems').child(problem.name).
     child('judge').once('value', function(data) {
       var counter = data.numChildren();
-      var allSuccess = true;
+      var error = undefined;
       for (var judgeInputKey in data.val()) {
         tester(data.val()[judgeInputKey], function(err, success) {
-          if (err || !success) {
-            allSuccess = false;
+          if (err) {
+            error = err;
+          }
+          if (!success) {
+            error = 'Incorrect output.';
           }
           counter--;
           if (counter == 0) {
-            callback(false, allSuccess);
+            callback(error);
           }
         });
       }
