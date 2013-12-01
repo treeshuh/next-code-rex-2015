@@ -1,7 +1,7 @@
 var model = require('./model');
 
 exports.initialRouter = function(req, res, next) {
-  if (req.url === '/login' || req.url === '/register') {
+  if (req.url === '/login' || req.url === '/register' || req.url === '/rules') {
     next();
   } else if (req.user) {
     console.log(req.user.username + " " + req.url);
@@ -43,6 +43,10 @@ exports.register = function(req, res) {
       res.render('register.html', {user: req.user, error: err});
     }
   });
+}
+
+exports.rules = function(req, res) {
+  res.render('rules.html', {user: req.user});
 }
 
 exports.getProblems = function(req, res) {

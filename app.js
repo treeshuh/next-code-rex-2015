@@ -44,6 +44,7 @@ app.post('/login', passport.authenticate('local', {
 app.get('/logout', routes.logout);
 app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
+app.get('/rules', routes.rules);
 app.get('/problems', routes.getProblems);
 app.get('/submit', routes.readySubmit);
 app.post('/submit', routes.submit);
