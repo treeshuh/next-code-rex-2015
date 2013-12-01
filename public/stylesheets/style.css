@@ -131,9 +131,6 @@ body {
     .content ul li {
       border-bottom: 1px solid #ddd;
       position: relative; }
-      .content ul li a.file, .content ul li.reservation {
-        display: block;
-        padding: 10px; }
       .content ul li a.remove {
         display: inline;
         float: right;
@@ -147,25 +144,16 @@ body {
           cursor: pointer; }
       .content ul li:hover {
         background-color: #f3f3f3; }
-  .content .email-special {
+  .content .code-golf {
     margin-top: 20px; }
-  .content .email-special p {
+  .content .code-golf p {
     line-height: 20px; }
-  .content .email-special p a {
+  .content .code-golf p a {
     font-size: 16px; }
-  .content .email-special h3 {
+  .content .code-golf h3 {
     color: #888; 
     font-size: 24px;
     margin-bottom: 20px; }
-
-.room-reserve {
-  margin-bottom: 20px; }
-  .room-reserve td {
-    min-width: 100px; }
-  .room-reserve input.time {
-    display: inline;
-    width: 100px;
-    min-width: 100px; }
 
 input[type="text"], input[type="password"] {
   border: 1px solid #ccc;
@@ -279,19 +267,5 @@ table tr td {
   .displaytable tr .empty {
     opacity: 0.2; }
 
-.calendarIframe {
-  margin-top: 25px; }
-
 .permissionStatus {
   float: right; }
-
-.manage-reservations {
-  margin-top: 10px; }
-  .manage-reservations .deny-reservation {
-    background-color: #c94f4f; }
-    .manage-reservations .deny-reservation:hover {
-      cursor: pointer; }
-  .manage-reservations textarea {
-    height: 30px; }
-  .manage-reservations li {
-    padding: 2px; }
