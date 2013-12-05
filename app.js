@@ -49,6 +49,7 @@ app.get('/problems', routes.getProblems);
 app.get('/submit', routes.readySubmit);
 app.post('/submit', routes.submit);
 app.get('/scoreboard', routes.scoreboard);
+app.get('/solutions', routes.solutions);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

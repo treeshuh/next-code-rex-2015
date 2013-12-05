@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>Next Code Golf Solutions</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/problems"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/problems">Next Code Golf</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">{{user.username}}</li>
+                <li><a href="/problems">Problems</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="prettybar"></div>
+        </div>
+        <div class="content">
+            <h1>Next Code Golf Solutions</h1>
+
+            <div class="next-code-golf">
+                <p>The official competition has ended, but feel free to continue submitting problems!</p>
+                <p>Winners:</p>
+                <ul>
+                    <li>1st place: uuu and trzhang</li>
+                    <li>2nd place: normandy</li>
+                    <li>3rd place: poofytoo</li>
+                </ul>
+                <br/>
+                <p>Here are the best solutions found by the contestants and the problem creators. (So far!)</p>
+                <p>Note: some submitted solutions have lower scores than the ones posted. These use techniques such as encoding information in a very big number (because numbers count only as one character), or submitting randomized solutions until they passed all the test cases by chance (yes that's you Runpeng), or other ingenious constructs. However, for the purposes of posting official solutions, we will only consider "fair" solutions. Specifically, no numbers greater than 1000 are allowed, and solutions must succeed deterministically and on all test cases.</p>
+
+                <p>
+                <span><a href="/submit?problem=counteven">counteven</a></span>
+                By <i>kyc</i> (score 17):
+                </p>
+                <pre class="prettyprint">
+print sum(not int(c) &amp; 1 for c in raw_input())
+                </pre>
+                <p>
+                <span><a href="/submit?problem=digitproduct">digitproduct</a></span>
+                By <i>trzhang</i> (score 18):
+                </p>
+                <pre class="prettyprint">
+import operator
+print reduce(operator.mul, map(int, raw_input()))
+                </pre>
+                <p>
+                <span><a href="/submit?problem=evaluator">evaluator</a></span>
+                By <i>normandy</i>, with modifications by <i>kyc</i> (score 78):
+                </p>
+                <pre class="prettyprint">
+o = {'+': add, '-': sub, '*': mul, '/': div}
+a = ['+'] + raw_input().split()
+b = 0
+while a:
+    b = o[a.pop(0)](b, int(a.pop(0)))
+print b
+                </pre>
+                <p>
+                <span><a href="/submit?problem=maxrepeated">maxrepeated</a></span>
+                By <i>kyc</i> (score 37):
+                </p>
+                <pre class="prettyprint">
+s = raw_input()
+for l in range(1000):
+    for c in s:
+        if c * l in s:
+            a = s.index(c * l)
+print a
+                </pre>
+                <p>
+                <span><a href="/submit?problem=mixingcolors">mixingcolors</a></span>
+                By <i>normandy</i> (score 83):
+                </p>
+                <pre class="prettyprint">
+c = 'white red blue purple yellow orange green black'.split()
+a, b = raw_input().split()
+print c[c.index(a) | c.index(b)]
+                </pre>
+                <p>
+                <span><a href="/submit?problem=parencheck">parencheck</a></span>
+                By <i>kyc</i> (score 30):
+                </p>
+                <pre class="prettyprint">
+s = raw_input()
+a = '()'
+while a in s:
+    s = s.replace(a, '')
+print not s
+                </pre>
+                <p>
+                By <i>uuu</i>, with modifications by <i>kyc</i> (score 30):
+                </p>
+                <pre class="prettyprint">
+d = 0
+for c in raw_input():
+    d += 81 - 2 * ord(c)
+    if d &lt; 0:
+        break
+print not d
+                </pre>
+                <p>
+                <span><a href="/submit?problem=roman">roman</a></span>
+                By <i>pikachu</i>, with modifications by <i>kyc</i> (score 102):
+                </p>
+                <pre class="prettyprint">
+a = int(raw_input())
+o = ''
+for i, r in zip([1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1], 'M CM D CD C XC L XL X IX V IV I'.split()):
+    while a &gt;= i:
+        a -= i
+        o += r
+print o
+                </pre>
+                <p>
+                <span><a href="/submit?problem=temperature">temperature</a></span>
+                By <i>uuu</i>, with modifications by <i>kyc</i> and <i>rliu42</i> (score 53):
+                </p>
+                <pre class="prettyprint">
+s = raw_input()
+n = float(a[:-1])
+print '%dF' % (n * 1.8 + 32) if 'C' in s else '%dC' % (n * .56 - 17)
+                </pre>
+                <p>
+                <span><a href="/submit?problem=tictactoe">tictactoe</a></span>
+                By <i>kyc</i> (score 63):
+                </p>
+                <pre class="prettyprint">
+s = raw_input() + raw_input() + raw_input()
+for u in [11, 14, 17, 24, 33, 34, 35, 44]:
+    c = s[u % 9]
+    if c == s[u % 10] == s[u % 11]:
+        print c
+                </pre>
+                <p>
+                <span><a href="/submit?problem=tree">tree</a></span>
+                By <i>leonxlin</i> (score 75):
+                </p>
+                <pre class="prettyprint">
+s = ' '
+print s * 8 + '--&gt;*&lt;--'
+for i in range(11):
+    print s * (10 - i) + '/_' + ('\_' if i % 2 else '/_') * i + '\\'
+print s * 9 + '[___]'
+                </pre>
+            </div>
+        </div>
+    </body>
+</html>
+

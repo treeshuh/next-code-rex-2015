@@ -89,3 +89,8 @@ exports.scoreboard = function(req, res) {
   });
 }
 
+exports.solutions = function(req, res) {
+  res.render('solutions.html', {user: req.user});
+}
+
+
