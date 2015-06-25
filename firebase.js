@@ -1,7 +1,7 @@
 /* Functions that interact with Firebase */
 
 var Firebase = require('firebase');
-var root = new Firebase('https://next-code-golf.firebaseIO.com');
+var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
 
 /*
  * Schema

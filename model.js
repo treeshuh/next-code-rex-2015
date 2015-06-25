@@ -1,6 +1,6 @@
 var firebase = require('./firebase');
 var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
