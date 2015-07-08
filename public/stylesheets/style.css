@@ -270,3 +270,10 @@ table tr td {
 
 .permissionStatus {
   float: right; }
+
+.chosen {
+  color: green;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 200%;
+}

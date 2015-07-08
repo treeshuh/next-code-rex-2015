@@ -4,6 +4,8 @@
         <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+        <script src="javascripts/viewmodel.js"></script>
     </head>
     <body>
         <div class="header">
@@ -21,15 +23,20 @@
         </div>
         <div class="content">
             <h1>Next Code Golf Problems</h1>
-    
             <div class="left-half code-golf">
                 <h3>Algorithmic Problems</h3>
                 {{#each algProblems}}
-                <p>
-                <span><a href="/submit?problem={{this.name}}">{{this.name}}</a></span>
-                <span class="score-{{this.score}}">Score: {{this.score}}</span>
-                </p>
+                    <p>
+                    <span><a href="/submit?problem={{this.name}}">{{this.name}}</a></span>
+                    <span class="score-{{this.score}}">Score: {{this.score}}</span>
+                    </p>
                 {{/each}}
+                <h3>Speed Problems Problems</h3>
+                    <p data-bind="foreach: targetWords">
+                        <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
+                    </p>
+                    <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
+                    <button data-bind="enable: valid">ahhh</button>  
             </div>
             <div class="right-half code-golf">
                 <h3>Example Problems</h3>
