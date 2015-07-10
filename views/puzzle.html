@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Next Code REX 2015</title>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="/javascripts/{{this.type}}.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/challenges"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/challenges">Next Code REX</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">{{user.username}}</li>
+                <li><a href="/challenges">Challenges</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="prettybar"></div>
+        </div>
+
+        <div class="content">
+
+            <div class="challenge-type">{{challenge.type}}</div>
+
+            <div class="challenge-title">{{challenge.title}}</div>
+
+            <div class="flavor-text">{{challenge.detail.statement}}</div>
+
+            <object data="{{this.detail.url}}" type="application/pdf" width="90%" height="75%">
+                <p>It appears you don't have a PDF plugin for this browser.
+                No biggie... you can <a href="{{this.detail.url}}">click here to
+                download the puzzle.</a></p>
+            </object>
+            
+        </div>
+
+    </body>
+
+</html>

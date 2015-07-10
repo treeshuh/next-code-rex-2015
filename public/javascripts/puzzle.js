@@ -1,0 +1,1 @@
+/*Javascript for puzzle challenges*/

@@ -6,7 +6,7 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
 /*
  * Schema
  *
- * next-code-golf
+ * next-code-rex-2015
  *   counters
  *     userID: 15 [ID of most recent user created]
  *     submissionID: 29 [ID of most recent submission]
@@ -15,33 +15,57 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
  *       id: 1
  *       username: sample-user
  *       pwHash: cf7d51e028...
- *       problems
- *         problem1 [problem name]
+ *       challenges
+ *         speed1 [challenge id]
+ *           id: "speed1"
  *           score: 57
  *           timestamp: 12304592813
- *           type: alg [or example]
- *           path: submissions/'best-submission'
- *         problem2
- *         problem3
+ *           type: speed or code or puzzle
+ *         code2
+ *         puzzle1
  *         ...
  *     2
  *     3
  *     ...
- *   problems
- *     problem1 [problem name]
- *       judge
- *         1 [judge input id]
- *           input: 5
- *           expected: 5
- *         2
- *         3
- *         ...
- *       name: sample-problem
- *       statement: Print out the input.
- *       type: alg [or example]
- *     problem2
- *     problem3
- *     ...
+ *   challenges
+ *       speed1 [challenge Id]
+ *         id: "speed1"
+ *         title: "Next House, Best House!"  
+ *         maxScore:
+ *         type: "speed"
+ *         detail:
+ *           timeLimit:
+ *           passage:
+ *       speed2
+ *       ...
+ *
+ *       code1 [challenge Id]
+ *         id: "code1"
+ *         title: "Primality Check"
+ *         maxScore: 100
+ *         type: "code"
+ *         judge
+ *           1 [judge input Id]
+ *             input: 42
+ *             expected: false 
+ *           2
+ *           ...
+ *         detail:
+ *           baseScore:
+ *           statement:
+ *       code2
+ *       ...
+ *
+ *       puzzle1 [challenge Id]
+ *         title: "Nonogram"       
+ *         maxScore: 200
+ *         type: "puzzle"
+ *         judge: "colombo" [solution]
+ *         detail: 
+ *           url: 
+ *           statement: (optional flavor)
+ *       puzzle2
+ *       ...
  */
 
 function createUser(username, pwHash, callback) {
@@ -86,25 +110,31 @@ function findUser(id, callback) {
   });
 }
 
-function getSolvedProblems(user, callback) {
-  root.child('users').child(user.id).child('problems').once('value', function(data) {
+function getSolvedChallenges(user, callback) {
+  root.child('users').child(user.id).child('challenges').once('value', function(data) {
     callback(false, data.val());
   });
 };
 
-function listProblems(user, callback) {
-  root.child('problems').once('value', function(data) {
+function listChallengesByType(user, callback) {
+  root.child('challenges').once('value', function(data) {
+    var challenges = data.val();
+    var challengesByType = {code:{}, speed:{}, puzzle:{}};
+    for (challengeId in challenges) {
+      var challenge = challenges[challengeId];
+      challengesByType[challenge.type][challengeId] = challenge;
+    }
+    callback(false, challengesByType);
+  });
+};
+
+function findChallenge(challengeId, callback) {
+  root.child('challenges').child(challengeId).once('value', function(data) {
     callback(false, data.val());
   });
 };
 
-function findProblem(problemName, callback) {
-  root.child('problems').child(problemName).once('value', function(data) {
-    callback(false, data.val());
-  });
-};
-
-function submitProblem(callback) {
+function submitCode(callback) {
   root.child('counters').child('submissionID').transaction(function(submissionID) {
     return submissionID + 1;
   }, function(err, committed, data) {
@@ -118,18 +148,17 @@ function submitProblem(callback) {
   });
 };
 
-function judgeSubmission(user, problem, tester, callback) {
-  root.child('problems').child(problem.name).
-    child('judge').once('value', function(data) {
+function judgeSubmission(user, challengeId, tester, callback) {
+  root.child('challenges').child(challengeId).child('judge').once('value', function(data) {
       var counter = data.numChildren();
       var error = undefined;
-      for (var judgeInputKey in data.val()) {
-        tester(data.val()[judgeInputKey], function(err, success) {
+      for (var judgeInput in data.val()) {
+        tester(judgeInput, data.val()[judgeInput], function(err, success) {
           if (err) {
             error = err;
           }
           if (!success) {
-            error = 'Incorrect output.';
+            error = {success: false, message: "You program returned an incorrect output for one of our test cases. That's all we know."};
           }
           counter--;
           if (counter == 0) {
@@ -140,13 +169,14 @@ function judgeSubmission(user, problem, tester, callback) {
     });
 };
 
-function solveProblem(user, problem, score, path) {
-  root.child('users').child(user.id).child('problems').child(problem.name).set({
-    'name': problem.name,
+function solveChallenge(user, challengeId, score, data) {
+  var type = challengeId.slice(0,-1);
+  root.child('users').child(user.id).child('challenges').child(challengeId).set({
+    'id': challengeId,
     'score': score,
     'timestamp': new Date().getTime(),
-    'type': problem.type,
-    'path': path
+    'type': type,
+    'best': data
   });
 };
 
@@ -160,11 +190,10 @@ function listener(callback) {
 exports.createUser = createUser;
 exports.getUser = getUser;
 exports.findUser = findUser;
-exports.getSolvedProblems = getSolvedProblems;
-exports.listProblems = listProblems;
-exports.findProblem = findProblem;
-exports.submitProblem = submitProblem;
+exports.getSolvedChallenges = getSolvedChallenges;
+exports.listChallenges = listChallengesByType;
+exports.findChallenge = findChallenge;
+exports.submitCode = submitCode;
 exports.judgeSubmission = judgeSubmission;
-exports.solveProblem = solveProblem;
+exports.solveChallenge = solveChallenge;
 exports.listener = listener;
-

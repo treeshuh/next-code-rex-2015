@@ -38,15 +38,18 @@ if ('development' == app.get('env')) {
 app.get('/', routes.login);
 app.get('/login', routes.login);
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/problems',
+  successRedirect: '/challenges',
   failureRedirect: '/login'
 }));
 app.get('/logout', routes.logout);
 app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
 app.get('/rules', routes.rules);
-app.get('/problems', routes.getProblems);
-app.get('/submit', routes.readySubmit);
+app.get('/challenge', function(req, res) {
+	res.redirect("/challenges");
+});
+app.get('/challenges', routes.getChallenges);
+app.get('/challenge/:challengeId', routes.displayChallenge);
 app.post('/submit', routes.submit);
 app.get('/scoreboard', routes.scoreboard);
 

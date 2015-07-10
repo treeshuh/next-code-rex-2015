@@ -31,6 +31,10 @@ exports.createUser = function(username, password, passwordconfirm, callback) {
     callback('Invalid characters in username');
     return;
   }
+  if (user.length < 4) {
+    callback('Username must be at least 4 characters long');
+    return;
+  }
   if (password !== passwordconfirm) {
     callback('Passwords don\'t match');
     return;
@@ -48,42 +52,64 @@ exports.createUser = function(username, password, passwordconfirm, callback) {
 
 exports.findUser = firebase.findUser;
 
-exports.listProblems = firebase.listProblems;
+exports.listChallenges = firebase.listChallenges;
 
-exports.getProblems = function(user, callback) {
+exports.getChallenges = function(user, callback) {
   // Returns a resource of the following form:
   // root
-  //   algProblems
-  //     alg1 [problem name]
-  //       name: alg1
+  //   speed
+  //     1 
+  //       id: "speed1"
+  //       title: "Next House, Best House!"
   //       score: 57 [or 'unsolved']
-  //     alg2
-  //     alg3
+  //       maxScore: 200
+  //       detail:
+  //         timeLimit: 45
+  //         passage: "To be or not to be, that is the question..."
+  //     2
+  //     3
   //     ...
-  //   chalProblems
-  //     chal1
-  //     chal2
-  //     chal3
+  //   code
+  //     1 
+  //       id: "code1"
+  //       title: "Prime numbers"
+  //       score: 120 [or 'unsolved']
+  //       maxScore: 180
+  //       detail:
+  //         charCount: 36 // our charCount to beat
+  //         baseScore: 120
+  //         statement: "Return true if a given positive integer is prime, and false otherwise..."
+  //     2
+  //     3
   //     ...
-  firebase.listProblems(user, function(err, problems) {
-    firebase.getSolvedProblems(user, function(err, solvedProblems) {
-      if (!solvedProblems) {
-        solvedProblems = [];
+  //    puzzle
+  //      1 
+  //        id: "puzzle1"
+  //        title: "Nonogram"
+  //        score: 200 or ['unsolved']
+  //        maxScore: 200
+  //        detail:
+  //          url: "puzzles/p1.pdf" (relative to "public" directory)
+  //          statement: (optional flavor)
+
+  firebase.listChallenges(user, function(err, challenges) {
+    firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
+      if (!solvedChallenges) {
+        solvedChallenges = [];
       }
       resource = new Object();
-      resource.algProblems = [];
-      resource.chalProblems = [];
-      for (var problemName in problems) {
-        var problem = problems[problemName];
-        if (problemName in solvedProblems) {
-          problem.score = solvedProblems[problemName].score;
-        } else {
-          problem.score = 'unsolved';
-        }
-        if (problem.type === 'alg') {
-          resource.algProblems.push(problem);
-        } else {  // 'chal'
-          resource.chalProblems.push(problem);
+      resource.speed = [];
+      resource.code = [];
+      resource.puzzle = [];
+      for (var challengeType in challenges) {
+        for (var challengeId in challenges[challengeType]) {
+          var challenge = challenges[challengeType][challengeId];
+          if (challengeId in solvedChallenges) {
+            challenge.score = solvedChallenges[challengeId].score;
+          } else {
+            challenge.score = 'unsolved';
+          }
+          resource[challengeType].push(challenge);
         }
       }
       callback(resource);
@@ -91,21 +117,70 @@ exports.getProblems = function(user, callback) {
   });
 }
 
-exports.submitProblem = function(user, problemName, file, callback) {
-  firebase.findProblem(problemName, function(err, problem) {
-    if (err || !problem) {
-      callback(true, "Invalid problem");
+exports.submitSpeed = function(user, challengeId, data, callback) {
+
+  firebase.findChallenge(challengeId, function(err, challenge) {
+    if (err || !challenge) {
+      callback(true, "Invalid challenge");
+      return;
+    } 
+    firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
+      improved = false;
+      if (!solvedChallenges || !(challengeId in solvedChallenges)) {
+        previousScore = 0;
+        improved = true;
+      } else {
+        previousScore = solvedChallenges[challengeId].score;
+        improved = (data.score > previousScore);
+      }
+      achievedMaxScore = (Math.max(previousScore, data.score) == challenge.maxScore);
+      if (improved) {
+        firebase.solveChallenge(user, challengeId, data.score, data);
+      }
+      callback(false, {improved: improved, achievedMaxScore: achievedMaxScore, score: data.score, previousScore: previousScore})
+    });
+  });
+}
+
+exports.submitPuzzle = function(user, challengeId, input, callback) {
+  const INCORRECT = "Sorry, your solution " + input.toUpperCase().trim() + " was incorrect.";
+  const CORRECT = "Congratuations! You have solved this puzzle."
+  const SOLVED = "You've already solved this puzzle."
+
+  firebase.findChallenge(challengeId, function(err, challenge) {
+    if (err || !challenge) {
+      callback(true, "Invalid challenge");
+      return;
+    } 
+    var correct = (userInput.toLowerCase().trim() == challenge.judge);
+    firebase.getSolvedProblems(user, function(err, solvedChallenges) {
+      if (!correct) {
+        message = INCORRECT;
+      } else if (!solvedChallenges || !(challengeId in solvedChallenges)){
+        firebase.solveChallenge(user, challengeId, challenge.maxScore, input);
+        message = CORRECT;
+      } else {
+        message = SOLVED;
+      }
+      callback(false, {input: input, correct: correct, message: message});
+    });
+  });
+}
+
+exports.submitCode = function(user, challengeId, input, callback) {
+  firebase.findChallenge(challengeId, function(err, challenge) {
+    if (err || !challenge) {
+      callback(true, "Invalid challenge");
       return;
     }
     // Copy file
-    fs.readFile(file.path, function(err, data) {
-      firebase.submitProblem(function(err, submissionID) {
+      firebase.submitCode(function(err, submissionID) {
         if (err) {
           callback(true, err);
           return;
         }
-        var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '-' + problemName + '.py';
-        fs.writeFile(dest, data, function(err) {
+        var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '-' + challengeId + '.py';
+        fs.writeFile(dest, input + "\n" + challenge.detail.tester, function(err) {
           // Check for forbidden constructs
           exec('python modules/sanitizer.py < ' + dest, function(error, stdout, stderr) {
             if (stdout) {
@@ -113,8 +188,14 @@ exports.submitProblem = function(user, problemName, file, callback) {
               return;
             }
             // Run program on judge input
-            firebase.judgeSubmission(user, problem, function(judgeInput, callback) {
-              exec('echo "' + judgeInput.input + '" | timeout 3s python ' + dest, function(error, stdout, stderr) {
+            firebase.judgeSubmission(user, challengeId, function(input, expected, callback) {
+              if (/^win/.test(process.platform)) {
+                command =  'python ' + dest + ' ' + input; // Windows
+              } else {
+                command =  'timeout 3s python ' + dest + ' ' + input; // Linux
+              }
+              //console.log(command);
+              exec(command, function(error, stdout, stderr) {
                 if (error) {
                   callback(error, true);
                   return;
@@ -123,12 +204,14 @@ exports.submitProblem = function(user, problemName, file, callback) {
                   callback(stderr, true);
                   return;
                 }
-                callback(false, stdout.trim() == judgeInput.expected.trim());
+                console.log("Output: " + stdout.trim())
+                console.log("Expected: " + String(expected).trim())
+                callback(false, stdout.trim() == String(expected).trim());
               });
             }, function(err) {
               if (err) {
                 if (err.code === 124) {
-                  err = 'Time Limit Exceeded';
+                  err = {message: 'Time Limit Exceeded!'};
                 }
                 callback(false, err);
                 return;
@@ -139,25 +222,46 @@ exports.submitProblem = function(user, problemName, file, callback) {
                   callback(true, stderr);
                   return;
                 }
-                var score = parseInt(stdout);
-                if (score <= 0) {
+                if (parseInt(stdout) <= 0) {
                   callback(true, "System error: charcount");
                   return;
                 }
-                firebase.getSolvedProblems(user, function(err, solvedProblems) {
-                  if (!solvedProblems || !(problem.name in solvedProblems) ||
-                    score < solvedProblems[problem.name].score) {
-                      firebase.solveProblem(user, problem, score, dest);
-                    }
-                  callback(false, 'Program successful. Score: ' + score);
+                var maxBonus = challenge.maxScore - challenge.detail.baseScore;
+                var bonusScore = setBonus(parseInt(stdout), challenge.detail.charCount, maxBonus);
+                score = challenge.detail.baseScore + bonusScore;
+                firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
+                  if (!solvedChallenges || !(challengeId in solvedChallenges)) {
+                    previousScore = 0;
+                    improved = true;
+                  } else {
+                    previousScore = solvedChallenges[challengeId].score;
+                    improved = (score > previousScore);
+                  }
+                  achievedMaxScore = (Math.max(previousScore, score) == challenge.maxScore);
+                  if (improved) {
+                    firebase.solveChallenge(user, challengeId, score, input);
+                  }
+                  callback(false, {
+                    success: true, 
+                    improved: improved, 
+                    achievedMaxScore: achievedMaxScore, 
+                    score: score, 
+                    previousScore: previousScore
+                  });
                 });
               });
             });
           });
         });
       });
-    });
   });
+}
+
+function setBonus(userCharCount, ourCharCount, maxBonus) {
+  if (userCharCount <= ourCharCount) {
+    return maxBonus;
+  }
+  return Math.round(ourCharCount/userCharCount*maxBonus);
 }
 
 /*
@@ -167,78 +271,34 @@ exports.submitProblem = function(user, problemName, file, callback) {
  *   topscores
  *     1 [rank]
  *       username: sample-user
- *       score: 57
+ *       score:
+ *         speed: 400
+ *         code: 600
+ *         puzzle: 200
+ *         total: 1200
  *     2 [rank]
  *     3 [rank]
  *     ...
- *   problems
- *     problem1 [problem name]
- *       1 [rank]
- *         username: sample-user
- *         score: 29
- *       2 [rank]
- *       3 [rank]
- *       ...
- *     problem2
- *     problem3
- *     ...
  */
 var scoreboard;
-const weights = [15, 12, 10, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 firebase.listener(function(users) {  // listener that updates scoreboard when firebase changes
   // Fill in the new scoreboard data
-  var newScoreboard = {topscores: [], problems: new Object()};
+  var newScoreboard = {topscores: []};
   for (var userKey in users) {
     var user = users[userKey];
-    for (var problemName in user.problems) {
-      var problem = user.problems[problemName];
-      if (!(problemName in newScoreboard.problems)) {
-        newScoreboard.problems[problemName] = [];
-      }
-      newScoreboard.problems[problemName].push({
-        username: user.username,
-        score: problem.score,
-        timestamp: problem.timestamp,
-        type: problem.type
-      });
+    var score = {speed: 0, code: 0, puzzle: 0, total: 0}
+    for (var challengeId in user.challenges) {
+      var challenge = user.challenges[challengeId]
+      score.total += challenge.score;
+      score[challenge.type] += challenge.score
     }
-  }
-
-  // Now sort all the lists in the scoreboard
-  for (var problemName in newScoreboard.problems) {
-    newScoreboard.problems[problemName].sort(function(item1, item2) {
-      if (item1.score == item2.score) {
-        return item1.timestamp - item2.timestamp;
-      }
-      return item1.score - item2.score;  // smaller score is better
-    });
-  }
-  for (var userKey in users) {
-    var user = users[userKey];
-    var userScore = 0;
-    for (var problemName in newScoreboard.problems) {
-      var problem = newScoreboard.problems[problemName];
-      var userIndex = weights.length - 1;
-      for (var index in problem) {
-        if (problem[index].username === user.username
-                && problem[index].type !== "example") {
-          userIndex = index;
-          break;
-        }
-      }
-      userScore += weights[Math.min(weights.length - 1, userIndex)];
-    }
-    newScoreboard.topscores.push({username: user.username, score: userScore});
+    newScoreboard.topscores.push({username: user.username, score: score});
   }
   newScoreboard.topscores.sort(function(item1, item2) {
-    return item2.score - item1.score;  // larger score is better
+    return item2.score.total - item1.score.total;  // larger score is better
   });
   scoreboard = newScoreboard;  // copy to global var; hopefully almost atomic
 });
-
-exports.getProblemScoreboard = function(problem) {
-  return scoreboard.problems[problem];
-}
 
 exports.getGlobalScoreboard = function() {
   return scoreboard.topscores;

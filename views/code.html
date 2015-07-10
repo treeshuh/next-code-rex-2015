@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Next Code REX 2015</title>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
+        <script>
+            var challengeId = "{{challenge.id}}"
+            var template = "{{challenge.detail.template}}"
+            var maxScore = {{challenge.maxScore}}
+            var baseScore = {{challenge.detail.baseScore}}
+            var previousScore = {{previousScore}}
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/challenges"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/challenges">Next Code REX</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">{{user.username}}</li>
+                <li><a href="/challenges">Challenges</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="prettybar"></div>
+        </div>
+
+        <div class="container">
+
+            <h2 class="challenge-title">{{challenge.title}}</h2>
+
+            Your task: 
+            <pre>{{challenge.detail.statement}}</pre>
+
+            <div id="alerts"></div>
+            <div class="scoreBar">
+                <span id="baseScore" class="score">Base score: {{challenge.detail.baseScore}}</span>
+                <span id="maxScore" class="score">Max score: {{challenge.maxScore}}</span>
+                <span id="bestScore" class="score">Team Best: {{previousScore}} / {{challenge.maxScore}}</span>
+            <div>
+
+            <br>
+
+            <div id="editor" style="display:none">{{bestSubmission}}</div>
+
+            <br>
+
+            <button id="submit" type="button" class="btn btn-success" style="display:none">SUBMIT</button>
+
+        </div>
+
+    </body>
+
+    <script src="/javascripts/lib/ace/src-min-noconflict/ace.js"></script>
+    <script src="/javascripts/code.js"></script>
+
+</html>

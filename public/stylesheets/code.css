@@ -1,0 +1,9 @@
+/* CSS for code challenges */
+
+#editor { 
+   top: 20%;
+   height: 50%;
+   width: 100%;
+   font-size: 18px;
+   margin-top: 20px;
+}
