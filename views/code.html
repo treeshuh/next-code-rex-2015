@@ -12,7 +12,9 @@
             var template = "{{challenge.detail.template}}"
             var maxScore = {{challenge.maxScore}}
             var baseScore = {{challenge.detail.baseScore}}
+            var maxBonus = maxScore-baseScore
             var previousScore = {{previousScore}}
+            var targetGolf = {{challenge.detail.charCount}}
         </script>
     </head>
     <body>
@@ -32,25 +34,106 @@
 
         <div class="container">
 
-            <h2 class="challenge-title">{{challenge.title}}</h2>
+            <div id="left-pane">
+            <h1 class="challenge-title">{{challenge.title}}</h1>
 
-            Your task: 
-            <pre>{{challenge.detail.statement}}</pre>
+            <div class="panel-group" id="accordion">
 
-            <div id="alerts"></div>
-            <div class="scoreBar">
-                <span id="baseScore" class="score">Base score: {{challenge.detail.baseScore}}</span>
-                <span id="maxScore" class="score">Max score: {{challenge.maxScore}}</span>
-                <span id="bestScore" class="score">Team Best: {{previousScore}} / {{challenge.maxScore}}</span>
-            <div>
+                <div class="panel panel-primary" id="panel1">
+                    <div class="panel-heading">
+                         <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#task" 
+                       href="#task">
+                      Your Challenge
+                    </a>
+                  </h4>
 
-            <br>
+                    </div>
+                    <div id="task" class="panel-collapse collapse">
+                        <div class="panel-body lead">{{challenge.detail.statement}}</div>
+                    </div>
+                </div>
 
-            <div id="editor" style="display:none">{{bestSubmission}}</div>
+                <div class="panel panel-default" id="panel2">
+                    <div class="panel-heading">
+                         <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#examples"
+                       href="#examples" class="collapsed">
+                      Example Input/Output
+                    </a>
+                  </h4>
 
-            <br>
+                    </div>
+                    <div id="examples" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            {{# each challenge.examples}}
+                            <pre class="example"> {{this.input}} -> {{this.output}}</pre>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
 
-            <button id="submit" type="button" class="btn btn-success" style="display:none">SUBMIT</button>
+                <div class="panel panel-info" id="panel3">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#rules" 
+                       href="#rules" class="collapsed">
+                      Guidelines
+                    </a>
+                    </h4>
+                    </div>
+                    <div id="rules" class="panel-collapse collapse">
+                        <div class="panel-body">
+                                <li>Please write your code in Python.</li>
+                                <li>Any submission that passes all of our tests earns <strong>BASE SCORE</strong>.</li>
+                                <li>Your program earns <strong>BONUS</strong> based on how concise it is.</li>
+                                <li>A successful program with <strong>GOLF SCORE</strong> below <strong>PAR</strong> receives all <strong>BONUS</strong> points.
+                                </li>
+                                <li>You may write helper functions, but don't change the signature of the main function.</li>
+                                <li>Your program should <code>return</code> (not <code>print</code>) the result.</li>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+            <div id="right-pane">
+                <div id="scorebar">
+                   <ul>
+                    <li id="base" data-toggle="popover" data-placement="bottom" data-content="Any successful program will earn these points.">
+                      <h3>BASE SCORE</h3>
+                      <div class="stat-num base"><span id="base-score">{{challenge.detail.baseScore}}</span></div>
+                    </li>
+                    <li id="bonus" data-toggle="popover" data-placement="bottom" data-content="A successful submission will earn bonus points based on its GOLF SCORE.">
+                      <h3>BONUS</h3>
+                      <div class="stat-num bonus">
+                        <span id="bonus-score">+0</span>
+                      </div>
+                    </li>
+                    <li id="total">
+                      <h3>TOTAL</h3>
+                      <div class="stat-num team"><span id="team-score">{{previousScore}}</span> / {{challenge.maxScore}}</div>
+                    </li>
+                    <li data-toggle="popover" data-placement="bottom" data-content="Every non-whitespace CHARACTER in your program counts for 1 golf score, with the exception of identifiers (function and variable names), which count for 1 golf score regardless of how they are named.">
+                        <div class="stat-num golf">
+                            <h3>[ GOLF SCORE / PAR ]</h3>
+                            <span class="golf">[<span class="golf" id="golf-score">0</span> / {{challenge.detail.charCount}}]</span>
+                        </div>
+                    </li>
+                  </ul>
+              </div>
+                <div id="alerts"></div>
+                <div id="editor" style="display:none">{{bestSubmission}}</div>
+                <br>
+                    <button id="submit" type="button" class="btn btn-success btn-lg" style="display:none">SUBMIT</button>
+                    <br>
+                    <div class="progress">
+                        <div id="progress" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        </div>
+                </div>
+            </div>
 
         </div>
 
@@ -58,5 +141,7 @@
 
     <script src="/javascripts/lib/ace/src-min-noconflict/ace.js"></script>
     <script src="/javascripts/code.js"></script>
+    <script src="/javascripts/utils/charcount.js"></script>
+    <script src="/javascripts/utils/sanitize.js"></script>
 
 </html>

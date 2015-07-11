@@ -28,6 +28,10 @@ func main() {
     wreg, _ := regexp.Compile("import sys.*|if \\_\\_.*|print.*")
     source = wreg.ReplaceAllString(source,"")
 
+    // Remove main function 
+    freg, _ := regexp.Compile("def\\s+[A-Za-z0-9_]+\\([A-Za-z0-9-\\,\\s]+\\):")
+    source = freg.ReplaceAllString(source,"")
+
     // Remove all comments
     creg, _ := regexp.Compile("[#]+(.*)")
     source = creg.ReplaceAllString(source,"")

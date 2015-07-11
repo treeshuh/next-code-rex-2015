@@ -181,16 +181,10 @@ exports.submitCode = function(user, challengeId, input, callback) {
         }
         var dest = SUBMISSION_DIRECTORY + 's' + submissionID + '-' + user.username + '-' + challengeId + '.py';
         fs.writeFile(dest, input + "\n" + challenge.detail.tester, function(err) {
-          // Check for forbidden constructs
-          exec('python modules/sanitizer.py < ' + dest, function(error, stdout, stderr) {
-            if (stdout) {
-              callback(true, "Forbidden constructs: " + stdout);
-              return;
-            }
             // Run program on judge input
             firebase.judgeSubmission(user, challengeId, function(input, expected, callback) {
-              if (/^win/.test(process.platform)) {
-                command =  'python ' + dest + ' ' + input; // Windows
+              if (/win/.test(process.platform)) {
+                command =  'python ' + dest + ' ' + input; // Windows + Mac
               } else {
                 command =  'timeout 3s python ' + dest + ' ' + input; // Linux
               }
@@ -253,7 +247,6 @@ exports.submitCode = function(user, challengeId, input, callback) {
             });
           });
         });
-      });
   });
 }
 

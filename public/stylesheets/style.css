@@ -278,3 +278,5 @@ table tr td {
   font-weight: bold;
   font-size: 200%;
 }
+
+a[disabled] { pointer-events: none; }
