@@ -61,7 +61,7 @@ exports.getChallenges = function(req, res) {
 
 exports.displayChallenge = function(req, res) {
   var challengeId = req.params.challengeId.split(".")[0];
-  var type = challengeId.slice(0,-1);
+  var type = challengeId.replace(/\d/g, "");
   model.listChallenges(req.user, function(err, challenges) {
     bestSubmission = undefined;
     previousScore = 0;
@@ -71,15 +71,19 @@ exports.displayChallenge = function(req, res) {
           bestSubmission = (req.user.challenges[challengeId].best).replace(/\\/g, "\\");
         }
     }
-    res.render(type + '.html', {
-      user: req.user,
-      previousScore: previousScore,
-      bestSubmission: bestSubmission,
-      type: type,
-      challengeId: challengeId,
-      challenge: challenges[type][challengeId],
-      challenges: challenges
-    });
+    if (challenges[type] && challenges[type][challengeId]) {
+      res.render(type + '.html', {
+        user: req.user,
+        previousScore: previousScore,
+        bestSubmission: bestSubmission,
+        type: type,
+        challengeId: challengeId,
+        challenge: challenges[type][challengeId],
+        challenges: challenges
+      });
+    } else {
+      res.redirect("/challenges");
+    }
   });
 }
 

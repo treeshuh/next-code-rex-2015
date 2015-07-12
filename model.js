@@ -152,8 +152,8 @@ exports.submitPuzzle = function(user, challengeId, input, callback) {
       callback(true, "Invalid challenge");
       return;
     } 
-    var correct = (userInput.toLowerCase().trim() == challenge.judge);
-    firebase.getSolvedProblems(user, function(err, solvedChallenges) {
+    var correct = (input.toLowerCase().trim() == challenge.judge);
+    firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
       if (!correct) {
         message = INCORRECT;
       } else if (!solvedChallenges || !(challengeId in solvedChallenges)){

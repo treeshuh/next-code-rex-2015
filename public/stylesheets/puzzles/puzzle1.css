@@ -1,0 +1,33 @@
+table {
+    position: absolute;
+    text-align: center;
+    border-spacing: 0px;
+    left: 6%;
+    margin-bottom: 5%;
+}
+td {
+    background: white;
+    vertical-align: top;
+    display: table-cell;
+    text-align: center !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    width: 2.2vw;
+    height: 2.8vh;
+    font-size: 2.8vh;
+    line-height: 2.8vh;
+    border: 2px solid black !important;
+}
+td.constraint {
+    width: 2.5vh;
+    height: 1.0vh;
+    padding: 1.0vh;
+    font-size: 2.0vh;
+    border: none !important;
+}
+td.hover {
+    background-color: rgba(120, 0, 0, 0.5) !important;
+}
+.green {
+    color: green;
+}

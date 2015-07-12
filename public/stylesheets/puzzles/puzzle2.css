@@ -1,0 +1,29 @@
+table {
+	border-spacing: 0px;
+	text-align: center;
+}
+tr {
+	text-align: center;
+	border: 0px;
+  border-radius: 3px !important;
+}
+td {
+  background: white;
+  color: rgb(120, 0, 0);
+  font-size: 24px !important;
+  vertical-align: top;
+  border: 2px solid rgb(238,238,238);
+  display: table-cell;
+  text-align: center !important;
+  width: 60px !important;; 
+  height: 60px !important;; 
+  line-height: 60px !important;;
+  padding: 0px !important;
+  margin: 0px !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

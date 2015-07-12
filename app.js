@@ -50,6 +50,7 @@ app.get('/challenge', function(req, res) {
 });
 app.get('/challenges', routes.getChallenges);
 app.get('/challenge/:challengeId', routes.displayChallenge);
+app.get('/challenges/:challengeId', routes.displayChallenge);
 app.post('/submit', routes.submit);
 app.get('/scoreboard', routes.scoreboard);
 

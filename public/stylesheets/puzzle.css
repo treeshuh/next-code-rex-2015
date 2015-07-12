@@ -1,1 +1,32 @@
 /* CSS for puzzle challenges */
+
+.challenge-title {
+    margin-bottom: 15px;
+}
+#alerts {
+	max-width: 650px;
+} 
+#instructions {
+	max-width: 650px;	
+} 
+#interactive {
+    text-align: center;
+    margin: 20px 0px;
+}
+#input {
+    margin-top: 10px;
+    min-width: 250px;
+    max-width: 750px;
+}
+#input:focus {
+    border: none;
+    outline: none;
+}
+table {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

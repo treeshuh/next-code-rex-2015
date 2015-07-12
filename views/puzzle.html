@@ -3,9 +3,13 @@
         <title>Next Code REX 2015</title>
         <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/puzzles/{{challenge.id}}.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
+        <script>var challengeId = "{{challenge.id}}"</script>
     </head>
     <body>
         <div class="header">
@@ -22,22 +26,41 @@
             <div class="prettybar"></div>
         </div>
 
-        <div class="content">
+        <div class="container">
 
-            <div class="challenge-type">{{challenge.type}}</div>
+            <h1 class="challenge-title">{{challenge.title}}</h1>
 
-            <div class="challenge-title">{{challenge.title}}</div>
+            <div id="instructions" class="panel-primary">
+                <div class="panel-heading">Your Challenge</div>
+                <div id="instruction-panel" class="panel-body">
+                        {{#each challenge.instruction}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                </div>
+            </div>
 
-            <div class="flavor-text">{{challenge.detail.statement}}</div>
+            <div id="alerts">
+            </div>
 
+            <div id="interactive">
+            </div>
+
+            <div id="submit-box">
+                <div class="input-group">
+                  <input id="input" type="text" class="form-control" placeholder="solution">
+                </div>            
+            </div>
+
+            {{#if this.detail.url}}
             <object data="{{this.detail.url}}" type="application/pdf" width="90%" height="75%">
                 <p>It appears you don't have a PDF plugin for this browser.
                 No biggie... you can <a href="{{this.detail.url}}">click here to
                 download the puzzle.</a></p>
             </object>
+            {{/if}}
             
         </div>
 
     </body>
-
+    <script src="/javascripts/puzzles/{{challenge.id}}.js"></script>
 </html>
