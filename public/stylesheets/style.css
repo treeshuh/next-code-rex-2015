@@ -17,6 +17,10 @@ body {
   min-width: 720px; 
 }
 
+.container {
+    width: 90% !important;
+}
+
 .header {
   background-color: #f8f8f8;
   height: 50px;

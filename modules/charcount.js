@@ -8,7 +8,7 @@ const identifiers = new RegExp("[A-Za-z0-9_]+", "g");
 const whitespace = new RegExp("\\t+|\\s+", "g");
 const comments = {
     "python": new RegExp("#.*(\\n|\\r|$)", "g"),
-    "java": new RegExp("\\/\\*.*?\\*\\|\\/\\/.*?(\\n|\\r|$)", "g")
+    "java": new RegExp("\\/\\*.*?\\*\\/|\\/(\\/|\\*).*?(\\n|\\r|$)", "g")
 }
 const mainFunc = {
     "python": new RegExp("def\\s+[\\w\\d_]+\\([\\w\\d\\_\\,\\s]+\\):"),
