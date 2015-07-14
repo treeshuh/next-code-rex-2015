@@ -1,4 +1,4 @@
-/* Client-side character count for Code Golf */
+/* Server-side character count for Code Golf */
 // Support languages: Java, Python
 // Does not count comments or whitespace (space, tab, newline)
 // Does not count the main method signature
@@ -14,9 +14,15 @@ const mainFunc = {
     "python": new RegExp("def\\s+[\\w\\d_]+\\([\\w\\d\\_\\,\\s]+\\):"),
     "java": new RegExp("(private|public|protected)?\\s*(final)?\\s*(static)?\\s*(int|long|boolean|void|float|double|String)\\s*[\\w\\d_]+\\(.*?\\)\\s*\\{")
 }
+const ext = {
+    ".py": "python",
+    ".java": "java"
+}
 
-function charcount(s, lang) {
-
+exports.charcount = function(s, lang) {
+    if (/\./.test(lang)) {
+        lang = ext[lang];
+    }
     s = s.replace(comments[lang], "");
     s = s.replace(mainFunc[lang], "");
 
@@ -31,6 +37,7 @@ function charcount(s, lang) {
         s = c[1]
     }
 
+    s = s.replace(/break(\;)?$/g, "");
     s = s.replace(identifiers, "?");
     s = s.replace(whitespace, "");
     // if java, only count curly brace set once

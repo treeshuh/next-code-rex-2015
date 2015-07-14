@@ -9,7 +9,9 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
-        <script>var challengeId = "{{challenge.id}}"</script>
+        <script>const challengeId = "{{challenge.id}}"
+                var previousScore = {{previousScore}}
+        </script>
     </head>
     <body>
         <div class="header">
@@ -28,27 +30,43 @@
 
         <div class="container">
 
-            <h1 class="challenge-title">{{challenge.title}}</h1>
+            <div id="left-pane">
 
-            <div id="instructions" class="panel-primary">
-                <div class="panel-heading">Your Challenge</div>
-                <div id="instruction-panel" class="panel-body">
-                        {{#each challenge.instruction}}
-                            <li>{{this}}</li>
-                        {{/each}}
+                <div id="instructions" class="panel-primary">
+                    <div class="panel-heading">Your Challenge</div>
+                    <div id="instruction-panel" class="panel-body">
+                            {{#each challenge.instruction}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                    </div>
                 </div>
+
+                <div id="score-display">
+                    <h3>COMPLETION SCORE</h3>
+                    <div id="max-score" class="stat-num">{{challenge.maxScore}}</div>
+                    {{#if previousScore}}
+                    <h3>SOLUTION</h3>
+                    <div id="max-score" class="stat-num">{{challenge.judge}}</div>
+                </div>
+                    {{else}}
+                </div>
+                <div id="submit-box">
+                    <div class="input-group">
+                      <input id="input" type="text" class="form-control" placeholder="solution">
+                    </div>            
+                </div>
+                    {{/if}}
+
             </div>
 
-            <div id="alerts">
-            </div>
+            <div id="right-pane">
+                <h1 class="challenge-title">{{challenge.title}}</h1>
 
-            <div id="interactive">
-            </div>
+                <div id="alerts">
+                </div>
 
-            <div id="submit-box">
-                <div class="input-group">
-                  <input id="input" type="text" class="form-control" placeholder="solution">
-                </div>            
+                <div id="interactive">
+                </div>
             </div>
 
             {{#if this.detail.url}}

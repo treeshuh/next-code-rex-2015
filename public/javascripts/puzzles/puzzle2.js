@@ -90,9 +90,9 @@ function checkSolve() {
             current = getClickedBorders(r, c)
             if (correct && current != correct) {
                 matched = false;
-                $("#cell-" + r + c).css("color", clickColor);
+                $("#cell-" + r + c).removeClass("green")
             } else if (current == correct) {
-                $("#cell-" + r + c).css("color", "green");
+                $("#cell-" + r + c).addClass("green")
             }
         }
     }

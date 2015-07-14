@@ -110,7 +110,7 @@ const boardWidth = constraintWidth + gridWidth;
 const boardHeight = constraintHeight + gridHeight;
 
 /* Game settings */
-const assistRate = 0.2;
+const assistRate = 0.15;
 const junkLetterRate = 0.4;
 
 /* Game states */
@@ -119,7 +119,7 @@ var mousedownCell = [false, false]; // for toggling multiple cells with mouse dr
 
 const rules = [
     "Color the grid according to the numbers at the side by following " +
-    "<a href='https://en.wikipedia.org/wiki/Nonogram'>Nonagram rules</a>, to reveal a hidden picture and secret message.",
+    "<a href='https://en.wikipedia.org/wiki/Nonogram'>Nonogram rules</a>, to reveal a hidden picture and secret message.",
     "In particular, the numbers measure how many <emph>unbroken</emph> lines of filled-in squares there are in any given row or column." +
     " For example, a clue of \"5 2 1\" would mean there are sets of five, two, and one filled squares, in that order, " +
     "with at least one blank square between successive groups.",
@@ -154,10 +154,8 @@ function initGrid() {
     // fill in letters
     var randomLetters = "AABCEEFHIILMNOPRRSSTTU";
     for (r = 0; r < gridHeight; r++) {
-        letterRow = letters[r].split(/(\s|\w)/)
-        letterRow = getOddIndices(letterRow);
-        for (c in letterRow) {
-            letter = letterRow[c].trim();
+        for (c in letters[r]) {
+            letter = letters[r][c].trim();
             if (solved[r][c] && Math.random() < assistRate) {
                 // this square gets filled in the final solution;
                 // with assitRate probability, fill in this square to help them out;
@@ -165,8 +163,8 @@ function initGrid() {
                 $("#cell-" + r + "-" + c).css("background-color", fill);
             } else {
                 $("#row-" + r).append("<td class='cell' id='cell-" + r + "-" + c + "'></td>");
-                if (solved[r][c] && !letter && Math.random() < 0.33) {
-                    letter = randomLetters.charAt(Math.floor(Math.random() * randomLetters.length));
+                if (solved[r][c] && !letter && Math.random() < junkLetterRate) {
+                    letter = randomLetters[Math.floor(Math.random() * randomLetters.length)];
                 }
             }
             $("#cell-" + r + "-" + c).html(letter)
@@ -255,7 +253,7 @@ function isFilled(r, c) {
     me = $("#cell-" + r + "-" + c);
     return (me.css("background-color") == fill);
 }
-
+correctRows = []
 function checkSolve() {
     match = true;
     // only check rows...
@@ -263,8 +261,14 @@ function checkSolve() {
         if (!arrayEquals(solved[i], getRowFilled(i))) {
             match = false;
         } else {
-            $("#row-" + i + ">.constraint").css("color", "green");
-            $("#row-" + i + ">.cell").removeClass("cell").unbind("mouseenter");
+            if (!$("#row-" + i + ">.constraint").hasClass("green")) {
+                $("#row-" + i + ">.constraint").addClass("green big")
+                $("#row-" + i + ">.cell").removeClass("cell").unbind("mouseenter");
+                var j = i;
+                setTimeout(function(){
+                    $("#row-" + j + ">.constraint").removeClass("big");
+                }, 300);
+            }
         }
     }
     if (!match) {

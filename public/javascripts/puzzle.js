@@ -9,6 +9,10 @@ $(document).ready(function(){
 	    	sendAnswer();
 	    }
 	});
+	if (previousScore) {
+		$("#max-score").addClass("max");
+		alertSuccess("You've already solved this puzzle.", "");
+	}
 })
 
 function sendAnswer() {
@@ -32,6 +36,7 @@ function sendAnswer() {
 
 function handleResult(result) {
 	if (result.correct) {
+		$("#max-score").addClass("max");
 		alertSuccess("", result.message);
 	} else {
 		alertError("", result.message);

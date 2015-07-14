@@ -20,7 +20,7 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
  *           id: "speed1"
  *           score: 57
  *           timestamp: 12304592813
- *           type: speed or code or puzzle
+ *           type: speed or code or puzzlea
  *         code2
  *         puzzle1
  *         ...
@@ -30,7 +30,7 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
  *   challenges
  *       speed1 [challenge Id]
  *         id: "speed1"
- *         title: "Next House, Best House!"  
+ *         title: "Next House, Best House!"
  *         maxScore:
  *         type: "speed"
  *         detail:
@@ -47,7 +47,7 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
  *         judge
  *           1 [judge input Id]
  *             input: 42
- *             expected: false 
+ *             expected: false
  *           2
  *           ...
  *         detail:
@@ -57,134 +57,146 @@ var root = new Firebase('https://next-code-rex-2015.firebaseIO.com');
  *       ...
  *
  *       puzzle1 [challenge Id]
- *         title: "Nonogram"       
+ *         title: "Nonogram"
  *         maxScore: 200
  *         type: "puzzle"
  *         judge: "colombo" [solution]
- *         detail: 
- *           url: 
+ *         detail:
+ *           url:
  *           statement: (optional flavor)
  *       puzzle2
  *       ...
  */
 
 function createUser(username, pwHash, callback) {
-  root.child('counters').child('userID').transaction(function(userID) {
-    return userID + 1;
-  }, function(err, committed, data) {
-    if (err) {
-      callback(err);
-      return;
-    }
-    if (!committed) {
-      callback('System error: create user');
-      return;
-    }
-    var userID = data.val();
-    root.child('users').child(userID).set({
-      'id': userID,
-      'username': username,
-      'pwHash': pwHash
+    root.child('counters').child('userID').transaction(function(userID) {
+        return userID + 1;
+    }, function(err, committed, data) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        if (!committed) {
+            callback('System error: create user');
+            return;
+        }
+        var userID = data.val();
+        root.child('users').child(userID).set({
+            'id': userID,
+            'username': username,
+            'pwHash': pwHash
+        });
+        callback(false);
     });
-    callback(false);
-  });
 };
 
 function getUser(username, callback) {
-  root.child('users').once('value', function(data) {
-    var users = data.val();
-    for (var userKey in users) {
-      var user = users[userKey];
-      if (user.username == username) {
-        callback(false, user);
-        return;
-      }
-    }
-    callback(false, false);
-  });
+    root.child('users').once('value', function(data) {
+        var users = data.val();
+        for (var userKey in users) {
+            var user = users[userKey];
+            if (user.username == username) {
+                callback(false, user);
+                return;
+            }
+        }
+        callback(false, false);
+    });
 };
 
 function findUser(id, callback) {
-  root.child('users').child(id).once('value', function(data) {
-    callback(false, data.val());
-  });
+    root.child('users').child(id).once('value', function(data) {
+        callback(false, data.val());
+    });
 }
 
 function getSolvedChallenges(user, callback) {
-  root.child('users').child(user.id).child('challenges').once('value', function(data) {
-    callback(false, data.val());
-  });
+    root.child('users').child(user.id).child('challenges').once('value', function(data) {
+        callback(false, data.val());
+    });
 };
 
 function listChallengesByType(user, callback) {
-  root.child('challenges').once('value', function(data) {
-    var challenges = data.val();
-    var challengesByType = {code:{}, speed:{}, puzzle:{}};
-    for (challengeId in challenges) {
-      var challenge = challenges[challengeId];
-      challengesByType[challenge.type][challengeId] = challenge;
-    }
-    callback(false, challengesByType);
-  });
+    root.child('challenges').once('value', function(data) {
+        var challenges = data.val();
+        var challengesByType = {
+            code: {},
+            speed: {},
+            puzzle: {}
+        };
+        for (challengeId in challenges) {
+            var challenge = challenges[challengeId];
+            challengesByType[challenge.type][challengeId] = challenge;
+        }
+        callback(false, challengesByType);
+    });
 };
 
+function allChallenges(callback) {
+    root.child('challenges').on('value', function(data) {
+        callback(false, data.val())
+    })
+}
+
 function findChallenge(challengeId, callback) {
-  root.child('challenges').child(challengeId).once('value', function(data) {
-    callback(false, data.val());
-  });
+    root.child('challenges').child(challengeId).once('value', function(data) {
+        callback(false, data.val());
+    });
 };
 
 function submitCode(callback) {
-  root.child('counters').child('submissionID').transaction(function(submissionID) {
-    return submissionID + 1;
-  }, function(err, committed, data) {
-    if (err) {
-      callback(err);
-    } else if (!committed) {
-      callback('System error: submit problem');
-    } else {
-      callback(false, data.val());
-    }
-  });
+    root.child('counters').child('submissionID').transaction(function(submissionID) {
+        return submissionID + 1;
+    }, function(err, committed, data) {
+        if (err) {
+            callback(err);
+        } else if (!committed) {
+            callback('System error: submit problem');
+        } else {
+            callback(false, data.val());
+        }
+    });
 };
 
 function judgeSubmission(user, challengeId, tester, callback) {
-  root.child('challenges').child(challengeId).child('judge').once('value', function(data) {
-      var counter = data.numChildren();
-      var error = undefined;
-      for (var judgeInput in data.val()) {
-        tester(judgeInput, data.val()[judgeInput], function(err, success) {
-          if (err) {
-            error = err;
-          }
-          if (!success) {
-            error = {success: false, message: "You program returned an incorrect output for one of our test cases. That's all we know."};
-          }
-          counter--;
-          if (counter == 0) {
-            callback(error);
-          }
-        });
-      }
+    root.child('challenges').child(challengeId).child('judge').once('value', function(data) {
+        var counter = data.numChildren();
+        var error = undefined;
+        for (var judgeInput in data.val()) {
+            tester(judgeInput, data.val()[judgeInput], function(err, success) {
+                if (err) {
+                    error = err;
+                }
+                if (!success) {
+                    error = {
+                        message: "You program returned an incorrect output for one of our test cases. That's all we know."
+                    };
+                }
+                counter--;
+                if (counter == 0) {
+                    callback(error);
+                }
+            });
+        }
     });
 };
 
 function solveChallenge(user, challengeId, score, data) {
-  var type = challengeId.slice(0,-1);
-  root.child('users').child(user.id).child('challenges').child(challengeId).set({
-    'id': challengeId,
-    'score': score,
-    'timestamp': new Date().getTime(),
-    'type': type,
-    'best': data
-  });
+    var type = challengeId.slice(0, -1);
+    root.child('users').child(user.id).child('challenges').child(challengeId).set({
+        'id': challengeId,
+        'score': score,
+        'timestamp': new Date().getTime(),
+        'type': type,
+        'best': data
+    });
 };
 
 // callback is called whenever the firebase data changes
 function listener(callback) {
-  root.child('users').on('value', function(data) {
-    callback(data.val());
-  });
+    root.child('users').on('value', function(data) {
+        callback(data.val());
+    });
 }
 
 exports.createUser = createUser;
@@ -192,6 +204,7 @@ exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getSolvedChallenges = getSolvedChallenges;
 exports.listChallenges = listChallengesByType;
+exports.allChallenges = allChallenges;
 exports.findChallenge = findChallenge;
 exports.submitCode = submitCode;
 exports.judgeSubmission = judgeSubmission;

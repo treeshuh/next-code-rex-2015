@@ -1,27 +1,91 @@
 /* CSS for puzzle challenges */
 
+#left-pane {
+    float: left;
+    height: 100%;
+    width: 35%;
+    max-width: 500px !important;
+    display: inline-block;
+    margin: 10px;
+}
+
+#right-pane {
+    float: right;
+    height: 100%;
+    display: inline-block;
+    width: 60%;
+    min-width: 600px !important;
+    margin: 10px;
+}
+
+@media (max-width: 1172px) {
+    #left-pane {
+        width: 250px;
+    }
+}
+
+@media (max-width: 950px) {
+    #left-pane {
+        display: none;
+    }
+}
+
 .challenge-title {
     margin-bottom: 15px;
+    text-align: center;
 }
+
 #alerts {
-	max-width: 650px;
-} 
+    font-size: 125%;
+}
+
+.alert {
+    text-align: center;
+}
+
 #instructions {
-	max-width: 650px;	
-} 
+    font-size: 110%;
+    margin-top: 28px;
+    max-width: 600px;
+}
+
 #interactive {
+    min-width: 500px;
     text-align: center;
     margin: 20px 0px;
 }
+
 #input {
+    font-size: 110%;
     margin-top: 10px;
     min-width: 250px;
-    max-width: 750px;
+    max-width: 500px;
 }
+
 #input:focus {
     border: none;
     outline: none;
 }
+
+#score-display h3 {
+    font-size: 1.2vw;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #ccc;
+    text-transform: uppercase;
+}
+
+.stat-num {
+    color: #333;
+    font-size: 4.0vw;
+}
+
+.max,
+.green {
+    white-space: nowrap;
+    color: #28b62c !important;
+}
+
 table {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
