@@ -5,9 +5,13 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
+        <script>const challengeId = "{{challenge.id}}";
+                const targetString = "{{challenge.detail.passage}}";
+                const timeLimit = {{challenge.detail.timeLimit}};
+                const maxScore = {{challenge.maxScore}};
+        </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-        <script src="/javascripts/viewmodel.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
     </head>
     <body>
@@ -26,15 +30,27 @@
         </div>
 
         <div class="container">
-            <div class="challenge-type">{{challenge.type}}</div>
+            <div class="left-pane">
+                <div class="challenge-type">{{challenge.type}}</div>
 
-            <div class="challenge-title">{{challenge.title}}</div>
-
-            <p data-bind="foreach: targetWords">
-                <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
-            </p>
-            <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
-            <button data-bind="enable: valid">ahhh</button>  
+                <div class="challenge-title">{{challenge.title}}</div>
+                <div data-bind="if: !challenging()">
+                    <button data-bind="click: startChallenge">Start!</button>
+                </div>    
+                <div data-bind="if: challenging()">
+                    <p data-bind="foreach: targetWords">
+                        <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
+                    </p>
+                    <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
+                    <div class="timer" style="width:200px;">
+                        <div class="input-progress"></div>
+                        <div class="timer-progress"></div>
+                    </div>
+                </div>   
+            </div>
+            <div class="right-pane">
+                <div class="alerts" data-bind="text: alertMessage()"></div>
+            </div>     
         </div>
 
     </body>

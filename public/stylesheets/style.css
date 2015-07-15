@@ -276,11 +276,31 @@ table tr td {
 .permissionStatus {
   float: right; }
 
+input[type="text"] {
+  width: 200px;
+  margin-bottom: 5px;
+}
+
 .chosen {
   color: green;
   text-decoration: underline;
   font-weight: bold;
-  font-size: 200%;
+}
+
+.timer {
+  background-color: lightgray;
+  height: 10px;
+}
+
+.timer-progress {
+  background-color: red;
+  height: 10px;
+}
+
+.input-progress {
+  position: absolute;
+  background-color: green;
+  height: 10px;
 }
 
 a[disabled] { pointer-events: none; }
