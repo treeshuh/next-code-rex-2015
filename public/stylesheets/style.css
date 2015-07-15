@@ -14,7 +14,12 @@
 
 body {
   font-family: sans-serif;
-  min-width: 720px; }
+  min-width: 720px; 
+}
+
+.container {
+    width: 90% !important;
+}
 
 .header {
   background-color: #f8f8f8;
@@ -277,3 +282,5 @@ table tr td {
   font-weight: bold;
   font-size: 200%;
 }
+
+a[disabled] { pointer-events: none; }

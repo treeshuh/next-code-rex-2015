@@ -1,0 +1,116 @@
+/* CSS for code challenges */
+
+#left-pane {
+    float: left;
+    height: 100%;
+    width: 40%;
+    display: inline-block;
+    margin: 10px;
+}
+#right-pane {
+    float: right;
+    height: 100%;
+    width: 55%;
+    display: inline-block;
+    margin: 10px;
+}
+@media (max-width: 1050px) {
+    #left-pane {
+        width: 275px;
+    }
+}
+@media (max-width: 900px) {
+    #left-pane {
+        display: none;
+    }
+    #right-pane {
+        width: 90%;
+    }
+}
+#editor,
+.ace_editor {
+    height: 60%;
+    width: 100%;
+    min-width: 400px;
+    max-width: 750px;
+    font-size: 13pt;
+    margin-top: 10px;
+    border-radius: 5px !important;
+}
+.ace_content {
+    background-size: 90% 85%;
+    background-image: url("/images/editor_bg.png") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 5px !important;
+    margin-top: 10px !important;
+}
+.ace_gutter {
+    border-radius: 5px !important;
+    margin-top: 10px !important;
+}
+.btn-group button {
+    font-size: 1.2vw;
+    margin-right: 15px;
+}
+.challenge-title {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #333;
+}
+#scorebar ul {
+    display: inline;
+    display: inline-flex;
+    text-align: center;
+}
+#scorebar ul li {
+    margin: 0px 16px;
+}
+#scorebar ul li h3 {
+    font-size: 1.2vmax;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #ccc;
+    text-transform: uppercase;
+}
+#alerts {
+    max-width: 750px;
+    font-size: 110%;
+}
+ul li .stat-num {
+    color: #333;
+    font-size: 3.2vmax;
+}
+#team-score {
+    color: #158cba;
+}
+.golf {
+    color: #666666;
+}
+.max {
+    color: #28b62c;
+}
+.complete {
+    background-color: #28b62c !important;
+    opacity: 0.45; 
+}
+.inactive,
+.incomplete {
+    opacity: 0.5;
+}
+.progress {
+    margin-top: 10px;
+    display: none;
+}
+button:focus,
+button:active {
+    border: none;
+    outline: none;
+}
+pre {
+    font-size: 12pt;
+}
+v {
+   white-space: nowrap;
+   font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}

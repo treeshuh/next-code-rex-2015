@@ -24,6 +24,18 @@ func main() {
     }
     source := string(content)
 
+    // Remove wrapper
+    wreg, _ := regexp.Compile("import sys.*|if \\_\\_.*|print.*")
+    source = wreg.ReplaceAllString(source,"")
+
+    // Remove main function 
+    freg, _ := regexp.Compile("def\\s+[A-Za-z0-9_]+\\([A-Za-z0-9-\\,\\s]+\\):")
+    source = freg.ReplaceAllString(source,"")
+
+    // Remove all comments
+    creg, _ := regexp.Compile("[#]+(.*)")
+    source = creg.ReplaceAllString(source,"")
+
     charCount := 0
 
     for true {
@@ -32,7 +44,7 @@ func main() {
             break
         }
         charCount += count
-        source = newstr
+        source = newstr    
     }
 
     // Replace identifiers with '?'
@@ -43,5 +55,5 @@ func main() {
     sreg, _ := regexp.Compile("\\s+")
     source = sreg.ReplaceAllString(source,"")
 
-    fmt.Printf("%d\n",len(source) + charCount)
+    fmt.Printf("\n%d",len(source) + charCount)
 }

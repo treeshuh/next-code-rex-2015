@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Next Code REX 2015</title>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+        <script src="/javascripts/viewmodel.js"></script>
+        <script src="/javascripts/{{this.type}}.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/challenges"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/challenges">Next Code REX</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">{{user.username}}</li>
+                <li><a href="/challenges">Challenges</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="prettybar"></div>
+        </div>
+
+        <div class="container">
+            <div class="challenge-type">{{challenge.type}}</div>
+
+            <div class="challenge-title">{{challenge.title}}</div>
+
+            <p data-bind="foreach: targetWords">
+                <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
+            </p>
+            <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
+            <button data-bind="enable: valid">ahhh</button>  
+        </div>
+
+    </body>
+
+</html>

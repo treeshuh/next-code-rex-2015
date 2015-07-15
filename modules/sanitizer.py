@@ -87,7 +87,6 @@ libraries = [
 'ossaudiodev',
 'gettext',
 'cmd',
-'sys',
 'sysconfig',
 'rexec',
 'Bastion',

@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Next Code REX 2015</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+        <script src="/javascripts/viewmodel.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/challenges"><span class="circle">NC</span></a>
+            <div class="appname">
+                <a href="/challenges">Next Code REX</a>
+            </div>
+            <ul class="topnav">
+                <li class="greeting">Hello, {{user.username}}!</li>
+                <li><a href="/challenges">Challenges</a></li>
+                <li><a href="/scoreboard">Scoreboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="prettybar"></div>
+        </div>
+        <div class="content">
+            <h1>Next Code REX 2015</h1>
+            <div class="left-half code-golf">
+                <h3>SPEED Challenges</h3>
+                {{#each speedChallenges}}
+                    <p>
+                    <span><a href="/challenge/{{this.id}}.nxt">{{this.title}}</a></span>
+                    <span class="score-{{this.score}}">Score: {{this.score}} / {{this.maxScore}}</span>
+                    </p>
+                {{/each}}  
+
+                <h3>CODE Challenges</h3>
+                {{#each codeChallenges}}
+                    <p>
+                    <span><a href="/challenge/{{this.id}}.nxt">{{this.title}}</a></span>
+                    <span class="score-{{this.score}}">Score: {{this.score}} / {{this.maxScore}}</span>
+                    </p>
+                {{/each}} 
+
+                <h3>PUZZLE Challenges</h3>
+                {{#each puzzleChallenges}}
+                    <p>
+                    <span><a href="/challenge/{{this.id}}.nxt">{{this.title}}</a></span>
+                    <span class="score-{{this.score}}">Score: {{this.score}} / {{this.maxScore}}</span>
+                    </p>
+                {{/each}} 
+            </div>
+        </div>
+    </body>
+    <script>
+        $('.score-unsolved').remove();
+    </script>
+</html>

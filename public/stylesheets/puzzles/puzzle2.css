@@ -1,0 +1,25 @@
+table {
+	border-spacing: 0px;
+	text-align: center;
+}
+tr {
+	text-align: center;
+	border: 0px;
+  border-radius: 3px !important;
+}
+td {
+  background: white;
+  color: rgb(120, 0, 0);
+  font-size: 2.0vw !important;
+  vertical-align: top;
+  border: 2px solid rgb(238,238,238);
+  display: table-cell;
+  text-align: center !important;
+  width: 4.0vw !important; 
+  height: 4.0vw !important; 
+  line-height: 4.0vw !important;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0px !important;
+  margin: 0px !important;
+}
