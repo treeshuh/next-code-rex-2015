@@ -365,11 +365,11 @@ firebase.allChallenges(function(err, challenges) {
     for (challengeId in challenges) {
         challenge = challenges[challengeId];
         if (!maxScores[challenge.type]) {
-            maxScores[challenge.type] = challenge.maxScore;
+            maxScores[challenge.type] = parseInt(challenge.maxScore);
         } else {
-            maxScores[challenge.type] += challenge.maxScore;
+            maxScores[challenge.type] += parseInt(challenge.maxScore);
         }
-        maxScores.total += challenge.maxScore;
+        maxScores.total += parseInt(challenge.maxScore);
     }
     console.log(maxScores);
 });
@@ -417,8 +417,8 @@ firebase.listener(function(users) { // listener that updates scoreboard when fir
         }
         for (var challengeId in user.challenges) {
             var challenge = user.challenges[challengeId]
-            score.total += challenge.score;
-            score[challenge.type] += challenge.score
+            score.total += parseInt(challenge.score);
+            score[challenge.type] += parseInt(challenge.score);
         }
         for (type in progress) {
             progress[type] = (score[type] / maxScores[type]).toFixed(2);

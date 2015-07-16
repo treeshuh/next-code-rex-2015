@@ -10,7 +10,7 @@
         <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
         <script>const challengeId = "{{challenge.id}}"
-                var previousScore = {{previousScore}}
+                const previousScore = {{previousScore}}
         </script>
     </head>
     <body>
@@ -32,7 +32,7 @@
 
             <div id="left-pane">
 
-                <div id="instructions" class="panel-primary">
+                <div id="instructions" class="panel panel-default">
                     <div class="panel-heading">Your Challenge</div>
                     <div id="instruction-panel" class="panel-body">
                             {{#each challenge.instruction}}
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div id="score-display">
+                <div id="score-display" class="panel">
                     <h3>COMPLETION SCORE</h3>
                     <div id="max-score" class="stat-num">{{challenge.maxScore}}</div>
                     {{#if previousScore}}
@@ -76,9 +76,6 @@
                 download the puzzle.</a></p>
             </object>
             {{/if}}
-            
         </div>
-
     </body>
-    <script src="/javascripts/puzzles/{{challenge.id}}.js"></script>
 </html>

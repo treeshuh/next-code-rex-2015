@@ -39,6 +39,7 @@ $(document).ready(function() {
 
     /* Setup UI */
     language = /static/.test($("#editor").html()) ? JAVA : PYTHON;
+    loadUtils();
     setupEditor();
     setupTask();
     updateScorebar();
@@ -219,6 +220,16 @@ $(document).ready(function() {
             } else {
                 alertError("Oops!", result.message || "Your submission failed to run. Check your syntax.")
             }
+        }
+    }
+
+    function loadUtils() {
+        files = ["readonly", "charcount", "sanitize"];
+        for (filename in files) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = "/javascripts/utils/" + files[filename] + ".js";
+            $('body').append(script);
         }
     }
 

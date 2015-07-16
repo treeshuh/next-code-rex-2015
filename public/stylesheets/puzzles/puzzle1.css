@@ -1,9 +1,8 @@
 table {
-    position: absolute;
     text-align: center;
     border-spacing: 0px;
-    margin-bottom: 5%;
 }
+
 td {
     background: white;
     vertical-align: top;
@@ -17,6 +16,7 @@ td {
     line-height: 2.6vh !important;
     border: 2px solid black !important;
 }
+
 td.constraint {
     width: 2.5vh;
     height: 1.0vh;
@@ -24,9 +24,11 @@ td.constraint {
     font-size: 2.0vh !important;
     border: none !important;
 }
+
 td.big {
-  font-size: 3.25vh !important;
+    font-size: 3.25vh !important;
 }
+
 td.hover {
     background-color: rgba(120, 0, 0, 0.5) !important;
 }

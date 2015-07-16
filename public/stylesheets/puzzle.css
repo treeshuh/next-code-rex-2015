@@ -1,5 +1,9 @@
 /* CSS for puzzle challenges */
 
+body {
+    background-color: #f8f8f8;
+}
+
 #left-pane {
     float: left;
     height: 100%;
@@ -12,9 +16,9 @@
 #right-pane {
     float: right;
     height: 100%;
-    display: inline-block;
     width: 60%;
     min-width: 600px !important;
+    display: inline-block;
     margin: 10px;
 }
 
@@ -31,7 +35,7 @@
 }
 
 .challenge-title {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -50,9 +54,23 @@
 }
 
 #interactive {
+    height: auto !important;
+    background-color: #FFFFFF;
     min-width: 500px;
     text-align: center;
-    margin: 20px 0px;
+    margin-top: 10px;
+    padding: 20px 5px 25px 5px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    border-width: 0 1px 4px 1px;
+}
+
+#interactive>table {
+    margin: auto;
+}
+
+#score-display {
+    padding: 1px 0 0 15px;
 }
 
 #input {

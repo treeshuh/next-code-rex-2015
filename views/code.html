@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="/javascripts/lib/ace/src-min-noconflict/ace.js"></script>
 </head>
 
 <body>
@@ -40,7 +41,7 @@
                         <div id="statement" class="panel-body lead"></div>
                     </div>
                 </div>
-                <div class="panel panel-default" id="panel2">
+                <div class="panel panel-primary" id="panel2">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#examples"
@@ -57,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="panel3">
+                <div class="panel panel-primary" id="panel3">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#rules" 
@@ -67,11 +68,11 @@
                     </h4>
                     </div>
                     <div id="rules" class="panel-collapse collapse">
-                        <div class="panel-body lead">
+                        <div class="panel-body">
                             <li>Please write your code in <v>PYTHON</v> or <v>JAVA</v>.</li>
-                            <li>Any submission that passes all of our tests earns <strong>BASE SCORE</strong>.</li>
+                            <li>Any program that passes all of our tests earns <strong>BASE SCORE</strong>.</li>
                             <li>Your program earns <strong>BONUS</strong> based on how concise it is.</li>
-                            <li>A successful program with <strong>GOLF SCORE</strong> below <strong>PAR</strong> receives all <strong>BONUS</strong> points.
+                            <li>A successful program with <strong>GOLF SCORE</strong> below <strong>PAR</strong> earns all <strong>BONUS</strong> points.
                             </li>
                             <li>You may write helper functions, but don't change the signature of the main function.</li>
                             <li>Your program should <code>return</code> (not <code>print</code>) the result.</li>
@@ -121,6 +122,161 @@
         </div>
     </div>
 </body>
+<!-- END -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     const challengeId = "{{challenge.id}}"
     const template = {
@@ -136,11 +292,9 @@
         "java": {{challenge.detail.charCount.java}}
     }
     var previousScore = {{previousScore}} 
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = "/javascripts/code.js";
+    $('body').append(script);
 </script>
-<script src="/javascripts/lib/ace/src-min-noconflict/ace.js"></script>
-<script src="/javascripts/code.js"></script>
-<script src="/javascripts/utils/readonly.js"></script>
-<script src="/javascripts/utils/charcount.js"></script>
-<script src="/javascripts/utils/sanitize.js"></script>
-
 </html>
