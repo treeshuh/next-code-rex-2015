@@ -6,6 +6,10 @@ exports.initialRouter = function(req, res, next) {
     } else if (req.user) {
         console.log(req.user.username + " " + req.url);
         next();
+    } 
+    //temporary
+      else if (req.url === '/index') {
+        res.render('index.html');
     } else {
         res.redirect('/login');
     }

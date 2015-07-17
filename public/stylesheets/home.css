@@ -1,0 +1,103 @@
+@font-face {
+	font-family: agencyFB;
+	src: url('/fonts/AgencyFB.ttf');
+}
+
+body {
+	background-image: url("/images/ring_logo_5.png");
+	background-repeat: no-repeat;
+	background-size: 600px;
+	background-position: center;
+	font-family: agencyFB;
+}
+
+.container {
+	position: relative;
+	width: 80%;
+	height: 210px;
+	margin-left: auto;
+	margin-right: auto;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+.left {
+	width: 48%;
+	display: inline-block;
+	vertical-align: top;
+
+}
+.right {
+	width: 48%;
+	display: inline-block;
+	vertical-align: top;
+
+}
+	
+img {
+	float: right;
+	padding-right: 4%;
+	height: 200px;
+}
+
+.login {
+	background-color: rgba(0,0,0,0.8);
+	height: 200px;
+	width: 600px;
+	max-width: 100%;
+}
+
+input{
+	font-family: "Lato";
+	width: 250px;
+	display: block;
+	margin-left: 20px;
+	margin-top: 20px;
+	height: 40px;
+	padding: 10px;
+	text-align: center;
+	font-variant: small-caps;
+}
+
+input[type="submit"] {
+	background-color: rgba(0,0,0,0);
+	border: 2px solid white;
+	color: white;
+}
+
+input[type="submit"]:hover {
+	background-color: white;
+	color: black;
+	cursor: pointer;
+}
+
+form {
+	width: 280px;
+	display: inline-block;
+	height: 180px;
+	overflow: hidden;
+}
+
+.register-form input[type="text"]{
+	height: 30px;
+	margin-top: 20px;
+	padding: 5px;
+}
+
+.register-form input[type="password"]{
+	height: 30px;
+	margin-top: 10px;
+	padding: 5px;
+}
+
+.register-form input[type="submit"]{
+	margin-top: 10px;
+}
+
+.vertical-divide {
+	display: inline-block;
+	width: 2px;
+	margin: 0 5px 0 15px;
+	height: 160px;
+	background-color: white;
+}
