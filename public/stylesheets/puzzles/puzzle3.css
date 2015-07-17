@@ -1,0 +1,49 @@
+.red {
+    color: rgb(228, 3, 3);
+}
+
+.orange {
+    color: rgb(255, 150, 0);
+}
+
+.yellow {
+    color: rgb(255, 237, 0);
+}
+
+.green {
+    color: rgb(0, 138, 38) !important;
+}
+
+.blue {
+    color: rgb(0, 77, 255);
+}
+
+.violet,
+.purple {
+    color: rgb(117, 7, 135);
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.rainbow {
+    background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #E40303), color-stop(0.2, #FF8C00), color-stop(0.4, #FFED00), color-stop(0.6, #008026), color-stop(0.8, #004DFF), color-stop(1.0, #750787));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    width: 230px;
+}
+
+.rainbow-solution {
+    background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #E40303), color-stop(0.2, #FF8C00), color-stop(0.4, #FFED00), color-stop(0.6, #008026), color-stop(0.8, #004DFF), color-stop(1.0, #750787));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    width: 12.7vw;
+}

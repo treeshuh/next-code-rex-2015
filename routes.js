@@ -8,7 +8,7 @@ exports.initialRouter = function(req, res, next) {
         next();
     } 
     //temporary
-      else if (req.url === '/index') {
+    else if (req.url === '/index') {
         res.render('index.html');
     } else {
         res.redirect('/login');

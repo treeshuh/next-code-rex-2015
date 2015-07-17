@@ -1,0 +1,11 @@
+.container {
+    width: 95% !important;
+}
+
+#right-pane {
+    width: 65% !important;
+}
+
+#left-pane {
+    width: 30% !important;
+}

@@ -177,7 +177,7 @@ exports.submitPuzzle = function(user, challengeId, input, callback) {
             callback(true, "Invalid challenge");
             return;
         }
-        var correct = (input.toLowerCase().trim() == challenge.judge);
+        var correct = (input.toLowerCase().replace(/[^\w\d]/g, "") == challenge.judge.replace(/[^\w\d]/g, ""));
         firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
             if (!correct) {
                 message = INCORRECT;

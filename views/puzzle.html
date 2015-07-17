@@ -9,7 +9,9 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
-        <script>const challengeId = "{{challenge.id}}"
+        <script src="/javascripts/lib/three/three.min.js"></script>
+        <script>
+                const challengeId = "{{challenge.id}}"
                 const previousScore = {{previousScore}}
         </script>
     </head>
@@ -46,7 +48,7 @@
                     <div id="max-score" class="stat-num">{{challenge.maxScore}}</div>
                     {{#if previousScore}}
                     <h3>SOLUTION</h3>
-                    <div id="max-score" class="stat-num">{{challenge.judge}}</div>
+                    <div id="solution" class="stat-num">{{challenge.judge}}</div>
                 </div>
                     {{else}}
                 </div>
