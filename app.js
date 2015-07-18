@@ -39,14 +39,9 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.get('/', routes.login);
-app.get('/login', routes.login);
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/challenges',
-    failureRedirect: '/login'
-}));
+app.get('/', routes.home);
+app.post('/login', routes.login);
 app.get('/logout', routes.logout);
-app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
 app.get('/rules', routes.rules);
 app.get('/challenge', function(req, res) {

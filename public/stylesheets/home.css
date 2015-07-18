@@ -21,6 +21,18 @@ body {
   	transform: translateY(-50%);
 }
 
+.error-container {
+	position: absolute;
+	top: -20px;
+}
+
+.error-container p {
+	font-family: "Lato";
+	font-variant: small-caps;
+	color: red;
+	text-align: center;
+}
+
 .left {
 	width: 48%;
 	display: inline-block;
@@ -76,6 +88,30 @@ form {
 	display: inline-block;
 	height: 180px;
 	overflow: hidden;
+}
+
+.pointer-to-login {
+	display: none;
+	width: 280px;
+	display: inline-block;
+	height: 180px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.pointer-to-login p {
+	margin-top: 15px;
+	font-size: 20px;
+	text-align: center;
+	color: white;
+	font-variant: small-caps;
+}
+
+.pointer-to-login img {
+	float: none;
+	margin-top: 20px;
+	width: 100px;
+	height: auto;
 }
 
 .register-form input[type="text"]{

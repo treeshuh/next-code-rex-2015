@@ -1,7 +1,10 @@
 var model = require('./model');
+var passport = require('passport');
 
 exports.initialRouter = function(req, res, next) {
-    if (req.url === '/login' || req.url === '/register' || req.url === '/rules') {
+    if (req.url == '/' || req.url == 'logout') {
+        next();
+    } else if (req.method == 'POST' && req.url === '/login' || req.url === '/register'){
         next();
     } else if (req.user) {
         console.log(req.user.username + " " + req.url);
@@ -11,7 +14,7 @@ exports.initialRouter = function(req, res, next) {
     else if (req.url === '/index') {
         res.render('index.html');
     } else {
-        res.redirect('/login');
+        res.redirect('/');
     }
 };
 
@@ -19,12 +22,19 @@ exports.localStrategy = model.localStrategy;
 
 exports.findUser = model.findUser;
 
+exports.home = function(req, res) {
+    res.render('index.html');
+}
+
 exports.login = function(req, res) {
-    if (req.user) {
-        res.redirect('/challenges');
-    } else {
-        res.render('login.html');
-    }
+    passport.authenticate('local', function(err, user, info) {
+        req.logIn(user, function(err) {
+            res.send({
+                info: info,
+                error: err
+            })
+        })
+    })(req, res);
 };
 
 exports.logout = function(req, res) {
@@ -34,25 +44,11 @@ exports.logout = function(req, res) {
     });
 }
 
-exports.readyRegister = function(req, res) {
-    res.render('ready_register.html', {
-        user: req.user
-    });
-}
-
 exports.register = function(req, res) {
     model.createUser(req.body.username, req.body.password, req.body.passwordconfirm, function(err) {
-        if (err) {
-            res.render('ready_register.html', {
-                user: req.user,
-                error: err
-            });
-        } else {
-            res.render('register.html', {
-                user: req.user,
-                error: err
-            });
-        }
+        res.send({
+            error: err
+        })
     });
 }
 
