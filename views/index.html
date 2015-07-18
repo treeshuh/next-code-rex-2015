@@ -1,35 +1,38 @@
 <html>
     <head>
         <title>Next Code Golf</title>
-        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
-        <link rel="stylesheet" type="text/css" href="stylesheets/home.css">
+        <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" type="text/css" href="stylesheets/reset.css"/>
+        <link rel="stylesheet" type="text/css" href="stylesheets/home.css"/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="javascripts/home.js"></script>
     </head>
     <body>
         <div class="container">
             <div class="logo left">
                 <img src="/images/banner-cropped.png"/>
             </div>
+            <div class="right error-container">
+                <p class="error"></p>
+            </div>
             <div class="login right">
                 <form method="post" action="/login" class="login-form">
-                {{#if error}}
-                <p class="error">Invalid login</p>
-                {{/if}}
                 <input type="text" class="username" name="username" placeholder="team name">
                 <input type="password" name="password" placeholder="password">
                 <input type="submit" value="login">
-            </form>
-            <div class="vertical-divide"></div>
-            <form method="post" action="/register" class="register-form">
-                {{#if error}}
-                <p class="error">{{error}}</p>
-                {{/if}}
-                <input type="text" class="username" name="username" placeholder="team name">
-                <input type="password" name="password" placeholder="password">
-                <input type="password" name="passwordconfirm" placeholder="confirm password">
-                <input type="submit" value="register">
-            </form>
+                </form>
+                <div class="vertical-divide"></div>
+                <form method="post" action="/register" class="register-form">
+                    <input type="text" class="username" name="username" placeholder="team name">
+                    <input type="password" name="password" placeholder="password">
+                    <input type="password" name="passwordconfirm" placeholder="confirm password">
+                    <input type="submit" value="register">
+                </form>
+                <div class="pointer-to-login" style="display:none;">
+                    <p>registration successful
+                    <br>please log in on the left</p>
+                    <img src="images/left-arrow.png"/>
+                </div>
             </div>    
         </div>
     </body>

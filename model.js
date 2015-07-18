@@ -34,11 +34,12 @@ exports.localStrategy = new LocalStrategy(function(username, password, callback)
 });
 
 exports.createUser = function(username, password, passwordconfirm, callback) {
+    username = username || '';
     if (/[^a-zA-Z0-9_]/.test(username)) {
         callback('Invalid characters in username');
         return;
     }
-    if (user.length < 4) {
+    if (username.length < 4) {
         callback('Username must be at least 4 characters long');
         return;
     }

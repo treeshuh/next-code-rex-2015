@@ -44,14 +44,9 @@ hbs.registerHelper('json', function(context) {
     return JSON.stringify(context);
 });
 
-app.get('/', routes.login);
-app.get('/login', routes.login);
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/challenges',
-    failureRedirect: '/login'
-}));
+app.get('/', routes.home);
+app.post('/login', routes.login);
 app.get('/logout', routes.logout);
-app.get('/register', routes.readyRegister);
 app.post('/register', routes.register);
 app.get('/rules', routes.rules);
 app.get('/challenge', function(req, res) {
