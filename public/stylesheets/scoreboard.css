@@ -4,50 +4,101 @@
 }
 
 body {
+    background-color: #f8f8f8;
+    background-size: 600px;
     font-family: agencyFB;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
+}
+
+body:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.4;
+    background: url("/images/ring_logo_5.png") center center;
 }
 
 .container {
-	text-align:center;
-    margin: auto;
+    text-align: center;
     width: 100%;
-    padding-right: 15px;
     overflow: auto;
 }
 
 .stats-item {
-	visibility: hidden;
+    background-color: white;
+    text-align: center;
+    visibility: hidden;
+    width: 30%;
+    min-width: 400px;
+    margin: 15px 8px;
+    border: 1px solid #e7e7e7;
+    border-width: 0 1px 4px 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    opacity: 0.6;
+}
+
+/* .stats-item.me {
+    opacity: 1.0;
+} */
+
+.stats-item.rank-3 {
+    background-color: rgba(150, 90, 56, 0.75);
+}
+
+.stats-item.rank-2 {
+    background-color: rgba(188, 198, 204, 0.75);
+}
+
+.stats-item.rank-1,
+.stats-item.score-2019 {
+    background-color: rgba(217, 164, 65, 0.75);
+}
+
+.stats-item.score-0 {
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .ring-set {
-    max-width: 410px;
+    max-width: 280px;
     display: inline-flex;
+    margin: 12px 0;
 }
 
-.stats-item {
-    margin-top: 20px;
+.team-rank {
+    color: #375a7f;
+    font-size: 32px;
 }
+
+/*.me>div>.team-rank {
+    font-size: 40px;
+}*/
 
 .team-name {
-	text-align: center;
-	text-transform: uppercase;
-	color: #333;
-	font-size: 42px;
+    text-transform: uppercase;
+    color: #333;
+    font-size: 42px;
 }
 
+/*.me>div>.team-name {
+    font-size: 54px;
+}*/
+
 .total-score {
-    font-size: 32px;
-    text-align: center;
     color: #333;
+    font-size: 32px;
 }
 
 .team-score {
-    font-size: 50px;
     color: #375a7f;
+    font-size: 50px;
 }

@@ -44,6 +44,10 @@ hbs.registerHelper('json', function(context) {
     return JSON.stringify(context);
 });
 
+hbs.registerHelper("inc", function(value, options) {
+    return parseInt(value) + 1;
+});
+
 app.get('/', routes.home);
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);

@@ -10,6 +10,7 @@
         <script src="/javascripts/lib/knob/knob.js"></script>
         <script src="/javascripts/main.js"></script>
         <script>
+            const username = "{{user.username}}"
             var maxScores = {{{json maxScores}}}
         </script>
         <script src="/javascripts/scoreboard.js"></script>
@@ -30,10 +31,11 @@
         </div>
         <div class="container">
 
+            <h1>2015 NEXTCODE TRIATHLON RANKINGS</h1>
 
             {{#each globalScoreboard}}
-            <div class="stats-item" id="stats-{{this.username}}">
-                <div class="team-name"><span class="team-name">{{this.username}}</span></div>
+            <div class="stats-item col-md-4 rank-{{inc @index}} score-{{this.score.total}}" id="stats-{{this.username}}">
+                <div class="stats-top"><span class="team-rank">{{inc @index}} </span><span class="team-name">{{this.username}}</span></div>
                 <div class="ring-set" id="ring-{{this.username}}">
                     <div>
                         <input type="text" class="ring ring-speed" data-min="0" data-max="{{maxScores.speed}}" value="{{this.score.speed}}">
@@ -48,34 +50,6 @@
                 <div class="total-score"> <span class="team-score">{{this.score.total}}</span> / 2019</div>
             </div>
             {{/each}}
-
-           <!-- <h1>Next Code REX Scoreboard</h1>
-
-            <table class=
-            "table table-striped table-bordered table-hover table-responsive" id=
-            "scoreboard">
-                <thead>
-                    <tr>
-                        <th>Team</th>
-                        <th>Total Score</th>
-                        <th>Speed Score</th>
-                        <th>Coding Score</th>
-                        <th>Puzzle Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each globalScoreboard}}
-                    <tr>
-                        <td>{{this.username}}</td>
-                        <td>{{this.score.total}}</td>
-                        <td>{{this.score.speed}}</td>
-                        <td>{{this.score.code}}</td>
-                        <td>{{this.score.puzzle}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table> -->
-            
         </div>
     </body>
 </html>

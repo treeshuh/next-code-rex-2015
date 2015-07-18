@@ -206,6 +206,9 @@ $(document).ready(function() {
                 $("#team-score").html(result.score)
                 previousScore = result.score
                 updateScorebar();
+                setTimeout(function(){
+                    location.href = ("/challenges")
+                }, 1500);
             } else if (result.improved) {
                 alertSuccess("Success.", "You achieved a score of " + result.score + " out of a possible " + maxScore + ". <br> Try shortening your code to earn more bonus points!");
                 $("#team-score").html(result.score)

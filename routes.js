@@ -4,13 +4,19 @@ var passport = require('passport');
 exports.initialRouter = function(req, res, next) {
     if (req.url == '/' || req.url == 'logout') {
         next();
-    } else if (req.method == 'POST' && req.url === '/login' || req.url === '/register'){
+    } else if (req.method == 'POST' && req.url === '/login' || req.url === '/register') {
         next();
     } else if (req.user) {
         console.log(req.user.username + " " + req.url);
         next();
-    } 
-    //temporary
+    } else if (req.url == "/scoreboard") {
+        res.render('scoreboard.html', {
+            user: {username: "none"},
+            globalScoreboard: model.getGlobalScoreboard(),
+            maxScores: model.getMaxScores()
+        });
+    }
+    // temporary
     else if (req.url === '/index') {
         res.render('index.html');
     } else {

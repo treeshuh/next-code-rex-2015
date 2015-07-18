@@ -15,7 +15,7 @@
         </script>
         <script src="/javascripts/challenges.js"></script>
     </head>
-    <body>
+    <body class='transition'>
         <div class="header">
             <a href="/challenges"><span class="circle">NC</span></a>
             <div class="appname">
@@ -30,7 +30,7 @@
 
         <div class="container">
 
-        <div id="center-pane">
+        <div class="transition" id="center-pane">
              <h2>TEAM {{user.username}}</h2>
              <div id="score-display">
                 <span id="team-score" class="score-{{stats.total.score}}"></span> / 2019
@@ -40,14 +40,14 @@
         <div id="left-pane">
 
             <div id="rings-bar">
-                <div>
-                    <input type="text" id="ring-speed" class="ring" data-min="0" data-max="{{stats.speed.possible}}" value="{{stats.speed.score}}">
+                <div class="ring ring-speed">
+                    <input type="text" id="ring-speed" data-min="0" data-max="{{stats.speed.possible}}" value="{{stats.speed.score}}">
                 </div>
-                <div>
-                    <input type="text" id="ring-code" class="ring" data-min="0" data-max="{{stats.code.possible}}" value="{{stats.code.score}}">
+                <div class="ring ring-code">
+                    <input type="text" id="ring-code" data-min="0" data-max="{{stats.code.possible}}" value="{{stats.code.score}}">
                 </div>
-                <div>
-                    <input type="text" id="ring-puzzle" class="ring" data-min="0" data-max="{{stats.puzzle.possible}}" value="{{stats.puzzle.score}}">
+                <div class="ring ring-puzzle">
+                    <input type="text" id="ring-puzzle" data-min="0" data-max="{{stats.puzzle.possible}}" value="{{stats.puzzle.score}}">
                 </div>
             </div>
 

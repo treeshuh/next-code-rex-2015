@@ -382,6 +382,7 @@ firebase.allChallenges(function(err, challenges) {
  *   topscores
  *     1 [rank]
  *       username: sample-user
+ *       rank: 1
  *       score:
  *         speed: 400
  *         code: 600

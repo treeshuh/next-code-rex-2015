@@ -43,6 +43,9 @@ $(document).ready(function() {
         if (result.correct) {
             $("#max-score").addClass("max");
             alertSuccess("", result.message);
+            setTimeout(function(){
+                location.href = ("/challenges");
+            }, 1000);
         } else {
             alertError("", result.message);
         }
