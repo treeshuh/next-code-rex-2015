@@ -9,3 +9,8 @@
 #left-pane {
     width: 30% !important;
 }
+
+canvas {
+	margin: 0 !important;
+	padding: 0 !important;
+}

@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     function setupEditor() {
         editor = ace.edit("editor");
-        editor.setTheme("ace/theme/solarized_light");
+        editor.setTheme("ace/theme/github");
         setLanguage(language);
         editor.setHighlightActiveLine(false);
         editor.$blockScrolling = Infinity;
@@ -229,6 +229,7 @@ $(document).ready(function() {
             var script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = "/javascripts/utils/" + files[filename] + ".js";
+            script.async = true;
             $('body').append(script);
         }
     }

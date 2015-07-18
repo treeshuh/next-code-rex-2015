@@ -3,8 +3,8 @@ $(document).ready(function() {
     const clickThreshold = 4 // pixels;
     const borderWidth = 8 // pixels;
     const unclickColor = "rgb(238,238,238)" // MIT gray;
-    const clickColor = "rgb(120, 0, 0)" // MIT maroon;
-    const hoverColor = "rgb(120, 0, 0, 0.5)" // transparent maroon;
+    const clickColor = "rgb(130, 0, 0)" // MIT maroon;
+    const hoverColor = "rgb(130, 0, 0, 0.5)" // transparent maroon;
 
     var cellValues = [
         [2, 0, 1, 0, 2, 3, 2, 0, 1, 0, 0, 2],

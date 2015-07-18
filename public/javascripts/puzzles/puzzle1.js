@@ -3,8 +3,8 @@ $(document).ready(function() {
 
     /* UI constants */
     const empty = "rgb(255, 255, 255)" // white;
-    const fill = "rgb(120, 0, 0)" // MIT maroon;
-    const hover = "rgba(120, 0, 0, 0.5)" // transparent maroon;
+    const fill = "rgb(130, 0, 0)" // MIT maroon;
+    const hover = "rgba(130, 0, 0, 0.5)" // transparent maroon;
     const borderWidth = 3 // pixels;
 
     /* Game constants */

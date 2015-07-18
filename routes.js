@@ -68,7 +68,8 @@ exports.getChallenges = function(req, res) {
             user: req.user,
             speedChallenges: resource.speed,
             codeChallenges: resource.code,
-            puzzleChallenges: resource.puzzle
+            puzzleChallenges: resource.puzzle,
+            stats: resource.stats
         });
     });
 }
@@ -157,6 +158,7 @@ submitPuzzle = function(req, res) {
 exports.scoreboard = function(req, res) {
     res.render('scoreboard.html', {
         user: req.user,
-        globalScoreboard: model.getGlobalScoreboard()
+        globalScoreboard: model.getGlobalScoreboard(),
+        maxScores: model.getMaxScores()
     });
 }

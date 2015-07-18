@@ -347,8 +347,8 @@ getUserStats = function(user, solvedChallenges) {
     stats = emptyStat;
     for (challengeId in solvedChallenges) {
         challenge = solvedChallenges[challengeId];
-        stats[challenge.type].score += challenge.score;
-        stats.total.score += challenge.score;
+        stats[challenge.type].score += parseInt(challenge.score);
+        stats.total.score += parseInt(challenge.score);
     }
     for (type in stats) {
         stats[type].possible = maxScores[type];
@@ -438,4 +438,8 @@ firebase.listener(function(users) { // listener that updates scoreboard when fir
 exports.getGlobalScoreboard = function() {
     console.log(scoreboard.topscores);
     return scoreboard.topscores;
+}
+
+exports.getMaxScores = function() {
+    return maxScores;
 }

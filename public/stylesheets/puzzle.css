@@ -1,7 +1,22 @@
 /* CSS for puzzle challenges */
 
+@font-face {
+    font-family: agencyFB;
+    src: url('/fonts/AgencyFB.ttf');
+}
+
 body {
     background-color: #f8f8f8;
+    background-image: url("/images/ring_logo_5.png");
+    background-repeat: no-repeat;
+    background-size: 600px;
+    background-position: center;
+    font-family: agencyFB;
+    font-size: 180%;
+}
+
+.panel-primary>.panel-heading {
+    background-color: #464545;
 }
 
 #left-pane {
@@ -40,7 +55,8 @@ body {
 }
 
 #alerts {
-    font-size: 125%;
+    font-family: agencyFB;
+    font-size: 150%;
 }
 
 .alert {
@@ -48,7 +64,6 @@ body {
 }
 
 #instructions {
-    font-size: 110%;
     margin-top: 28px;
     max-width: 600px;
 }
@@ -74,7 +89,6 @@ body {
 }
 
 #input {
-    font-size: 110%;
     margin-top: 10px;
     min-width: 250px;
     max-width: 500px;
@@ -86,7 +100,7 @@ body {
 }
 
 #score-display h3 {
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     font-weight: 500;
     margin-bottom: 2px;
     color: #ccc;
@@ -95,13 +109,17 @@ body {
 
 .stat-num {
     color: #333;
-    font-size: 4.0vw;
+    font-size: 5.0vw;
 }
 
 .max,
 .green {
     white-space: nowrap;
-    color: #28b62c !important;
+    color: #00bc8c !important;
+}
+
+a {
+    white-space: nowrap;
 }
 
 table {

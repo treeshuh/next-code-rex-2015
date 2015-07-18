@@ -1,7 +1,5 @@
 /* Javascript for puzzle challenges */
-
 $(document).ready(function() {
-
     $("#submit").on("click", function() {
         sendAnswer();
     });
@@ -14,6 +12,7 @@ $(document).ready(function() {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = "/javascripts/puzzles/" + challengeId + ".js";
+    script.async = true;
     $('body').append(script);
 
     if (previousScore) {

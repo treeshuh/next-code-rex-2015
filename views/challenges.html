@@ -3,7 +3,17 @@
         <title>Next Code REX 2015</title>
         <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/challenges.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
+        <script src="/javascripts/lib/knob/knob.js"></script>
+        <script src="/javascripts/main.js"></script>
+        <script>
+            const teamTotal = {{stats.total.score}}
+            var stats = {{{json stats}}}
+        </script>
+        <script src="/javascripts/challenges.js"></script>
     </head>
     <body>
         <div class="header">
@@ -12,16 +22,101 @@
                 <a href="/challenges">Next Code REX</a>
             </div>
             <ul class="topnav">
-                <li class="greeting">Hello, {{user.username}}!</li>
-                <li><a href="/challenges">Challenges</a></li>
                 <li><a href="/scoreboard">Scoreboard</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
             <div class="prettybar"></div>
         </div>
-        <div class="content">
-            <h1>Next Code REX 2015</h1>
-            <div class="left-half code-golf">
+
+        <div class="container">
+
+        <div id="center-pane">
+             <h2>TEAM {{user.username}}</h2>
+             <div id="score-display">
+                <span id="team-score" class="score-{{stats.total.score}}"></span> / 2019
+             </div>
+        </div>
+
+        <div id="left-pane">
+
+            <div id="rings-bar">
+                <div>
+                    <input type="text" id="ring-speed" class="ring" data-min="0" data-max="{{stats.speed.possible}}" value="{{stats.speed.score}}">
+                </div>
+                <div>
+                    <input type="text" id="ring-code" class="ring" data-min="0" data-max="{{stats.code.possible}}" value="{{stats.code.score}}">
+                </div>
+                <div>
+                    <input type="text" id="ring-puzzle" class="ring" data-min="0" data-max="{{stats.puzzle.possible}}" value="{{stats.puzzle.score}}">
+                </div>
+            </div>
+
+            <div class="panel-group" id="challenges">
+                <!-- SPEED -->
+                <div class="panel" id="panel-speed">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#speed" 
+                               href="#speed">
+                              SPEED
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="speed" class="panel-collapse collapse list-group">
+                            {{#each speedChallenges}}
+                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item">{{this.title}} <br>
+                                    <span class="challenge-score score-{{this.score}}">[<span class="team-score">{{this.score}}</span> / {{this.maxScore}}]</span>
+                                </a>
+                            {{/each}}
+                    </div>
+                </div>
+
+                <!-- CODE -->
+                <div class="panel" id="panel-code">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#code"
+                       href="#code">
+                      CODE
+                    </a>
+                  </h4>
+                    </div>
+                    <div id="code" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            {{#each codeChallenges}}
+                                <a href="/challenge/{{this.id}}.nxt" class="code list-group-item col-md-6">{{this.title}} <br> 
+                                    <span class="challenge-score score-{{this.score}}">[<span class="team-score">{{this.score}}</span> / {{this.maxScore}}]</span>
+                                </a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PUZZLE -->
+                <div class="panel" id="panel-puzzle">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#puzzle"
+                       href="#puzzle">
+                      PUZZLE
+                    </a>
+                  </h4>
+                    </div>
+                    <div id="puzzle" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            {{#each puzzleChallenges}}
+                                <a href="/challenge/{{this.id}}.nxt" class="puzzle list-group-item col-md-6">{{this.title}} <br>
+                                    <span class="challenge-score score-{{this.score}}">[<span class="team-score">{{this.score}}</span> / {{this.maxScore}}]</span>
+                                </a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+          <!--  <div class="left-half code-golf">
                 <h3>SPEED Challenges</h3>
                 {{#each speedChallenges}}
                     <p>
@@ -45,7 +140,7 @@
                     <span class="score-{{this.score}}">Score: {{this.score}} / {{this.maxScore}}</span>
                     </p>
                 {{/each}} 
-            </div>
+            </div>  -->
         </div>
     </body>
     <script>

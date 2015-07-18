@@ -1,0 +1,164 @@
+@font-face {
+    font-family: agencyFB;
+    src: url('/fonts/AgencyFB.ttf');
+}
+
+body {
+    margin: auto;
+    background-color: #fafafa;
+    font-family: agencyFB;
+    overflow: hidden;
+}
+
+.container {
+    overflow: auto;
+}
+
+#left-pane {
+    width: 35%;
+    float: left;
+    max-width: 600px;
+    min-width: 300px;
+    overflow: auto;
+}
+
+#rings-bar {
+    text-align: center;
+    margin-top: 10px;
+    max-width: 475px;
+    width: 100%;
+    display: inline-flex;
+}
+
+#rings-bar>div {
+    visibility: hidden;
+}
+
+.panel-group {
+    margin-top: 20px;
+}
+
+.panel {
+    display: none;
+    border-radius: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+.panel>.panel-heading {
+    text-align: center;
+    opacity: 0.85;
+    border-radius: 0;
+}
+
+.panel>.panel-heading:hover {
+    opacity: 1.0;
+    color: white !important;
+}
+
+h4.panel-title > a {
+    font-size: 150%;
+}
+
+h4.panel-title > a:hover {
+    text-decoration: none !important;
+}
+
+#panel-speed>.panel-heading {
+    background-color: #00bc8c;
+}
+
+#panel-code>.panel-heading {
+    background-color: #375a7f;
+}
+
+#panel-puzzle>.panel-heading {
+    background-color: #e74c3c;
+}
+
+#panel-puzzle>.panel-heading {
+    background-color: #e74c3c;
+}
+
+.list-group-item {
+    text-align: center;
+    border: none;
+    font-size: 140%;
+}
+
+.list-group-item:hover {
+    color: white !important;
+}
+
+.speed:hover {
+    background-color: rgba(0, 188, 140, 0.5) !important;
+}
+
+.code:hover {
+    background-color: rgba(55, 90, 127, 0.6) !important;
+}
+
+.puzzle:hover {
+    background-color: rgba(231, 76, 60, 0.5) !important;
+}
+
+#center-pane {
+    position: absolute;
+    width: 600px;
+    height: 550px;
+    left: 70%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -250px;
+    /* background-image: url("/images/ring_logo_color_alpha.png");
+    background-repeat: no-repeat;
+    background-size: 600px 545px;
+    aspect ratio: 1.1 */
+    vertical-align: middle;
+    text-align: center;
+}
+
+#center-pane:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.25;
+    background: url("/images/ring_logo_color.png") center center no-repeat;
+}
+
+#center-pane:hover:before {
+    opacity: 0.85;
+}
+
+#center-pane h2 {
+    text-transform: uppercase;
+    margin-top: 20%;
+    font-size: 64px;
+    color: #444;
+}
+
+#score-display {
+    font-weight: 1000;
+    font-size: 100px;
+    color: #333;
+}
+
+#team-score,
+.team-score {
+    color: #375a7f;
+}
+
+@media (max-width: 768px) {
+    #center-pane {
+        display: none;
+    }
+}
+
+@media (max-height: 600px) {
+    #center-pane {
+        display: none;
+    }
+}

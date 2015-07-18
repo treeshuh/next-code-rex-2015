@@ -33,6 +33,19 @@ body {
 	vertical-align: top;
 
 }
+
+@media (max-width: 960px) {
+    .left {
+        width: 96%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .right {
+        width: 96%;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
 	
 img {
 	float: right;

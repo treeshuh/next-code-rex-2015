@@ -39,6 +39,11 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+// handlebars
+hbs.registerHelper('json', function(context) {
+    return JSON.stringify(context);
+});
+
 app.get('/', routes.login);
 app.get('/login', routes.login);
 app.post('/login', passport.authenticate('local', {

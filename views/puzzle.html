@@ -6,8 +6,9 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/{{this.type}}.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/puzzles/{{challenge.id}}.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
+        <script src="/javascripts/main.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
         <script src="/javascripts/lib/three/three.min.js"></script>
         <script>
@@ -34,7 +35,7 @@
 
             <div id="left-pane">
 
-                <div id="instructions" class="panel panel-default">
+                <div id="instructions" class="panel panel-primary">
                     <div class="panel-heading">Your Challenge</div>
                     <div id="instruction-panel" class="panel-body">
                             {{#each challenge.instruction}}

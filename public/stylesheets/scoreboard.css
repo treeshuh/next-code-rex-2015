@@ -1,0 +1,53 @@
+@font-face {
+    font-family: agencyFB;
+    src: url('/fonts/AgencyFB.ttf');
+}
+
+body {
+    font-family: agencyFB;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.container {
+	text-align:center;
+    margin: auto;
+    width: 100%;
+    padding-right: 15px;
+    overflow: auto;
+}
+
+.stats-item {
+	visibility: hidden;
+}
+
+.ring-set {
+    max-width: 410px;
+    display: inline-flex;
+}
+
+.stats-item {
+    margin-top: 20px;
+}
+
+.team-name {
+	text-align: center;
+	text-transform: uppercase;
+	color: #333;
+	font-size: 42px;
+}
+
+.total-score {
+    font-size: 32px;
+    text-align: center;
+    color: #333;
+}
+
+.team-score {
+    font-size: 50px;
+    color: #375a7f;
+}
