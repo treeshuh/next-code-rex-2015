@@ -3,9 +3,12 @@
     src: url('/fonts/AgencyFB.ttf');
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
-    background-color: #f8f8f8;
-    background-size: 600px;
+    background-color: rgba(51, 181, 229, 0.2);
     font-family: agencyFB;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -24,13 +27,77 @@ body:before {
     left: 0;
     right: 0;
     opacity: 0.4;
+    -webkit-animation: fadein 1.8s;
+    -moz-animation: fadein 1.8s;
+    -ms-animation: fadein 1.8s;
+    -o-animation: fadein 1.8s;
+    animation: fadein 1.8s;
     background: url("/images/ring_logo_5.png") center center;
 }
 
-.container {
+@keyframes fadein {
+    from {
+        opacity: 0.01;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+@-moz-keyframes fadein {
+    from {
+        opacity: 0.01;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+@-webkit-keyframes fadein {
+    from {
+        opacity: 0.01;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+@-ms-keyframes fadein {
+    from {
+        opacity: 0.01;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+@-o-keyframes fadein {
+    from {
+        opacity: 0.01;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+.header {
+    background: none;
+    font-size: 150%;
+}
+
+h1, h2 {
+    margin-top: -20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h1 {
+    font-size: 84px;
+}
+
+​.container {
     text-align: center;
     width: 100%;
-    overflow: auto;
 }
 
 .stats-item {
@@ -38,18 +105,38 @@ body:before {
     text-align: center;
     visibility: hidden;
     width: 30%;
-    min-width: 400px;
+    min-width: 360px;
     margin: 15px 8px;
     border: 1px solid #e7e7e7;
     border-width: 0 1px 4px 1px;
     padding-top: 10px;
     padding-bottom: 10px;
-    opacity: 0.6;
+    opacity: 0.5;
+    overflow: hidden;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
 }
 
-/* .stats-item.me {
-    opacity: 1.0;
-} */
+.stats-item:hover,
+.stats-item.me {
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+}
+
+.stats-item.me .ring-set,
+.stats-item:hover .ring-set {
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+}
 
 .stats-item.rank-3 {
     background-color: rgba(150, 90, 56, 0.75);
@@ -69,15 +156,45 @@ body:before {
 }
 
 .ring-set {
-    max-width: 280px;
+    max-width: 235px;
     display: inline-flex;
-    margin: 12px 0;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flex;
+    margin: 12px 0 12px -30px;
+}
+
+.stats-top {
+    margin-bottom: 10px;
+}
+
+.total-score {
+    margin-top: -10px;
+}
+
+.ring-set .puzzle-container {
+    margin-top: -20px;
+}
+
+.ring-set .speed-container,
+.ring-set .code-container {
+    margin-top: 20px;
+}
+
+@media (max-width: 1280px) {
+    .stats-item {
+        min-width: 300px;
+    }
+    .ring-set {
+        max-width: 175px;
+        margin: 6px 0 6px -15px;
+    }
 }
 
 .team-rank {
     color: #375a7f;
     font-size: 32px;
 }
+
 
 /*.me>div>.team-rank {
     font-size: 40px;
@@ -88,6 +205,7 @@ body:before {
     color: #333;
     font-size: 42px;
 }
+
 
 /*.me>div>.team-name {
     font-size: 54px;

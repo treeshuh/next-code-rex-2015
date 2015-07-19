@@ -1,0 +1,95 @@
+.stats-item .shine-effect {
+  position: absolute;
+  top: -110%;
+  left: -210%;
+  width: 200%;
+  height: 210%;
+
+  opacity: 0;
+  
+  background: rgba(255, 255, 255, 0.2);
+  background: -moz-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.5) 90%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.5) 90%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  background: -webkit-gradient(
+    linear, left top, right top,
+    color-stop(0%  ,rgba(255, 255, 255, 0.2)),
+    color-stop(75% ,rgba(255, 255, 255, 0.2)),
+    color-stop(90% ,rgba(255, 255, 255, 0.8)),
+    color-stop(100%,rgba(255, 255, 255, 0.0))
+  );
+  background: -o-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.5) 90%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  background: -ms-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.5) 90%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  background: linear-gradient(
+    top,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.5) 90%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+
+  -webkit-transform: rotate(60deg);
+     -moz-transform: rotate(60deg);
+      -ms-transform: rotate(60deg);
+       -o-transform: rotate(30deg);
+          transform: rotate(30deg);
+    
+  -webkit-transition-property: left, top, opacity;
+     -moz-transition-property: left, top, opacity;
+      -ms-transition-property: left, top, opacity;
+       -o-transition-property: left, top, opacity;
+          transition-property: left, top, opacity;
+  -webkit-transition-duration: 0.5s, 0.5s, 0.1s;
+     -moz-transition-duration: 0.5s, 0.5s, 0.1s;
+      -ms-transition-duration: 0.5s, 0.5s, 0.1s;
+       -o-transition-duration: 0.5s, 0.5s, 0.1s;
+          transition-duration: 0.5s, 0.5s, 0.1s;
+  -webkit-transition-timing-function: ease;
+     -moz-transition-timing-function: ease;
+      -ms-transition-timing-function: ease;
+       -o-transition-timing-function: ease;
+          transition-timing-function: ease;
+}
+
+/* Hover state - trigger effect */
+
+.rank-1:hover .shine-effect, .stats-item.me.hover .shine-effect {
+  opacity: 1;
+  top: -60%;
+  left: -30%;
+}
+
+.rank-2:hover .shine-effect {
+  opacity: 1;
+  top: -60%;
+  left: -30%;
+}
+
+.rank-3:hover .shine-effect {
+  opacity: 1;
+  top: -60%;
+  left: -30%;
+}

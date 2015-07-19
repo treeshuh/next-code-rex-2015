@@ -67,7 +67,7 @@ $(document).ready(function() {
             alpha: true
         });
         renderer.setSize(window.innerWidth * .5, window.innerHeight * .5);
-        renderer.setClearColor(0xffffff, 0.7);
+        renderer.setClearColor(0xffffff, 0);
 
         scene = new THREE.Scene();
 
@@ -87,12 +87,15 @@ $(document).ready(function() {
             new THREE.BoxGeometry(190, 190, 190, 5, 5, 5),
             new THREE.MeshFaceMaterial(materials));
 
-        $("#interactive").append(renderer.domElement);
         scene.add(camera);
         scene.add(cube);
 
+        setTimeout(function(){
+            $("#interactive").append(renderer.domElement).fadeIn(1000);
+        }, 250);
+
         // Randomize faces
-        iter = Math.floor(Math.random() * 15 + 20);
+        iter = Math.floor(Math.random() * 15 + 25);
         var randomize = setInterval(
             function() {
                 if (iter > 0) {

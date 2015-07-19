@@ -5,32 +5,98 @@
 
 body {
     margin: auto;
-    background-color: rgba(250, 250, 250, 0.75);
+    overflow-x: hidden;
     font-family: agencyFB;
-    overflow: hidden;
+    background-color: rgba(51, 181, 229, 0.2);
 }
 
-.container {
-    overflow: auto;
+.header {
+    background: none;
+}
+
+.left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    border: 1px solid #e7e7e7;
+    border-width: 0px 5px 0px 0px;
 }
 
 #left-pane {
-    float: left;
-    width: 575px;
-    overflow: auto;
+    padding: 60px 30px 30px 30px;
+    height: auto;
+    width: 100%;
+    min-width: 500px;
+    background-color: rgba(51, 181, 229, 0.2);
+    text-align: center;
 }
 
 #rings-bar {
-    text-align: center;
-    margin-top: 10px;
-    margin-left: 35px;
-    max-width: 475px;
+    visibility: hidden;
+    margin: 10px 0;
+    margin-left: -20px;
     width: 100%;
+    max-width: 450px;
     display: inline-flex;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flex;
 }
 
-#rings-bar>div {
-    visibility: hidden;
+div.ring {
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: 75% 50%;
+    opacity: 0.8;
+    border-radius: 50%;
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+    transition: margin-top 0.5s ease-in-out, background-position 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    -webkit-transition: margin-top 0.5s ease-in-out, background-position 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+div.ring-puzzle {
+    background-position: 80% 50%;
+}
+
+div.ring-code {
+    background-position: 83% 50%;
+}
+
+div.ring:hover {
+    opacity: 0.9;
+    margin-top: -50px;
+    background-position: 75% 33%;
+}
+
+div.ring-puzzle:hover {
+    background-position: 80% 33%;
+}
+
+div.ring-code:hover {
+    background-position: 83% 33%;
+}
+
+div.ring>div>canvas {
+    -webkit-transition: -webkit-transform .8s ease-in-out, opacity 0.8s;
+    transition: transform .8s ease-in-out, opacity .8s;
+    opacity: 0.9;
+}
+
+div.ring:hover>div>canvas {
+    opacity: 1.0;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
 }
 
 .panel-group {
@@ -39,8 +105,14 @@ body {
 
 .panel {
     display: none;
+    background: none;
+    border-width: 0;
     border-radius: 0 !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 15px !important;
+}
+
+.panel-slide {
+    display: none;
 }
 
 .panel>.panel-heading {
@@ -50,12 +122,12 @@ body {
 }
 
 .panel>.panel-heading:hover {
-    opacity: 1.0;
+    opacity: 0.95;
     color: white !important;
 }
 
 h4.panel-title > a {
-    font-size: 150%;
+    font-size: 130%;
 }
 
 h4.panel-title > a:hover {
@@ -67,26 +139,41 @@ h4.panel-title > a:hover {
 }
 
 #panel-code>.panel-heading {
-    background-color: #375a7f;
+    background-color: #375a8f;
 }
 
 #panel-puzzle>.panel-heading {
     background-color: #e74c3c;
 }
 
-#panel-puzzle>.panel-heading {
-    background-color: #e74c3c;
+.panel-body {
+    border-width: 0;
+    padding: 2px 0 0 0;
+}
+
+.panel>.list-group .list-group-item {
+    border-width: 0 !important;
 }
 
 .list-group-item {
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
     border: none !important;
     border-radius: 0 !important;
-    font-size: 140%;
+    padding: 6px 8px;
+    font-size: 130%;
 }
 
 .list-group-item:hover {
     color: white !important;
+}
+
+.list-group-item:hover .challenge-score {
+    color: #ccc;
+}
+
+.list-group-item:hover .team-score {
+    color: white;
 }
 
 .speed:hover {
@@ -94,18 +181,21 @@ h4.panel-title > a:hover {
 }
 
 .code:hover {
-    background-color: rgba(55, 90, 127, 0.6) !important;
+    background-color: rgba(55, 90, 142, 0.7) !important;
 }
 
 .puzzle:hover {
-    background-color: rgba(231, 76, 60, 0.5) !important;
+    background-color: rgba(231, 76, 60, 0.6) !important;
 }
 
 #center-pane {
+    transition: text-shadow 1.0s ease-in-out;
+    -webkit-transition: text-shadow 1.0s ease-in-out;
     position: absolute;
+    display: none;
     width: 600px;
     height: 550px;
-    left: 70%;
+    left: 75%;
     top: 50%;
     margin-left: -300px;
     margin-top: -250px;
@@ -114,6 +204,8 @@ h4.panel-title > a:hover {
 }
 
 #center-pane:before {
+    transition: transform 1.0s ease-in-out, opacity 1.0s ease-in-out;
+    -webkit-transition: -webkit-transform 1.0s ease-in-out, opacity 1.0s ease-in-out;
     content: "";
     position: absolute;
     z-index: -1;
@@ -123,10 +215,24 @@ h4.panel-title > a:hover {
     right: 0;
     opacity: 0.25;
     background: url("/images/ring_logo_color.png") center center no-repeat;
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
 }
 
 #center-pane:hover:before {
+    -webkit-transform: rotate(360deg) scale(1.0);
+    -moz-transform: rotate(360deg) scale(1.0);
     opacity: 0.75;
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
 }
 
 #center-pane:hover {
@@ -151,13 +257,48 @@ h4.panel-title > a:hover {
     color: #375a7f;
 }
 
-@media (max-width: 1024px) {
+#team-score {
+    opacity: 0.5;
+}
+
+#total-score {
+    display: none;
+}
+
+@media (max-width: 1280px) {
     #center-pane {
-        display: none;
+        left: 80%;
+    }
+    #center-pane:before {
+        -webkit-transform: scale(0.6);
+        -moz-transform: scale(0.6);
+    }
+    #center-pane:hover:before {
+        -webkit-transform: scale(0.7);
+        -moz-transform: scale(0.7);
+    }
+    #center-pane h2 {
+        margin-top: 25%;
+        font-size: 48px;
+    }
+    #score-display {
+        font-size: 84px;
+    }
+    .left {
+        width: 60%;
     }
 }
 
-@media (max-height: 600px) {
+@media (max-width: 961px) {
+    #center-pane {
+        display: none !important;
+    }
+    .left {
+        width: 100%;
+    }
+}
+
+@media (max-height: 560px) {
     #center-pane {
         display: none;
     }

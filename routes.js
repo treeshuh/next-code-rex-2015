@@ -11,7 +11,7 @@ exports.initialRouter = function(req, res, next) {
         next();
     } else if (req.url == "/scoreboard") {
         res.render('scoreboard.html', {
-            user: {username: "none"},
+            user: {username: "scoreboard"},
             globalScoreboard: model.getGlobalScoreboard(),
             maxScores: model.getMaxScores()
         });

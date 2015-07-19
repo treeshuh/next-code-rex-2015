@@ -591,7 +591,7 @@ $(document).ready(function() {
         renderer.setSize(window.innerWidth * 0.55, window.innerHeight * 0.6);
         window.camera = camera;
         setTimeout(function() {
-            $("#interactive").append(renderer.domElement);
+            $("#interactive").append(renderer.domElement).fadeIn(750);
         }, 500);
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         document.addEventListener('keydown', onDocumentKeyDown, false);

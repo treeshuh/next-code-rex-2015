@@ -5,8 +5,8 @@
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/scoreboard.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/shine.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/lib/knob/knob.js"></script>
         <script src="/javascripts/main.js"></script>
         <script>
@@ -17,34 +17,30 @@
     </head>
     <body>
         <div class="header">
-            <a href="/challenges"><span class="circle">NC</span></a>
-            <div class="appname">
-                <a href="/challenges">Next Code REX</a>
-            </div>
             <ul class="topnav">
-                <li class="greeting">{{user.username}}</li>
+                <li class="greeting"><a href="#stats-{{user.username}}">TEAM {{user.username}}</a></li>
                 <li><a href="/challenges">Challenges</a></li>
-                <li><a href="/scoreboard">Scoreboard</a></li>
-                <li><a href="/logout">Logout</a></li>
             </ul>
-            <div class="prettybar"></div>
         </div>
         <div class="container">
 
-            <h1>2015 NEXTCODE TRIATHLON RANKINGS</h1>
+            <h2><strong>2015 NEXTCODE TRIATHLON</strong><h2>
+            <br>
+            <h1>RANKINGS</h1>
 
             {{#each globalScoreboard}}
             <div class="stats-item col-md-4 rank-{{inc @index}} score-{{this.score.total}}" id="stats-{{this.username}}">
+                <span class="shine-effect"></span>
                 <div class="stats-top"><span class="team-rank">{{inc @index}} </span><span class="team-name">{{this.username}}</span></div>
                 <div class="ring-set" id="ring-{{this.username}}">
-                    <div>
+                    <div class = "speed-container">
                         <input type="text" class="ring ring-speed" data-min="0" data-max="{{maxScores.speed}}" value="{{this.score.speed}}">
                     </div>
-                    <div>
-                        <input type="text" class="ring ring-code" data-min="0" data-max="{{maxScores.code}}" value="{{this.score.code}}">
-                    </div>
-                    <div>
+                    <div class = "puzzle-container">
                         <input type="text" class="ring ring-puzzle" data-min="0" data-max="{{maxScores.puzzle}}" value="{{this.score.puzzle}}">
+                    </div>
+                    <div class = "code-container">
+                        <input type="text" class="ring ring-code" data-min="0" data-max="{{maxScores.code}}" value="{{this.score.code}}">
                     </div>
                 </div>
                 <div class="total-score"> <span class="team-score">{{this.score.total}}</span> / 2019</div>

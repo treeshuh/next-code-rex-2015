@@ -10,6 +10,10 @@
     width: 30% !important;
 }
 
+#interactive{
+	display: none;
+}
+
 canvas {
 	margin: 0 !important;
 	padding: 0 !important;
