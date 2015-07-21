@@ -19,7 +19,7 @@
 
 .header {
   text-transform: uppercase;
-  height: 50px;
+  height: 60px;
   font-weight: 200;
   background-color: rgba(51, 181, 229, 0.2);
   font-size: 125%;
@@ -28,8 +28,8 @@
   .header .appname {
     font-family: agencyFB;
     font-weight: 1000;
-    font-size: 20px;
-    padding: 10px;
+    font-size: 32px;
+    padding: 6px;
     margin-left: 100px;
     display: inline-block; }
     .header .appname a {
@@ -37,22 +37,11 @@
    }
     .header .appname a:hover {
       text-decoration: none;
-      color: #fafafa;
+      color: #fafafa
    }
-  .header .circle {
-    background-color: #47a9c4;
-    display: block;
-    width: 32px;
-    line-height: 30px;
-    height: 30px;
-    font-size: 18px;
-    padding-top: 2px;
-    text-align: center;
-    border-radius: 50%;
-    color: #fff;
-    position: absolute;
-    top: 7px;
-    left: 24px; }
+    .header .appname .year {
+      color: #e7e7e7;
+    }
   .header .prettybar {
     height: 5px;
     background-color: #e8e8e8;
@@ -64,7 +53,7 @@
     float: right;
     display: inline-block;
     color: #666;
-    right: 10px;
+    right: 2;
     top: 0;
     position: absolute; }
     .header ul.topnav li {
@@ -73,17 +62,17 @@
       line-height: 18px;
       vertical-align: center;
       display: inline-block;
-      margin-right: 8px;
+      margin-right: 4px;
       position: relative;
       z-index: 200; }
       .header ul.topnav li.greeting {
-        margin-right: 20px; }
+        margin-right: 30px; }
       .header ul.topnav li a {
         font-weight: 100;
-        width: 125;
+        width: 120;
         text-align: center;
         text-decoration: none;
-        padding: 15px 10px 11px;
+        padding: 20px 10px 17px;
         display: block;
         background-color: #fafafa;
         border-bottom: 6px solid #e8e8e8;

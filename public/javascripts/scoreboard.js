@@ -19,90 +19,142 @@ var globalMaxScore;
 
 $(document).ready(function() {
 
-        var ringWidth = Math.min(125, Math.round($(window).width() / 12));
+    var windowWidth = $(window).width();
+    var ringWidth = Math.round(windowWidth > 1280 ? 125 : windowWidth > 800 ? windowWidth / 12 : 60);
 
-        var ringOpts = {
-            readOnly: true,
-            thickness: 0.18,
-            displayInput: false,
-            width: ringWidth,
-            height: ringWidth
-        }
+    var ringOpts = {
+        readOnly: true,
+        thickness: 0.18,
+        displayInput: false,
+        width: ringWidth,
+        height: ringWidth
+    }
 
+    function pad(num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length - size);
+    }
 
-        function pad(num, size) {
-            var s = "000000000" + num;
-            return s.substr(s.length - size);
-        }
+    if (username === "scoreboard") {
+        $(".stats-item").addClass("me").css("opacity", "1.0");
+    }
 
-        if (username === "scoreboard") {
-            $(".stats-item").addClass("me").css("opacity", "1.0");
-        }
+    globalMaxScore = $($(".team-score")[0]).html();
 
-        globalMaxScore = $($(".team-score")[0]).html();
-
-        setTimeout(function() {
-            var previousScore = globalMaxScore;
-            var rank = 1;
-            $.each($(".ring-set"), function(index, value) {
-                var myScore = $($(".team-score")[index]).html();
-                if (myScore == globalMaxScore) {
-                    $($(this).parent()).addClass("rank-1");
+    var populateScoreboard = function() {
+        var previousScore = globalMaxScore;
+        var rank = 1;
+        $.each($(".ring-set"), function(index, value) {
+            var myScore = $($(".team-score")[index]).html();
+            if (myScore == globalMaxScore) {
+                $($(this).parent()).addClass("rank-1");
+            }
+            if (myScore != previousScore) {
+                rank++;
+                previousScore = myScore;
+            }
+            $($(".team-rank")[index]).html(rank + " ");
+            var id = $(this).attr("id");
+            if (id.indexOf(username) > -1) {
+                $($(this).parent()).addClass("me");
+            }
+            for (var i in rings) {
+                ringOpts.fgColor = rings[i]
+                ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacityEmpty);
+                ringOpts.max = maxScores[i];
+                var me = $("#" + id + ">div>.ring-" + i);
+                me.attr("value", parseInt(me.attr("value")) ? String(me.attr("value")) : String(Math.round(ringOpts.max / 100)));
+                me.knob(ringOpts);
+            }
+            var fudge = ringWidth / 20;
+            for (var i in ringNames) {
+                var category = ringNames[i];
+                var achievedMax = ($("#" + id + ">div>div>.ring-" + category).attr("value") == maxScores[category]);
+                if (achievedMax) {
+                    var canvas = $("#" + id + ">div>div>canvas")[i];
+                    var context = canvas.getContext("2d");
+                    h = context.canvas.height;
+                    w = context.canvas.width;
+                    var logoHeight = h / 3;
+                    img = logos[i];
+                    ratio = img.width / img.height
+                    logoWidth = logoHeight * ratio;
+                    context.drawImage(img, w / 2 - logoWidth / 2 + (i - 1) * fudge, h / 2 - logoHeight / 2, logoWidth, logoWidth);
                 }
-                if (myScore != previousScore) {
-                    rank++;
-                    previousScore = myScore;
-                }
-                $($(".team-rank")[index]).html(rank + " ");
-                var id = $(this).attr("id");
-                if (id.indexOf(username) > -1) {
-                    $($(this).parent()).addClass("me");
-                }
-                for (var i in rings) {
-                    ringOpts.fgColor = rings[i]
-                    ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacityEmpty);
-                    ringOpts.max = maxScores[i];
-                    var me = $("#" + id + ">div>.ring-" + i);
-                    me.attr("value", parseInt(me.attr("value")) ? String(me.attr("value")) : String(Math.round(ringOpts.max / 100)));
-                    me.knob(ringOpts);
-                }
-                var fudge = ringWidth / 20;
-                for (var i in ringNames) {
-                    var category = ringNames[i];
-                    var achievedMax = ($("#" + id + ">div>div>.ring-" + category).attr("value") == maxScores[category]);
-                    if (achievedMax) {
-                        var canvas = $("#" + id + ">div>div>canvas")[i];
-                        var context = canvas.getContext("2d");
-                        h = context.canvas.height;
-                        w = context.canvas.width;
-                        var logoHeight = h / 3;
-                        img = logos[i];
-                        ratio = img.width / img.height
-                        logoWidth = logoHeight * ratio;
-                        context.drawImage(img, w / 2 - logoWidth / 2 + (i - 1) * fudge, h / 2 - logoHeight / 2, logoWidth, logoWidth);
-                    }
-                }
+            }
+            if (username == "scoreboard" || /challenges/.test(referer)) {
                 setTimeout(function() {
                     $("#" + id.replace("ring", "stats")).hide().css("visibility", "visible").fadeIn(750);
                 }, 100);
-            });
-        }, 100);
+            } else {
+                $("#" + id.replace("ring", "stats")).css("visibility", "visible");
+            }
+        });
+    }
 
-        $.fn.scrollView = function() {
-            return this.each(function() {
-                $('html, body').animate({
-                    scrollTop: $(this).offset().top
-                }, 1000);
+    setTimeout(populateScoreboard, 100);
+
+    function highlightLastSolve() {
+        if (username == "scoreboard") {
+            scoreUpdate.child("last").once("value", function(data) {
+                if (data.val() && data.val().user) {
+                    var lastSolveUser = data.val().user.username;
+                    $("#stats-" + lastSolveUser).addClass("highlight");
+                    setTimeout(function() {
+                        $("#stats-" + lastSolveUser).find(".shine-effect").animate({
+                            opacity: 0
+                        }, 750);
+                    }, 1500);
+                }
             });
         }
+    }
 
-        setTimeout(function() {
-                var me = $('#stats-' + username);
-                me.scrollView();
-                me.animate({
-                        "opacity": 1.0
-                    }, function() {
-                        $('#stats-' + username).addClass("hover");
-                    });
-                }, 2000);
+    setTimeout(highlightLastSolve, 1500);
+
+    $.fn.scrollView = function() {
+        return this.each(function() {
+            $('html, body').animate({
+                scrollTop: $(this).offset().top - 15
+            }, 1000);
         });
+    }
+
+    var scrollToMe = function() {
+        var me = $('#stats-' + username);
+        me.scrollView();
+        me.animate({
+            "opacity": 1.0
+        }, function() {
+            $('#stats-' + username).addClass("highlight");
+            setTimeout(function() {
+                $('#stats-' + username).find(".shine-effect").animate({
+                    opacity: 0
+                }, 750, function(){
+                    $('#stats-' + username).removeClass("highlight");
+                    if ($(window).width() < 961) {
+                        $(".stats-item").addClass("shiny");
+                        $(".stats-item").on("mouseenter", function(){
+                            $(this).removeClass("shiny")
+                        });
+                    }
+                });
+            }, 1500);
+        });
+    }
+
+    setTimeout(scrollToMe, 2500);
+    $(".greeting").on("click", scrollToMe);
+
+});
+
+var firstLoad = true;
+var scoreUpdate = new Firebase("https://next-code-rex-2015.firebaseio.com/solves");
+scoreUpdate.on("value", function(data) {
+    if (!firstLoad) {
+        $(".stats-item").fadeOut(400, function() {
+            location.reload(true);
+        });
+    }
+    firstLoad = false;
+});

@@ -14,10 +14,10 @@
 <body>
     <div class="header">
         <div class="appname">
-            <strong><a href="/challenges">2015 Nextcode Triathlon</a></strong>
+            <strong><a href="/challenges"><small><span class="year">2015</span></small> Nextcode Triathlon</a></strong>
         </div>
         <ul class="topnav">
-            <li class="greeting"><strong>TEAM {{user.username}}</strong></li>
+            <li class="greeting"><strong>Team {{user.username}}</strong></li>
             <li><a href="/challenges">Challenges</a></li>
             <li><a href="/scoreboard">Scoreboard</a></li>
             <li><a href="/logout">Logout</a></li>
@@ -32,7 +32,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#task" 
-                       href="#task">
+                    >
                       Your Challenge
                     </a>
                     </h4>
@@ -45,7 +45,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#examples"
-                       href="#examples" class="collapsed">
+                    class="collapsed">
                       Example Input/Output
                     </a>
                   </h4>
@@ -61,8 +61,22 @@
                 <div class="panel panel-primary" id="panel3">
                     <div class="panel-heading">
                         <h4 class="panel-title">
+                    <a data-toggle="collapse" data-target="#hints" 
+                     class="collapsed">
+                      Hints
+                    </a>
+                    </h4>
+                    </div>
+                    <div id="hints" class="panel-collapse collapse">
+                        <div class="panel-body lead">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary" id="panel4">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#rules" 
-                       href="#rules" class="collapsed">
+                     class="collapsed">
                       Guidelines
                     </a>
                     </h4>
@@ -291,6 +305,7 @@
         "python": {{challenge.detail.charCount.python}},
         "java": {{challenge.detail.charCount.java}}
     }
+    const hints = {{{json challenge.hints}}}
     var previousScore = {{previousScore}} 
     var script = document.createElement('script');
     script.type = 'text/javascript';

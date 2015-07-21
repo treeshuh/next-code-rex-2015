@@ -37,7 +37,8 @@ $(document).ready(function(){
             }
             else {
                 $(".register-form").fadeOut();
-                $(".pointer-to-login").css("display", "inline-block");                        
+                $(".pointer-to-login").css("display", "inline-block");
+                $("body").addClass("color")                        
             }
         })
     });

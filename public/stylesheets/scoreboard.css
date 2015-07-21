@@ -1,6 +1,7 @@
 @font-face {
     font-family: agencyFB;
     src: url('/fonts/AgencyFB.ttf');
+    src: url('/fonts/AgencyFB.eot');
 }
 
 ::-webkit-scrollbar {
@@ -23,28 +24,16 @@ body:before {
     position: absolute;
     z-index: -1;
     top: 0;
-    bottom: 0;
+    bottom: -9999;
     left: 0;
     right: 0;
     opacity: 0.4;
-    -webkit-animation: fadein 1.8s;
-    -moz-animation: fadein 1.8s;
-    -ms-animation: fadein 1.8s;
-    -o-animation: fadein 1.8s;
-    animation: fadein 1.8s;
+    /* -webkit-animation: fadein 1.8s;
+    animation: fadein 1.8s; */
     background: url("/images/ring_logo_5.png") center center;
 }
 
 @keyframes fadein {
-    from {
-        opacity: 0.01;
-    }
-    to {
-        opacity: 0.4;
-    }
-}
-
-@-moz-keyframes fadein {
     from {
         opacity: 0.01;
     }
@@ -62,37 +51,32 @@ body:before {
     }
 }
 
-@-ms-keyframes fadein {
-    from {
-        opacity: 0.01;
-    }
-    to {
-        opacity: 0.4;
-    }
-}
-
-@-o-keyframes fadein {
-    from {
-        opacity: 0.01;
-    }
-    to {
-        opacity: 0.4;
-    }
-}
-
 .header {
     background: none;
-    font-size: 150%;
 }
 
-h1, h2 {
-    margin-top: -20px;
+.header ul {
+    left: 50%;
+}
+
+.header ul li {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+h1,
+h2 {
+    margin-top: 40px;
     text-transform: uppercase;
     text-align: center;
 }
 
 h1 {
-    font-size: 84px;
+    font-size: 100px;
+}
+
+h2 {
+    font-size: 64px;
 }
 
 ​.container {
@@ -107,7 +91,6 @@ h1 {
     width: 30%;
     min-width: 360px;
     margin: 15px 8px;
-    border: 1px solid #e7e7e7;
     border-width: 0 1px 4px 1px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -139,36 +122,40 @@ h1 {
 }
 
 .stats-item.rank-3 {
+    border-color: rgba(140, 82, 50, 0.7);
     background-color: rgba(150, 90, 56, 0.75);
 }
 
 .stats-item.rank-2 {
+    border-color: rgba(180, 190, 194, 0.8);
     background-color: rgba(188, 198, 204, 0.75);
 }
 
 .stats-item.rank-1,
 .stats-item.score-2019 {
+    border-color: rgba(205, 158, 60, 0.8);
     background-color: rgba(217, 164, 65, 0.75);
 }
 
 .stats-item.score-0 {
+    border-color: rgba(255, 255, 255, 0.75);
     background-color: rgba(255, 255, 255, 0.8);
 }
 
 .ring-set {
     max-width: 235px;
-    display: inline-flex;
+    display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
-    display: -ms-inline-flex;
+    display: inline-flex;
     margin: 12px 0 12px -30px;
 }
 
 .stats-top {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .total-score {
-    margin-top: -10px;
+    margin-top: -5px;
 }
 
 .ring-set .puzzle-container {
@@ -180,36 +167,16 @@ h1 {
     margin-top: 20px;
 }
 
-@media (max-width: 1280px) {
-    .stats-item {
-        min-width: 300px;
-    }
-    .ring-set {
-        max-width: 175px;
-        margin: 6px 0 6px -15px;
-    }
-}
-
 .team-rank {
     color: #375a7f;
     font-size: 32px;
 }
-
-
-/*.me>div>.team-rank {
-    font-size: 40px;
-}*/
 
 .team-name {
     text-transform: uppercase;
     color: #333;
     font-size: 42px;
 }
-
-
-/*.me>div>.team-name {
-    font-size: 54px;
-}*/
 
 .total-score {
     color: #333;
@@ -218,5 +185,83 @@ h1 {
 
 .team-score {
     color: #375a7f;
-    font-size: 50px;
+    font-size: 48px;
+}
+
+@media (max-width: 1280px) {
+    .stats-item {
+        min-width: 300px;
+    }
+    .ring-set {
+        max-width: 175px;
+        margin: 6px 0 6px -40px;
+    }
+}
+
+@media (max-width: 961px) {
+    .scoreboard-container {
+        margin-left: 50%;
+        width: 100%;
+    }
+    .stats-top {
+        margin-bottom: 15px;
+    }
+    .stats-item {
+        width: 160px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        border-radius: 50%;
+        border-width: 3px;
+        box-shadow: 3px 3px 6px #888;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -webkit-filter: blur(1px);
+        -moz-filter: blur(1px);
+        -o-filter: blur(1px);
+        -ms-filter: blur(1px);
+        filter: blur(1px);
+    }
+    .ring-set {
+        width: 90px;
+    }
+    .ring-set .puzzle-container {
+        margin-top: -25px;
+    }
+    .ring-set .speed-container,
+    .ring-set .code-container {
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .stats.item {
+        width: 100px;
+    }
+    .ring-set {
+        margin: 12px 0 12px -25px;
+        width: 78px;
+    }
+    .ring-set .puzzle-container {
+        margin-top: -15px;
+    }
+    .ring-set .speed-container,
+    .ring-set .code-container {
+        margin-top: 15px;
+    }
+    .total-score {
+        margin-top: 0;
+    }
+    .team-rank {
+        font-size: 24px;
+    }
+    .team-name {
+        font-size: 28px;
+    }
+    .total-score {
+        font-size: 24px;
+    }
+    .team-score {
+        font-size: 32px;
+    }
 }

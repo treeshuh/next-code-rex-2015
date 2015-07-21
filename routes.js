@@ -68,6 +68,7 @@ exports.getChallenges = function(req, res) {
     model.getChallenges(req.user, function(resource) {
         res.render('challenges.html', {
             user: req.user,
+            referer: req.headers.referer,
             speedChallenges: resource.speed,
             codeChallenges: resource.code,
             puzzleChallenges: resource.puzzle,
@@ -96,7 +97,6 @@ exports.displayChallenge = function(req, res) {
                 type: type,
                 challengeId: challengeId,
                 challenge: challenges[type][challengeId],
-                challenges: challenges
             });
         } else {
             res.redirect("/challenges");
@@ -160,6 +160,7 @@ submitPuzzle = function(req, res) {
 exports.scoreboard = function(req, res) {
     res.render('scoreboard.html', {
         user: req.user,
+        referer: req.headers.referer,
         globalScoreboard: model.getGlobalScoreboard(),
         maxScores: model.getMaxScores()
     });

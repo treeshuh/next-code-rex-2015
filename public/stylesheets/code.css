@@ -3,6 +3,11 @@
 @font-face {
     font-family: agencyFB;
     src: url('/fonts/AgencyFB.ttf');
+    src: url('/fonts/AgencyFB.eot');
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 body {
@@ -11,39 +16,55 @@ body {
     background-repeat: no-repeat;
     background-size: 600px;
     background-position: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
+
 .header {
     font-size: 20px;
     font-family: agencyFB;
     background-color: rgba(55, 90, 142, 0.9);
 }
 
+.panel {
+    border-radius: 0 !important;
+    margin-bottom: 15px !important;
+}
+
 .panel-primary>.panel-heading {
     background-color: #464545;
     font-family: agencyFB;
+    border-radius: 0;
 }
 
 #left-pane {
     float: left;
-    height: 100%;
+    height: auto;
     width: 40%;
     display: inline-block;
     margin: 10px;
     border: #333 3px !important;
 }
+
 #right-pane {
     float: right;
-    height: 100%;
+    height: auto;
     width: 55%;
     display: inline-block;
     margin: 10px;
     border: #333 3px !important;
 }
+
 @media (max-width: 1050px) {
     #left-pane {
         width: 275px;
     }
 }
+
 @media (max-width: 900px) {
     #left-pane {
         display: none;
@@ -52,6 +73,7 @@ body {
         width: 90%;
     }
 }
+
 #editor,
 .ace_editor {
     height: 60%;
@@ -61,9 +83,14 @@ body {
     font-size: 12pt;
     margin-top: 10px;
     border: 1px solid #e7e7e7;
-    border-radius: 4px;
     border-width: 2px 1px 4px 1px;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
+
 .ace_content {
     background-size: 90% 85%;
     background-image: url("/images/editor_bg.png") !important;
@@ -71,42 +98,50 @@ body {
     background-position: center;
     margin-top: 10px !important;
 }
+
 .ace_gutter {
     margin-top: 10px !important;
 }
+
 .btn-group button {
     font-size: 1.2vw;
     margin-right: 15px;
     font-family: agencyFB;
 }
+
 .challenge-title {
     text-align: center;
     font-family: agencyFB;
     margin-bottom: 20px;
     color: #333;
 }
+
 #rules {
     font-size: 12pt;
     font-family: agencyFB;
 }
+
 #scorebar {
     background-color: #FFFFFF;
     max-width: 750px;
     margin: 4px 0px 10px 0px;
     border: 1px solid #e7e7e7;
     border-width: 0 1px 4px 1px;
-    border-radius: 4px;
+    text-align: center;
     font-family: agencyFB;
 }
+
 #scorebar ul {
+    display: -ms-inline-flexbox;
     display: inline-flex;
     display: -webkit-inline-flex;
     display: -ms-inline-flex;
-    text-align: center;
 }
+
 #scorebar ul li {
     margin: 0px 16px;
 }
+
 #scorebar ul li h3 {
     font-size: 1.4vmax;
     font-weight: 500;
@@ -114,45 +149,65 @@ body {
     color: #ccc;
     text-transform: uppercase;
 }
+
 #alerts {
+    text-align: center;
     font-family: agencyFB;
     max-width: 750px;
     font-size: 130%;
 }
+
+.alert {
+    border-radius: 0;
+}
+
+.alert-console {
+    text-align: left;
+}
+
 ul li .stat-num {
     color: #333;
     font-size: 3.4vmax;
 }
+
 #team-score {
     color: #375a7f;
 }
+
 .golf {
     color: #666666;
 }
+
 .max {
     color: #00bc8c;
 }
+
 .complete {
     background-color: #00bc8c !important;
-    opacity: 0.45; 
+    opacity: 0.45;
 }
+
 .inactive,
 .incomplete {
     opacity: 0.5;
 }
+
 .progress {
     margin-top: 10px;
     display: none;
 }
+
 button:focus,
 button:active {
     border: none;
     outline: none;
 }
+
 pre {
     font-size: 10pt;
 }
+
 v {
-   white-space: nowrap;
-   font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    white-space: nowrap;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }

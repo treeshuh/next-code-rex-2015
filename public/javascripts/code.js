@@ -144,6 +144,9 @@ $(document).ready(function() {
     function setupTask() {
         $("#statement").append(statement.replace(/\_([^\_]+)\_/g, "<v>$1</v>"));
         $("#task").collapse("show");
+        for (i in hints) {
+            $("#hints>.panel-body").append("<li>" + hints[i] + "</li>");
+        }
     }
 
     function setupEditor() {
@@ -206,7 +209,7 @@ $(document).ready(function() {
                 $("#team-score").html(result.score)
                 previousScore = result.score
                 updateScorebar();
-                setTimeout(function(){
+                setTimeout(function() {
                     location.href = ("/challenges")
                 }, 1500);
             } else if (result.improved) {
@@ -259,5 +262,5 @@ function alertWarning(header, message) {
 }
 
 function alertConsole(header, message) {
-    $("#alerts").append("<div class='alert'> <strong>" + header + "</strong>" + "<br> <pre>" + message + "</pre></div>");
+    $("#alerts").append("<div class='alert alert-console'> <strong>" + header + "</strong>" + "<br> <pre>" + message + "</pre></div>");
 }

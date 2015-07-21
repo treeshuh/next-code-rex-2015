@@ -3,7 +3,7 @@
   top: -110%;
   left: -210%;
   width: 200%;
-  height: 210%;
+  height: 220%;
 
   opacity: 0;
   
@@ -51,9 +51,9 @@
     rgba(255, 255, 255, 0.0) 100%
   );
 
-  -webkit-transform: rotate(60deg);
-     -moz-transform: rotate(60deg);
-      -ms-transform: rotate(60deg);
+  -webkit-transform: rotate(30deg);
+     -moz-transform: rotate(30deg);
+      -ms-transform: rotate(30deg);
        -o-transform: rotate(30deg);
           transform: rotate(30deg);
     
@@ -62,11 +62,11 @@
       -ms-transition-property: left, top, opacity;
        -o-transition-property: left, top, opacity;
           transition-property: left, top, opacity;
-  -webkit-transition-duration: 0.5s, 0.5s, 0.1s;
-     -moz-transition-duration: 0.5s, 0.5s, 0.1s;
-      -ms-transition-duration: 0.5s, 0.5s, 0.1s;
-       -o-transition-duration: 0.5s, 0.5s, 0.1s;
-          transition-duration: 0.5s, 0.5s, 0.1s;
+  -webkit-transition-duration: 0.5s, 0.5s, 0.15s;
+     -moz-transition-duration: 0.5s, 0.5s, 0.15s;
+      -ms-transition-duration: 0.5s, 0.5s, 0.15s;
+       -o-transition-duration: 0.5s, 0.5s, 0.15s;
+          transition-duration: 0.5s, 0.5s, 0.15s;
   -webkit-transition-timing-function: ease;
      -moz-transition-timing-function: ease;
       -ms-transition-timing-function: ease;
@@ -76,20 +76,11 @@
 
 /* Hover state - trigger effect */
 
-.rank-1:hover .shine-effect, .stats-item.me.hover .shine-effect {
-  opacity: 1;
-  top: -60%;
-  left: -30%;
-}
-
-.rank-2:hover .shine-effect {
-  opacity: 1;
-  top: -60%;
-  left: -30%;
-}
-
-.rank-3:hover .shine-effect {
-  opacity: 1;
-  top: -60%;
-  left: -30%;
+.rank-1:hover .shine-effect,
+.rank-2:hover .shine-effect,
+.rank-3:hover .shine-effect,
+.stats-item.highlight .shine-effect {
+    opacity: 0.9;
+    top: -60%;
+    left: -30%;
 }

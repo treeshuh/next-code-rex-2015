@@ -1,49 +1,64 @@
 @font-face {
-	font-family: agencyFB;
-	src: url('/fonts/AgencyFB.ttf');
+    font-family: agencyFB;
+    src: url('/fonts/AgencyFB.ttf');
+    src: url('/fonts/AgencyFB.eot');
 }
 
 body {
-	background-image: url("/images/ring_logo_5.png");
-	background-repeat: no-repeat;
-	background-size: 600px;
-	background-position: center;
-	font-family: agencyFB;
+    height: 100%;
+    background-image: url("/images/ring_logo_5.png");
+    background-repeat: no-repeat;
+    background-size: 600px;
+    background-position: center;
+    font-family: agencyFB;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: all 2s ease;
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+}
+
+body.color {
+    background-image: url("/images/ring_logo_color_alpha_25.png");
 }
 
 .container {
-	position: relative;
-	width: 80%;
-	height: 210px;
-	margin-left: auto;
-	margin-right: auto;
-  	top: 50%;
-  	transform: translateY(-50%);
+    position: relative;
+    width: 80%;
+    height: 210px;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .error-container {
-	position: absolute;
-	top: -20px;
+    position: absolute;
+    top: -20px;
 }
 
 .error-container p {
-	font-family: "Lato";
-	font-variant: small-caps;
-	color: red;
-	text-align: center;
+    font-family: "Lato";
+    font-variant: small-caps;
+    color: red;
+    text-align: center;
 }
 
 .left {
-	width: 48%;
-	display: inline-block;
-	vertical-align: top;
-
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
 }
-.right {
-	width: 48%;
-	display: inline-block;
-	vertical-align: top;
 
+.right {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 @media (max-width: 960px) {
@@ -58,95 +73,109 @@ body {
         vertical-align: top;
     }
 }
-	
+
 img {
-	float: right;
-	padding-right: 4%;
-	height: 200px;
+    float: right;
+    padding-right: 4%;
+    height: 200px;
 }
 
 .login {
-	background-color: rgba(0,0,0,0.8);
-	height: 200px;
-	width: 600px;
-	max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 200px;
+    width: 600px;
+    max-width: 100%;
 }
 
-input{
-	font-family: "Lato";
-	width: 250px;
-	display: block;
-	margin-left: 20px;
-	margin-top: 20px;
-	height: 40px;
-	padding: 10px;
-	text-align: center;
-	font-variant: small-caps;
+input {
+    font-family: "Lato";
+    width: 250px;
+    display: block;
+    margin-left: 20px;
+    margin-top: 20px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    font-variant: small-caps;
 }
 
 input[type="submit"] {
-	background-color: rgba(0,0,0,0);
-	border: 2px solid white;
-	color: white;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid white;
+    color: white;
 }
 
 input[type="submit"]:hover {
-	background-color: white;
-	color: black;
-	cursor: pointer;
+    background-color: white;
+    color: black;
+    cursor: pointer;
 }
 
 form {
-	width: 280px;
-	display: inline-block;
-	height: 180px;
-	overflow: hidden;
+    width: 280px;
+    display: inline-block;
+    height: 180px;
+    overflow: hidden;
 }
 
 .pointer-to-login {
-	display: none;
-	width: 280px;
-	display: inline-block;
-	height: 180px;
-	overflow: hidden;
-	text-align: center;
+    display: none;
+    width: 280px;
+    display: inline-block;
+    height: 180px;
+    overflow: hidden;
+    text-align: center;
 }
 
 .pointer-to-login p {
-	margin-top: 15px;
-	font-size: 20px;
-	text-align: center;
-	color: white;
-	font-variant: small-caps;
+    margin-top: 15px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    font-variant: small-caps;
 }
 
 .pointer-to-login img {
-	float: none;
-	margin-top: 20px;
-	width: 100px;
-	height: auto;
+    float: none;
+    margin-top: 20px;
+    width: 100px;
+    height: auto;
 }
 
-.register-form input[type="text"]{
-	height: 30px;
-	margin-top: 20px;
-	padding: 5px;
+.register-form input[type="text"] {
+    height: 30px;
+    margin-top: 20px;
+    padding: 5px;
 }
 
-.register-form input[type="password"]{
-	height: 30px;
-	margin-top: 10px;
-	padding: 5px;
+.register-form input[type="password"] {
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px;
 }
 
-.register-form input[type="submit"]{
-	margin-top: 10px;
+.register-form input[type="submit"] {
+    margin-top: 10px;
 }
 
 .vertical-divide {
-	display: inline-block;
-	width: 2px;
-	margin: 0 5px 0 15px;
-	height: 160px;
-	background-color: white;
+    display: inline-block;
+    width: 2px;
+    margin: 0 5px 0 15px;
+    height: 160px;
+    background-color: white;
+}
+
+input:focus {
+    outline-color: rgb(225, 225, 225);
+    outline-width: 1px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+     -webkit-box-shadow: 0 0 0 1000px rgb(46, 45, 45) inset;
+     -webkit-text-fill-color: white;
 }

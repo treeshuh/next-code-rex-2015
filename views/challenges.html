@@ -6,10 +6,10 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/challenges.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="/javascripts/lib/knob/knob.js"></script>
         <script src="/javascripts/main.js"></script>
         <script>
+            const referer = "{{referer}}"
             const teamTotal = {{stats.total.score}}
             var stats = {{{json stats}}}
         </script>
@@ -17,13 +17,9 @@
     </head>
     <body>
         <div class="header">
-            <!-- <a href="/challenges"><span class="circle">NC</span></a>
-            <div class="appname">
-                <a href="/challenges">Next Code REX</a>
-            </div> -->
             <ul class="topnav">
-                <li><a href="/scoreboard">Scoreboard</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li id="scoreboard-tab"><a href="/scoreboard">Scoreboard</a></li>
+                <li id="logout-tab"><a href="/logout">Logout</a></li>
             </ul>
         </div>
 
@@ -49,14 +45,14 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-target="#speed" 
                                href="#speed">
-                              SPEED
+                              <strong>SPEED</strong>
                             </a>
                         </h4>
                     </div>
                     <div id="speed" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each speedChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item col-md-6">{{this.title}} <br>
+                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item col-md-6 score-{{this.score}}">{{this.title}} <br>
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}
@@ -70,14 +66,14 @@
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#puzzle"
                        href="#puzzle">
-                      PUZZLE
+                      <strong>PUZZLE</strong>
                     </a>
                   </h4>
                     </div>
                     <div id="puzzle" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each puzzleChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="puzzle list-group-item col-md-6">{{this.title}} <br>
+                                <a href="/challenge/{{this.id}}.nxt" class="puzzle list-group-item col-md-6 score-{{this.score}}">{{this.title}} <br>
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}
@@ -91,14 +87,14 @@
                         <h4 class="panel-title">
                     <a data-toggle="collapse" data-target="#code"
                        href="#code">
-                      CODE
+                      <strong>CODE</strong>
                     </a>
                   </h4>
                     </div>
                     <div id="code" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each codeChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="code list-group-item col-md-4">{{this.title}} <br> 
+                                <a href="/challenge/{{this.id}}.nxt" class="code list-group-item col-md-4 score-{{this.score}}">{{this.title}} <br> 
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}
@@ -110,15 +106,20 @@
         </div>
     </div>
 
-        <div id="center-pane">
-            <h2><strong><small>TEAM</small> {{user.username}}</strong></h2>
-            <div id="score-display">
-                <strong><span id="team-score" class="score-{{stats.total.score}}">0000</span></strong><span id="total-score"> / 2019 </span>
-            </div>
+    <div class="right">
+        <iframe id = "scoreboard-frame">
+        </iframe>
+    </div>
+
+
+    <div id="center-pane">
+        <h2><strong><small>TEAM</small> {{user.username}}</strong></h2>
+        <div id="score-display">
+            <strong><span id="team-score" class="score-{{stats.total.score}}">0000</span></strong><span id="total-score"> / 2019 </span>
         </div>
+    </div>
+
 
     </body>
-    <script>
-        $('.score-unsolved').remove();
-    </script>
+
 </html>

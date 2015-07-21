@@ -190,6 +190,13 @@ function solveChallenge(user, challengeId, score, data) {
         'type': type,
         'best': data
     });
+    root.child('solves').child("last").set({
+        'id': challengeId,
+        'timestamp': new Date().getTime(),
+        'score': score,
+        'type': type,
+        'user': user
+    });
 };
 
 // callback is called whenever the firebase data changes

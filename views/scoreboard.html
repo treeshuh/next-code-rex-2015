@@ -10,43 +10,48 @@
         <script src="/javascripts/lib/knob/knob.js"></script>
         <script src="/javascripts/main.js"></script>
         <script>
+            const referer = "{{referer}}"
             const username = "{{user.username}}"
             var maxScores = {{{json maxScores}}}
         </script>
+        <script src="/javascripts/lib/firebase.js"></script>
         <script src="/javascripts/scoreboard.js"></script>
     </head>
     <body>
         <div class="header">
             <ul class="topnav">
-                <li class="greeting"><a href="#stats-{{user.username}}">TEAM {{user.username}}</a></li>
+                <li class="greeting"><a>TEAM {{user.username}}</a></li>
                 <li><a href="/challenges">Challenges</a></li>
             </ul>
         </div>
         <div class="container">
 
-            <h2><strong>2015 NEXTCODE TRIATHLON</strong><h2>
+            <h2><strong><span class="year"><small>2015</small></span> NextCode Triathlon</strong></h2>
             <br>
-            <h1>RANKINGS</h1>
-
-            {{#each globalScoreboard}}
-            <div class="stats-item col-md-4 rank-{{inc @index}} score-{{this.score.total}}" id="stats-{{this.username}}">
-                <span class="shine-effect"></span>
-                <div class="stats-top"><span class="team-rank">{{inc @index}} </span><span class="team-name">{{this.username}}</span></div>
-                <div class="ring-set" id="ring-{{this.username}}">
-                    <div class = "speed-container">
-                        <input type="text" class="ring ring-speed" data-min="0" data-max="{{maxScores.speed}}" value="{{this.score.speed}}">
+            
+            <div class="scoreboard-container">
+                {{#each globalScoreboard}}
+                <div class="stats-item col-md-4 rank-{{inc @index}} score-{{this.score.total}}" id="stats-{{this.username}}">
+                    <span class="shine-effect"></span>
+                    <div class="stats-top"><strong><span class="team-rank">{{inc @index}} </span></strong><span class="team-name">{{this.username}}</span></div>
+                    <div class="ring-set" id="ring-{{this.username}}">
+                        <div class="speed-container">
+                            <input type="text" class="ring ring-speed" data-min="0" data-max="{{maxScores.speed}}" value="{{this.score.speed}}">
+                        </div>
+                        <div class="puzzle-container">
+                            <input type="text" class="ring ring-puzzle" data-min="0" data-max="{{maxScores.puzzle}}" value="{{this.score.puzzle}}">
+                        </div>
+                        <div class="code-container">
+                            <input type="text" class="ring ring-code" data-min="0" data-max="{{maxScores.code}}" value="{{this.score.code}}">
+                        </div>
                     </div>
-                    <div class = "puzzle-container">
-                        <input type="text" class="ring ring-puzzle" data-min="0" data-max="{{maxScores.puzzle}}" value="{{this.score.puzzle}}">
-                    </div>
-                    <div class = "code-container">
-                        <input type="text" class="ring ring-code" data-min="0" data-max="{{maxScores.code}}" value="{{this.score.code}}">
-                    </div>
+                    <div class="total-score"><strong><span class="team-score">{{this.score.total}}</span></strong> / 2019</div>
                 </div>
-                <div class="total-score"> <span class="team-score">{{this.score.total}}</span> / 2019</div>
+                {{/each}}
             </div>
-            {{/each}}
+            
         </div>
+
     </body>
 </html>
 

@@ -1,6 +1,11 @@
 @font-face {
     font-family: agencyFB;
     src: url('/fonts/AgencyFB.ttf');
+    src: url('/fonts/AgencyFB.eot');
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 body {
@@ -8,6 +13,12 @@ body {
     overflow-x: hidden;
     font-family: agencyFB;
     background-color: rgba(51, 181, 229, 0.2);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .header {
@@ -18,7 +29,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+    min-height: 100%;
+    height: auto;
     width: 50%;
     border: 1px solid #e7e7e7;
     border-width: 0px 5px 0px 0px;
@@ -33,15 +45,30 @@ body {
     text-align: center;
 }
 
+.right {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+}
+
+#scoreboard-frame {
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
 #rings-bar {
     visibility: hidden;
     margin: 10px 0;
     margin-left: -20px;
     width: 100%;
     max-width: 450px;
-    display: inline-flex;
+    display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
-    display: -ms-inline-flex;
+    display: inline-flex;
 }
 
 div.ring {
@@ -51,13 +78,13 @@ div.ring {
     background-position: 75% 50%;
     opacity: 0.8;
     border-radius: 50%;
+    transform: scale(1.0);
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
     -o-filter: blur(1px);
     -ms-filter: blur(1px);
     filter: blur(1px);
-    transition: margin-top 0.5s ease-in-out, background-position 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    -webkit-transition: margin-top 0.5s ease-in-out, background-position 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out
 }
 
 div.ring-puzzle {
@@ -83,14 +110,14 @@ div.ring-code:hover {
 }
 
 div.ring>div>canvas {
-    -webkit-transition: -webkit-transform .8s ease-in-out, opacity 0.8s;
-    transition: transform .8s ease-in-out, opacity .8s;
+    transition: all 0.8s ease-in-out;
     opacity: 0.9;
 }
 
 div.ring:hover>div>canvas {
     opacity: 1.0;
     -webkit-transform: rotate(360deg);
+    -mos-transform: rotate(360deg);
     transform: rotate(360deg);
     -webkit-filter: blur(0px);
     -moz-filter: blur(0px);
@@ -190,7 +217,6 @@ h4.panel-title > a:hover {
 
 #center-pane {
     transition: text-shadow 1.0s ease-in-out;
-    -webkit-transition: text-shadow 1.0s ease-in-out;
     position: absolute;
     display: none;
     width: 600px;
@@ -198,14 +224,16 @@ h4.panel-title > a:hover {
     left: 75%;
     top: 50%;
     margin-left: -300px;
-    margin-top: -250px;
+    margin-top: -225px;
     vertical-align: middle;
     text-align: center;
 }
 
 #center-pane:before {
-    transition: transform 1.0s ease-in-out, opacity 1.0s ease-in-out;
-    -webkit-transition: -webkit-transform 1.0s ease-in-out, opacity 1.0s ease-in-out;
+    transition: all 1.0s ease-in-out;
+    -webkit-transition: all 1.0s ease-in-out;
+    -moz-transition: all 1.0s ease-in-out;
+    -ms-transition: all 1.0s ease-in-out;
     content: "";
     position: absolute;
     z-index: -1;
@@ -213,10 +241,10 @@ h4.panel-title > a:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0.25;
+    opacity: 0.3;
     background: url("/images/ring_logo_color.png") center center no-repeat;
     -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
+    transform: scale(0.9);
     -webkit-filter: blur(2px);
     -moz-filter: blur(2px);
     -o-filter: blur(2px);
@@ -225,8 +253,11 @@ h4.panel-title > a:hover {
 }
 
 #center-pane:hover:before {
-    -webkit-transform: rotate(360deg) scale(1.0);
-    -moz-transform: rotate(360deg) scale(1.0);
+    -webkit-transform: scale(1.0);
+    -moz-transform: scale(1.0);
+    -ms-filter: scale(1.0);
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
     opacity: 0.75;
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
@@ -265,17 +296,29 @@ h4.panel-title > a:hover {
     display: none;
 }
 
+a > .score-unsolved {
+    visibility: hidden;
+}
+
+.score-unsolved {
+    padding: 12px 6px 0px 6px;
+}
+
 @media (max-width: 1280px) {
     #center-pane {
         left: 80%;
     }
     #center-pane:before {
+        transform: scale(0.6);
         -webkit-transform: scale(0.6);
         -moz-transform: scale(0.6);
+        -ms-transform: scale(0.6);
     }
     #center-pane:hover:before {
+        transform: scale(0.7);
         -webkit-transform: scale(0.7);
         -moz-transform: scale(0.7);
+        -ms-transform: scale(0.7);
     }
     #center-pane h2 {
         margin-top: 25%;
@@ -287,14 +330,25 @@ h4.panel-title > a:hover {
     .left {
         width: 60%;
     }
+    .right {
+        left: 60%;
+        width: 40%;
+    }
 }
 
 @media (max-width: 961px) {
-    #center-pane {
+    #center-pane,
+    .right {
         display: none !important;
     }
     .left {
         width: 100%;
+    }
+    #rings-bar {
+        max-width: 350px;
+    }
+    div.ring {
+        transform: scale(0.9);
     }
 }
 
