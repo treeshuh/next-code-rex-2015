@@ -56,7 +56,7 @@
                     <div id="speed" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each speedChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item">{{this.title}} <br>
+                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item col-md-6">{{this.title}} <br>
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}

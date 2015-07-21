@@ -9,19 +9,21 @@
                 const targetString = "{{challenge.detail.passage}}";
                 const timeLimit = {{challenge.detail.timeLimit}};
                 const maxScore = {{challenge.maxScore}};
+                const previousScore = {{previousScore}};
         </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+        <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
+        <script src="/javascripts/main.js"></script>
         <script src="/javascripts/{{this.type}}.js"></script>
     </head>
     <body>
         <div class="header">
-            <a href="/challenges"><span class="circle">NC</span></a>
             <div class="appname">
-                <a href="/challenges">Next Code REX</a>
+                <strong><a href="/challenges">2015 Nextcode Triathlon</a></strong>
             </div>
             <ul class="topnav">
-                <li class="greeting">{{user.username}}</li>
+                <li class="greeting"><strong>Team {{user.username}}</strong></li>
                 <li><a href="/challenges">Challenges</a></li>
                 <li><a href="/scoreboard">Scoreboard</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -30,26 +32,39 @@
         </div>
 
         <div class="container">
-            <div class="left-pane">
-                <div class="challenge-type">{{challenge.type}}</div>
+            <div id="left-pane">
+                <div id="instructions" class="panel panel-primary">
+                    <div class="panel-heading">Your Challenge</div>
+                    <div id="instruction-panel" class="panel-body">
+                        Press START, and type the passage as quickly as possible!
+                        <br>
+                        You have {{challenge.detail.timeLimit}} seconds.
+                    </div>
+                </div>
 
-                <div class="challenge-title">{{challenge.title}}</div>
+                <div id="score-display" class="panel">
+                    <h3>COMPLETION SCORE</h3>
+                    <div id="max-score" class="stat-num">{{challenge.maxScore}}</div>
+                </div>    
+
+                <div class="timer panel" style="width:100%;" data-bind="visible: challenging()">
+                    <div class="input-progress panel"></div>
+                    <div class="timer-progress panel"></div>
+                </div>
+            </div>
+            <div id="right-pane">
+                <div id="alerts">
+                </div>
+                <h1 class="challenge-title">{{challenge.title}}</h1>
                 <div data-bind="if: !challenging()">
-                    <button data-bind="click: startChallenge">Start!</button>
+                    <button class="btn btn-lg btn-success" data-bind="click: startChallenge">Start!</button>
                 </div>    
                 <div data-bind="if: challenging()">
-                    <p data-bind="foreach: targetWords">
+                    <div data-bind="foreach: targetWords" class="panel interactive">
                         <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
-                    </p>
-                    <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
-                    <div class="timer" style="width:200px;">
-                        <div class="input-progress"></div>
-                        <div class="timer-progress"></div>
                     </div>
+                    <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
                 </div>   
-            </div>
-            <div class="right-pane">
-                <div class="alerts" data-bind="text: alertMessage()"></div>
             </div>     
         </div>
 
