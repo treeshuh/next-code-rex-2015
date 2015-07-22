@@ -95,7 +95,7 @@ function getUser(username, callback) {
         var users = data.val();
         for (var userKey in users) {
             var user = users[userKey];
-            if (user.username == username) {
+            if (user.username.toLowerCase() == username.toLowerCase()) {
                 callback(false, user);
                 return;
             }

@@ -8,6 +8,7 @@ $(document).ready(function(){
             $(".error").text("");
         })
         e.preventDefault();
+        $('.container').animate({opacity: 0.6}, 300);
         $.ajax({
             type: 'POST',
             url: '/login',
@@ -15,9 +16,13 @@ $(document).ready(function(){
         }).done(function(response){
             if (response.error) {
                 $(".error").text("login error");
+                $('.container').animate({opacity: 1.0}, 700);
             }
             else {
-                $(location).attr('href', '/challenges');
+                $('body').addClass("color");
+                $('.container').animate({opacity: 0}, 450, function(){
+                    location.href = '/challenges';
+                })
             }
         })
     });

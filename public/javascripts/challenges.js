@@ -12,12 +12,22 @@ for (var i in ringNames) {
 }
 
 const opacityFill = "0.85";
-const opacityEmpty = "0.55";
 const rings = {
     "speed": "rgba(0, 188, 140, " + opacityFill + ")",
     "puzzle": "rgba(231, 76, 60, " + opacityFill + ")",
     "code": "rgba(55, 90, 142, " + opacityFill + ")"
 };
+const opacities = {
+    "speed": "0.45",
+    "puzzle": "0.55",
+    "code": "0.55"
+};
+
+var hardcode = !/chrome|safari/i.test(navigator.userAgent) || /mac.*chrome/i.test(navigator.userAgent);
+
+if (hardcode) {
+    $(".ring").addClass("hardcode");
+}
 
 $(document).ready(function() {
 
@@ -28,11 +38,18 @@ $(document).ready(function() {
 
     function startCountUp() {
         var count = 0;
+        $("#team-score").css({
+            "opacity": 0.25,
+            "font-size": "100px"
+        }).animate({
+            "opacity": 0.95,
+            "font-size": "120px"
+
+        }, 1000);
         var countUp = setInterval(function() {
-            if (count < teamTotal) {
-                count += Math.round(130 * teamTotal / 2019);
-                var fraction = (count / teamTotal);
-                $("#team-score").html(pad(count, 4)).css("opacity", 0.70 * fraction + 0.25).css("font-size", 100 + 20 * fraction + "px");
+            if (count < teamTotal * 0.9) {
+                count += Math.round(teamTotal * .06);
+                $("#team-score").html(pad(count, 4));
             } else {
                 $("#team-score").html(pad(teamTotal, 4)).css({
                     "opacity": 1.0,
@@ -56,7 +73,8 @@ $(document).ready(function() {
         $("#total-score").show();
     }
 
-    var ringWidth = Math.min(200, Math.round($(window).width() / 6));
+    var windowWidth = $(window).width();
+    var ringWidth = (windowWidth > 1280) ? 200 : (windowWidth > 961) ? 175 : 150;
     var ringOpts = {
         readOnly: true,
         thickness: 0.18,
@@ -68,8 +86,8 @@ $(document).ready(function() {
     function drawRings() {
         for (var i in rings) {
             ringOpts.fgColor = rings[i]
-            ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacityEmpty);
-            $("#ring-" + i).attr("value", (stats[i].score) ? String(stats[i].score) * .99 : String(Math.round(stats[i].possible / 100)));
+            ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacities[i]);
+            $("#ring-" + i).attr("value", (stats[i].score) ? stats[i].score * .99 : Math.round(stats[i].possible * .01));
             $("#ring-" + i).knob(ringOpts);
         }
     }
@@ -106,8 +124,7 @@ $(document).ready(function() {
             $("#panel-code").fadeIn(500, function() {
                 $(".panel-slide").slideDown(500);
                 $("#left-pane").animate({
-                    "height": "auto",
-                    "min-height": "100%"
+                    "height": "auto"
                 });
             });
         }, 450);
@@ -137,7 +154,6 @@ $(document).ready(function() {
             $("#center-pane").remove();
             $("#scoreboard-frame").contents().find(".header").hide();
             $("#scoreboard-frame").contents().find("h2").html("<strong>CURRENT RANKINGS</strong>").css("font-size", "48px");
-            $("#scoreboard-frame").contents().find(".stats-item").css("border", "none");
             $("#scoreboard-frame").animate({
                 opacity: 1
             }, 600);
@@ -160,7 +176,7 @@ $(document).ready(function() {
         w = context.canvas.width;
         fontSize = h / 8;
         fontWidth = fontSize / 5.2;
-        var category = $($($(this).parent()).parent()).attr("class").split("-")[1];
+        var category = $($($(this).parent()).parent()).attr("class").split("-")[1].split(" ")[0];
         context.font = fontSize + "px agencyFB";
         context.fillStyle = rings[category];
         var score = stats[category].score;

@@ -77,6 +77,12 @@ body {
     font-size: 130%;
 }
 
+@media (max-width: 1280px) {
+    #alerts {
+        font-size: 100%;
+    }
+}
+
 .alert {
     border-radius: 0;
     text-align: center;

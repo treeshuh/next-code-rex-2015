@@ -1,6 +1,7 @@
 <html>
 <head>
-    <title>Next Code REX 2015</title>
+    <title>Next Code Triathlon</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
@@ -14,12 +15,14 @@
 <body>
     <div class="header">
         <div class="appname">
-            <strong><a href="/challenges"><small><span class="year">2015</span></small> Nextcode Triathlon</a></strong>
+            <a href="/challenges"><small>2015</small> <strong>Nextcode Triathlon</strong></a>
+        </div>
+        <div class="teamname">
+            <a href="/scoreboard"><small>Team</small> <strong>{{user.username}}</strong></a>
         </div>
         <ul class="topnav">
-            <li class="greeting"><strong>Team {{user.username}}</strong></li>
             <li><a href="/challenges">Challenges</a></li>
-            <li><a href="/scoreboard">Scoreboard</a></li>
+            <li><a href="/scoreboard">Rankings</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
         <div class="prettybar"></div>

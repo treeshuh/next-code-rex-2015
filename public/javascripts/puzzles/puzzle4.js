@@ -381,29 +381,29 @@ const walls = [{
 $(document).ready(function() {
 
     const positions = [{
-        x: 360,
-        z: 380
+        x: -727,
+        z: 156
     }, {
-        x: -840,
-        z: -270
+        x: -666,
+        z: 2
     }, {
         x: 30,
         z: 125
     }, {
-        x: 485,
-        z: -305
+        x: -234,
+        z: -398
     }, {
-        x: 760,
-        z: 210
+        x: -734,
+        z: -115
     }, {
-        x: 385,
-        z: -15
+        x: -620,
+        z: -375
     }, {
-        x: 666,
-        z: 127
+        x: -283,
+        z: 348
     }, {
-        x: 675,
-        y: -2
+        x: -20,
+        z: 481
     }];
 
     var cubes = [];
@@ -434,8 +434,8 @@ $(document).ready(function() {
     };
     var angleY = 0;
     var angleX = 0;
-    var windowHalfX = window.innerWidth / 2;
-    var windowHalfY = window.innerHeight / 2;
+    var windowHalfX = $(window).width() / 2;
+    var windowHalfY = $(window).height() / 2;
     var incrementoX = Math.PI / (windowHalfX);
     var incrementoY = Math.PI / (windowHalfY);
     var posInitial = {
@@ -459,7 +459,7 @@ $(document).ready(function() {
 
         geometry = new THREE.BoxGeometry(100, 100, 100);
         geometrySphere = new THREE.SphereGeometry(75, 16, 16);
-        geometryCube = new THREE.BoxGeometry(50, 50, 50);
+        geometryCube = new THREE.BoxGeometry($(window).height()/20, $(window).height()/20, $(window).height()/20);
         geometryPlane = new THREE.PlaneBufferGeometry(maze.width * maze.cellSize, maze.large * maze.cellSize);
         geometryPlaneBasic = new THREE.PlaneBufferGeometry(maze.cellSize, maze.cellSize, 1, 1);
 
@@ -498,6 +498,7 @@ $(document).ready(function() {
             }));
             cubes[i].position.x = positions[i].x;
             cubes[i].position.z = positions[i].z;
+            //console.log(cubes[i])
         }
 
         plane = new THREE.Mesh(geometryPlane, material);
@@ -580,7 +581,7 @@ $(document).ready(function() {
 
         for (i in cubes) {
             scene.add(cubes[i]);
-        }
+        } 
         scene.add(plane);
         scene.add(plane2);
         pointLight = new THREE.DirectionalLight(0xffffff);
@@ -593,9 +594,13 @@ $(document).ready(function() {
         setTimeout(function() {
             $("#interactive").append(renderer.domElement).fadeIn(750);
         }, 500);
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        document.addEventListener('keydown', onDocumentKeyDown, false);
+        $(document).on("mousemove", onDocumentMouseMove)
+        $(document).on("keydown", onDocumentKeyDown);
     };
+
+    /* $(document).on("click", function(){
+        console.log(camera.position.x, camera.position.z);
+    }) */
 
     function onDocumentMouseMove(e) {
         difference = mouseX - e.clientX;
@@ -654,6 +659,8 @@ $(document).ready(function() {
             if (!mazeComplete) {
                 alertSuccess("You've discovered all the totems.", "");
                 mazeComplete = true;
+                $(document).unbind("mousemove");
+                $(document).unbind("keydown");
             }
         }
     };
@@ -679,13 +686,16 @@ $(document).ready(function() {
 
     function Slider() {
 
-        $("#left-pane").append("<br><canvas id='slider' height='300px' width='300px'></canvas>");
+        const height = Math.min(300, $(window).height()/2.8);
+        $("#left-pane").append("<br><canvas id='slider' height=\"" + height + "px\" width=\"" + height + "px\"></canvas>");
         var context = document.getElementById("slider").getContext('2d');
-
+        var scale;
+        const boardSize = $("#slider").width();
         var img = new Image();
         img.src = '/images/maze/totem.png';
-
-        var boardSize = $("#slider").width();
+        img.onload = function(){
+            scale = boardSize/img.height;
+        }
         const tileCount = 3;
         const tileSize = boardSize / tileCount;
 
@@ -704,8 +714,14 @@ $(document).ready(function() {
                 clickLoc.x = Math.floor((e.pageX - this.offsetLeft) / tileSize);
                 clickLoc.y = Math.floor((e.pageY - this.offsetTop) / tileSize);
                 if (distance(clickLoc.x, clickLoc.y, emptyLoc.x, emptyLoc.y) == 1) {
-                    slideTile(emptyLoc, clickLoc);
-                    drawTiles();
+                    try {
+                        slideTile(emptyLoc, clickLoc);
+                        drawTiles();
+                    } catch(e) {
+                        setBoard();
+                        drawTiles();
+                        slideTile(emptyLoc, clickLoc)
+                    }
                 }
                 if (solved) {
                     solve();
@@ -713,7 +729,7 @@ $(document).ready(function() {
             }
         });
 
-        this.setBoard = function() {
+        setBoard = function() {
             boardParts = new Array(tileCount);
             for (var i = 0; i < tileCount; ++i) {
                 boardParts[i] = new Array(tileCount);
@@ -726,6 +742,8 @@ $(document).ready(function() {
             emptyLoc.x = boardParts[tileCount - 1][tileCount - 1].x;
             emptyLoc.y = boardParts[tileCount - 1][tileCount - 1].y;
             solved = false;
+            console.log("Board is set.")
+            $("#slider").click();
         };
 
 
@@ -739,25 +757,26 @@ $(document).ready(function() {
                                 var y = boardParts[i][j].y;
                                 if (i != emptyLoc.x || j != emptyLoc.y || solved == true) {
                                     context.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize,
-                                        i * tileSize, j * tileSize, tileSize, tileSize);
+                                        i * tileSize / scale, j * tileSize / scale, tileSize, tileSize);
                                 }
                             }
                         }
                     }
                 } catch (e) {
-                    this.setBoard();
-                    this.drawTiles();
+                    setBoard();
+                    drawTiles();
                 }
             },
 
-            this.drawTiles = drawTiles;
+        this.drawTiles = drawTiles;
 
         this.drawTile = function(n) {
+            console.log(scale)
             var x = Math.floor(n / tileCount);
             var y = (n % tileCount);
             var i = (tileCount - 1) - x;
             var j = (tileCount - 1) - y;
-            context.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize,
+            context.drawImage(img, x * tileSize/scale, y * tileSize/scale, tileSize/scale, tileSize/scale,
                 i * tileSize, j * tileSize, tileSize, tileSize);
         }
 

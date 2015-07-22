@@ -3,14 +3,8 @@
     src: url('/fonts/AgencyFB.ttf');
 }
 
-.left-half {
-    width: 45%;
-    float: left;
-}
-
-.right-half {
-    width: 50%;
-    float: right;
+body {
+  letter-spacing: 0.5px;
 }
 
 .container {
@@ -32,16 +26,34 @@
     padding: 6px;
     margin-left: 100px;
     display: inline-block; }
-    .header .appname a {
+    .header div a {
       color: rgb(46, 45, 45);
    }
-    .header .appname a:hover {
+    .header div a:hover, .header div a:hover strong, .header .teamname a:hover small {
       text-decoration: none;
       color: #fafafa
    }
-    .header .appname .year {
-      color: #e7e7e7;
+    .header div small {
+      color: #ddd;
+      letter-spacing: 0.33px;
     }
+  .header .teamname {
+    font-family: agencyFB;
+    font-weight: 1000;
+    font-size: 24px;
+    padding: 11px;
+    display: inline-block;
+    float: right;
+    margin-right: 400px;
+  }
+     @media (max-width: 961px) {
+      .header .teamname {
+        display: none;
+      }
+   }
+  .header div a strong {
+    letter-spacing: 0.75px;
+  }
   .header .prettybar {
     height: 5px;
     background-color: #e8e8e8;
@@ -58,12 +70,13 @@
     position: absolute; }
     .header ul.topnav li {
       font-weight: 200;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 18px;
       vertical-align: center;
       display: inline-block;
       margin-right: 4px;
       position: relative;
+      letter-spacing: 0.25px;
       z-index: 200; }
       .header ul.topnav li.greeting {
         margin-right: 30px; }
@@ -82,120 +95,12 @@
           border-bottom: 6px solid #fafafa;
           background-color: #e8e8e8; }
 
-input[type="text"], input[type="password"] {
+input[type="text"] {
   border: 1px solid #ccc;
   padding: 5px;
   outline: none; }
-  input[type="text"]:focus, input[type="password"]:focus {
-    border: 1px solid #FFAC00; }
-
-input[type="submit"] {
-  font-family: sans-serif;
-  font-weight: 200;
-  font-size: 14px;
-  padding: 7px;
-  color: #fff;
-  background-color: #a4d654;
-  border: none;
-  border-radius: 5px; }
-  input[type="submit"]:hover {
-    background-color: #94C447;
-    cursor: pointer; }
-
-fieldset {
-  font-size: 14px; }
-  fieldset label {
-    width: 140px;
-    display: inline-block; }
-
-input[type="date"] {
-  display: inline; }
-
-input[type="file"] {
-  margin-bottom: 10px; }
-
-input[type="button"] {
-  font-family: sans-serif;
-  font-weight: 200;
-  font-size: 14px;
-  padding: 5px 12px;
-  color: #333;
-  background-color: #eee;
-  width: 100px;
-  border: none;
-  display: inline;
-  border-radius: 5px;
-  margin-right: 5px; }
-  input[type="button"].slim {
-    font-size: 13px; }
-  input[type="button"].active {
-    background-color: #E3F0D1; }
-    input[type="button"].active:hover {
-      background-color: #E3F0D1; }
-  input[type="button"]:hover {
-    background-color: #ddd;
-    cursor: pointer; }
-
-textarea {
-  border: 1px solid #ccc;
-  padding: 5px;
-  outline: none;
-  font-size: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-style: sans-serif; }
-  textarea:focus {
-    border: 1px solid #FFAC00; }
-
-.nodate {
-  font-size: 14px;
-  color: #aaa;
-  display: block; }
-
-table tr td {
-  vertical-align: middle;
-  padding-right: 10px;
-  font-size: 14px; }
-
-.alerttext {
-  margin-top: 10px;
-  color: #c94f4f; }
-
-.error-msg {
-  font-size: 14;
-  line-height: normal;
-  color: #c94f4f;
-  margin-bottom: 10px; }
-
-.success-msg {
-  color: #a4d654;
-  margin-bottom: 10px; }
-
-.invalid {
-  color: #E0BABA;
-  opacity: 0.6; }
-
-.displaytable tr {
-  background-color: #fff; }
-  .displaytable tr:nth-child(even) {
-    background-color: #E4F4F5; }
-  .displaytable tr td {
-    padding: 5px 20px 5px 5px;
-    min-width: 100px; }
-  .displaytable tr th {
-    background-color: #333;
-    color: #ccc;
-    padding: 3px 6px;
-    font-size: 12px;
-    font-weight: 500; }
-  .displaytable tr .invalid-blur {
-    color: transparent;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
-  .displaytable tr .empty {
-    opacity: 0.2; }
-
-.permissionStatus {
-  float: right; }
+  input[type="text"]:focus {
+    border: 2px solid #555; }
 
 input[type="text"] {
   width: 200px;
@@ -203,7 +108,7 @@ input[type="text"] {
 }
 
 .chosen {
-  color: green;
+  color: rgb(0, 188, 140);
   text-decoration: underline;
   font-weight: bold;
 }

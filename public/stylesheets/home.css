@@ -16,19 +16,20 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    transition: all 2s ease;
-    -webkit-transition: all 2s ease;
-    -moz-transition: all 2s ease;
-    -ms-transition: all 2s ease;
+    transition: all 1.0s ease-in;
+    -webkit-transition: all 1.0s ease-in;
+    -moz-transition: all 1.0s ease-in;
+    -ms-transition: all 1.0s ease-in;
 }
 
 body.color {
-    background-image: url("/images/ring_logo_color_alpha_25.png");
+    background-image: url("/images/ring_logo_color_alpha.png");
+    background-color: rgba(51, 181, 229, 0.4)
 }
 
 .container {
     position: relative;
-    width: 80%;
+    width: 95%;
     height: 210px;
     margin-left: auto;
     margin-right: auto;
@@ -39,7 +40,8 @@ body.color {
 
 .error-container {
     position: absolute;
-    top: -20px;
+    width: 600px;
+    top: -30px;
 }
 
 .error-container p {
@@ -56,22 +58,8 @@ body.color {
 }
 
 .right {
-    width: 48%;
     display: inline-block;
     vertical-align: top;
-}
-
-@media (max-width: 960px) {
-    .left {
-        width: 96%;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .right {
-        width: 96%;
-        display: inline-block;
-        vertical-align: top;
-    }
 }
 
 img {
@@ -128,6 +116,7 @@ form {
 }
 
 .pointer-to-login p {
+    font-family: "Lato";
     margin-top: 15px;
     font-size: 20px;
     text-align: center;
@@ -171,11 +160,54 @@ input:focus {
     outline-width: 1px;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
-    
+input[type="text"]:focus,
+input[type="password"]:focus {}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgb(46, 45, 45) inset;
+    -webkit-text-fill-color: white;
 }
 
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-     -webkit-box-shadow: 0 0 0 1000px rgb(46, 45, 45) inset;
-     -webkit-text-fill-color: white;
+@media (max-width: 1280px) {
+    .container {
+        text-align: center;
+        height: 80%;
+        width: 90%;
+    }
+    .left {
+        width: 464px;
+        height: 200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 7.5vh;
+        margin-bottom: 7.5vh;
+    }
+    .left img {
+        display: block;
+        margin: auto;
+        padding: 0;
+    }
+    .right {
+        top: 50%;
+        vertical-align: top;
+    }
+    .login {
+        margin-left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+    }
+    .error-container {
+        top: 45%;
+        height: 40px;
+        position: relative;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        background-size: 500px;
+    }
 }

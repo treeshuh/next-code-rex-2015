@@ -9,6 +9,8 @@
 }
 
 body {
+    height: auto;
+    min-height: 100%;
     background-color: rgba(51, 181, 229, 0.2);
     font-family: agencyFB;
     -webkit-touch-callout: none;
@@ -28,27 +30,7 @@ body:before {
     left: 0;
     right: 0;
     opacity: 0.4;
-    /* -webkit-animation: fadein 1.8s;
-    animation: fadein 1.8s; */
     background: url("/images/ring_logo_5.png") center center;
-}
-
-@keyframes fadein {
-    from {
-        opacity: 0.01;
-    }
-    to {
-        opacity: 0.4;
-    }
-}
-
-@-webkit-keyframes fadein {
-    from {
-        opacity: 0.01;
-    }
-    to {
-        opacity: 0.4;
-    }
 }
 
 .header {
@@ -147,11 +129,23 @@ h2 {
     display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
     display: inline-flex;
-    margin: 12px 0 12px -30px;
+    margin: 12px 0 12px -35px;
+}
+
+div.ring-set.hardcode>div {
+    position: relative !important;
+}
+
+div.ring-set.hardcode .puzzle-container {
+    left: -45px;
+}
+
+div.ring-set.hardcode .code-container {
+    left: -90px;
 }
 
 .stats-top {
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .total-score {
@@ -174,8 +168,10 @@ h2 {
 
 .team-name {
     text-transform: uppercase;
+    font-weight: 600;
     color: #333;
     font-size: 42px;
+    letter-spacing: 0.25px;
 }
 
 .total-score {
@@ -196,6 +192,12 @@ h2 {
         max-width: 175px;
         margin: 6px 0 6px -40px;
     }
+    div.ring-set.hardcode .puzzle-container {
+        left: -30px;
+    }
+    div.ring-set.hardcode .code-container {
+        left: -60px;
+    }
 }
 
 @media (max-width: 961px) {
@@ -204,15 +206,16 @@ h2 {
         width: 100%;
     }
     .stats-top {
-        margin-bottom: 15px;
+        margin-top: 10px;
+        margin-bottom: 18px;
     }
     .stats-item {
-        width: 160px;
+        width: 164px;
         padding-top: 30px;
         padding-bottom: 30px;
         border-radius: 50%;
         border-width: 3px;
-        box-shadow: 3px 3px 6px #888;
+        box-shadow: 0 0 20px #888;
         transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
         -moz-transform: translateX(-50%);
@@ -224,6 +227,7 @@ h2 {
     }
     .ring-set {
         width: 90px;
+        margin-left: -34px;
     }
     .ring-set .puzzle-container {
         margin-top: -25px;
@@ -231,6 +235,12 @@ h2 {
     .ring-set .speed-container,
     .ring-set .code-container {
         margin-top: 25px;
+    }
+}
+
+@media(max-width: 768px) {
+    .ring-set {
+        margin-left: -26px;
     }
 }
 
@@ -264,4 +274,49 @@ h2 {
     .team-score {
         font-size: 32px;
     }
+}
+
+.stats-item .shine-effect {
+    position: absolute;
+    top: -110%;
+    left: -210%;
+    width: 200%;
+    height: 220%;
+    opacity: 0;
+    background: rgba(255, 255, 255, .2);
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, .1) 0, rgba(255, 255, 255, .1) 75%, rgba(255, 255, 255, .5) 90%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, .1) 0, rgba(255, 255, 255, .1) 75%, rgba(255, 255, 255, .5) 90%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255, 255, 255, .2)), color-stop(75%, rgba(255, 255, 255, .2)), color-stop(90%, rgba(255, 255, 255, .8)), color-stop(100%, rgba(255, 255, 255, 0)));
+    background: -o-linear-gradient(top, rgba(255, 255, 255, .1) 0, rgba(255, 255, 255, .1) 75%, rgba(255, 255, 255, .5) 90%, rgba(255, 255, 255, 0) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, .1) 0, rgba(255, 255, 255, .1) 75%, rgba(255, 255, 255, .5) 90%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(top, rgba(255, 255, 255, .1) 0, rgba(255, 255, 255, .1) 75%, rgba(255, 255, 255, .5) 90%, rgba(255, 255, 255, 0) 100%);
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
+    -webkit-transition-property: left, top, opacity;
+    -moz-transition-property: left, top, opacity;
+    -ms-transition-property: left, top, opacity;
+    -o-transition-property: left, top, opacity;
+    transition-property: left, top, opacity;
+    -webkit-transition-duration: .5s, .5s, .15s;
+    -moz-transition-duration: .5s, .5s, .15s;
+    -ms-transition-duration: .5s, .5s, .15s;
+    -o-transition-duration: .5s, .5s, .15s;
+    transition-duration: .5s, .5s, .15s;
+    -webkit-transition-timing-function: ease;
+    -moz-transition-timing-function: ease;
+    -ms-transition-timing-function: ease;
+    -o-transition-timing-function: ease;
+    transition-timing-function: ease
+}
+
+.rank-1:hover .shine-effect,
+.rank-2:hover .shine-effect,
+.rank-3:hover .shine-effect,
+.stats-item.highlight .shine-effect {
+    opacity: 0.9;
+    top: -60%;
+    left: -30%
 }

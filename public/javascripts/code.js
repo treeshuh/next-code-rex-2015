@@ -234,7 +234,7 @@ $(document).ready(function() {
         for (filename in files) {
             var script = document.createElement('script');
             script.type = 'text/javascript';
-            script.src = "/javascripts/utils/" + files[filename] + ".js";
+            script.src = "/javascripts/utils/" + files[filename] + ".min.js";
             script.async = true;
             $('body').append(script);
         }

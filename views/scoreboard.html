@@ -1,21 +1,19 @@
 <html>
     <head>
-        <title>Next Code Golf Scoreboard</title>
+        <title>Next Code Triathlon Rankings</title>
+        <link rel="shortcut icon" href="/images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/lib/lumen.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/scoreboard.css">
-        <link rel="stylesheet" type="text/css" href="stylesheets/shine.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="/javascripts/lib/knob/knob.js"></script>
-        <script src="/javascripts/main.js"></script>
+        <script async src="/javascripts/lib/knob/knob.js"></script>
         <script>
             const referer = "{{referer}}"
             const username = "{{user.username}}"
             var maxScores = {{{json maxScores}}}
         </script>
-        <script src="/javascripts/lib/firebase.js"></script>
-        <script src="/javascripts/scoreboard.js"></script>
+        <script async src="/javascripts/lib/firebase.js"></script>
     </head>
     <body>
         <div class="header">
@@ -51,7 +49,8 @@
             </div>
             
         </div>
-
+        <script src="/javascripts/scoreboard.js"></script>
+        <script src="/javascripts/main.js"></script>
     </body>
 </html>
 

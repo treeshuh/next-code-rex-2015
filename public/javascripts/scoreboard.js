@@ -14,6 +14,17 @@ const rings = {
     "code": "rgba(55, 90, 142, " + opacityFill + ")",
     "puzzle": "rgba(231, 76, 60, " + opacityFill + ")"
 };
+const opacities = {
+    "speed": "0.45",
+    "puzzle": "0.55",
+    "code": "0.55"
+}
+
+var hardcode = !/chrome|safari/i.test(navigator.userAgent) || /mac.*chrome/i.test(navigator.userAgent);
+
+if (hardcode) {
+    $(".ring-set").addClass("hardcode");
+}
 
 var globalMaxScore;
 
@@ -60,16 +71,16 @@ $(document).ready(function() {
             }
             for (var i in rings) {
                 ringOpts.fgColor = rings[i]
-                ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacityEmpty);
+                ringOpts.bgColor = ringOpts.fgColor.replace(opacityFill, opacities[i]);
                 ringOpts.max = maxScores[i];
                 var me = $("#" + id + ">div>.ring-" + i);
-                me.attr("value", parseInt(me.attr("value")) ? String(me.attr("value")) : String(Math.round(ringOpts.max / 100)));
+                me.attr("value", parseInt(me.attr("value")) ? Math.ceil(me.attr("value")*0.99) : Math.round(ringOpts.max*0.01));
                 me.knob(ringOpts);
             }
-            var fudge = ringWidth / 20;
+            var fudge = windowWidth > 961 ? ringWidth / 20 : 0;
             for (var i in ringNames) {
                 var category = ringNames[i];
-                var achievedMax = ($("#" + id + ">div>div>.ring-" + category).attr("value") == maxScores[category]);
+                var achievedMax = ($("#" + id + ">div>div>.ring-" + category).attr("value") >= 0.99*maxScores[category]);
                 if (achievedMax) {
                     var canvas = $("#" + id + ">div>div>canvas")[i];
                     var context = canvas.getContext("2d");

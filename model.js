@@ -34,13 +34,17 @@ exports.localStrategy = new LocalStrategy(function(username, password, callback)
 });
 
 exports.createUser = function(username, password, passwordconfirm, callback) {
-    username = username || '';
+    username = username.toLowerCase() || '';
     if (/[^a-zA-Z0-9_]/.test(username)) {
         callback('Invalid characters in username');
         return;
     }
     if (username.length < 4) {
-        callback('Username must be at least 4 characters long');
+        callback('Team name must be at least 4 characters long');
+        return;
+    }
+    if (username.length > 12) {
+        callback('Team name is too long');
         return;
     }
     if (password !== passwordconfirm) {
@@ -49,7 +53,7 @@ exports.createUser = function(username, password, passwordconfirm, callback) {
     }
     firebase.getUser(username, function(err, user) {
         if (user) {
-            callback('Username already exists');
+            callback('Team name already exists');
         } else {
             firebase.createUser(username, bcrypt.hashSync(password, 10), function(err) {
                 callback(err);
@@ -438,7 +442,6 @@ firebase.listener(function(users) { // listener that updates scoreboard when fir
 });
 
 exports.getGlobalScoreboard = function() {
-    console.log(scoreboard.topscores);
     return scoreboard.topscores;
 }
 

@@ -12,7 +12,7 @@ body {
     margin: auto;
     overflow-x: hidden;
     font-family: agencyFB;
-    background-color: rgba(51, 181, 229, 0.2);
+    background-color: rgba(51, 181, 229, 0.25);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -41,8 +41,14 @@ body {
     height: auto;
     width: 100%;
     min-width: 500px;
-    background-color: rgba(51, 181, 229, 0.2);
+    background-color: rgba(51, 181, 229, 0.15);
     text-align: center;
+}
+
+.panel-group {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .right {
@@ -55,7 +61,7 @@ body {
 
 #scoreboard-frame {
     height: auto;
-    min-height: 100%;
+    min-height: 110%;
     width: 100%;
     opacity: 0;
 }
@@ -66,8 +72,8 @@ body {
     margin-left: -20px;
     width: 100%;
     max-width: 450px;
-    display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
     display: inline-flex;
 }
 
@@ -87,26 +93,36 @@ div.ring {
     transition: all 0.5s ease-in-out
 }
 
+div.ring.hardcode {
+    position: relative !important;
+    background-size: 40%;
+    background-position: 50% 50%;
+}
+
 div.ring-puzzle {
     background-position: 80% 50%;
+}
+
+div.ring-puzzle.hardcode {
+    left: -45px;
 }
 
 div.ring-code {
     background-position: 83% 50%;
 }
 
+div.ring-code.hardcode {
+    left: -90px;
+}
+
 div.ring:hover {
     opacity: 0.9;
     margin-top: -50px;
-    background-position: 75% 33%;
+    background-position-y: 33%;
 }
 
-div.ring-puzzle:hover {
-    background-position: 80% 33%;
-}
-
-div.ring-code:hover {
-    background-position: 83% 33%;
+div.ring.hardcode:hover {
+    background-position: 50% 33%;
 }
 
 div.ring>div>canvas {
@@ -191,7 +207,15 @@ h4.panel-title > a:hover {
     font-size: 130%;
 }
 
+@media (max-width: 1280px) {
+    h4.panel-title > a,
+    .list-group-item {
+        font-size: 100%;
+    }
+}
+
 .list-group-item:hover {
+    font-weight: 600;
     color: white !important;
 }
 
@@ -224,7 +248,7 @@ h4.panel-title > a:hover {
     left: 75%;
     top: 50%;
     margin-left: -300px;
-    margin-top: -225px;
+    margin-top: -250px;
     vertical-align: middle;
     text-align: center;
 }
@@ -245,11 +269,11 @@ h4.panel-title > a:hover {
     background: url("/images/ring_logo_color.png") center center no-repeat;
     -webkit-transform: scale(0.9);
     transform: scale(0.9);
-    -webkit-filter: blur(2px);
-    -moz-filter: blur(2px);
-    -o-filter: blur(2px);
-    -ms-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(1.5px);
+    -moz-filter: blur(1.5px);
+    -o-filter: blur(1.5px);
+    -ms-filter: blur(1.5px);
+    filter: blur(1.5px);
 }
 
 #center-pane:hover:before {
@@ -305,6 +329,9 @@ a > .score-unsolved {
 }
 
 @media (max-width: 1280px) {
+    #left-pane {
+        padding-top: 45px;
+    }
     #center-pane {
         left: 80%;
     }
@@ -324,6 +351,9 @@ a > .score-unsolved {
         margin-top: 25%;
         font-size: 48px;
     }
+    #rings-bar {
+        max-width: 400px;
+    }
     #score-display {
         font-size: 84px;
     }
@@ -333,6 +363,10 @@ a > .score-unsolved {
     .right {
         left: 60%;
         width: 40%;
+    }
+    .header ul.topnav li {
+        font-size: 14px;
+        line-height: 2px;
     }
 }
 

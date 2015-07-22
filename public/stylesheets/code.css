@@ -165,7 +165,12 @@ body {
     text-align: left;
 }
 
+.btn {
+    letter-spacing: 0.5px;
+}
+
 ul li .stat-num {
+    letter-spacing: 0.25px;
     color: #333;
     font-size: 3.4vmax;
 }
@@ -206,6 +211,19 @@ button:active {
 pre {
     font-size: 10pt;
 }
+
+@media (max-width: 1280px) {
+    #alerts {
+        font-size: 100%;
+    }
+    #editor {
+        font-size: 10pt;
+    }
+    .panel-body {
+        font-size: 100% !important;
+    }
+}
+
 
 v {
     white-space: nowrap;
