@@ -16,10 +16,10 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    transition: all 1.0s ease-in;
-    -webkit-transition: all 1.0s ease-in;
-    -moz-transition: all 1.0s ease-in;
-    -ms-transition: all 1.0s ease-in;
+    transition: all 1.5s ease-in-out;
+    -webkit-transition: all 1.5s ease-in-out;
+    -moz-transition: all 1.5s ease-in-out;
+    -ms-transition: all 1.5s ease-in-out;
 }
 
 body.color {
@@ -29,7 +29,7 @@ body.color {
 
 .container {
     position: relative;
-    width: 95%;
+    width: 100%;
     height: 210px;
     margin-left: auto;
     margin-right: auto;
@@ -52,24 +52,51 @@ body.color {
 }
 
 .left {
+    left: -5%;
     width: 48%;
+    opacity: 0.9;
     display: inline-block;
     vertical-align: top;
 }
 
 .right {
+    opacity: 0.9;
     display: inline-block;
     vertical-align: top;
 }
 
 img {
     float: right;
-    padding-right: 4%;
+    padding-right: 15%;
     height: 200px;
+    opacity: 0.9;
+}
+
+.year {
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    vertical-align: center;
+    margin-top: -20px;
+    height: 450px;
+    font-size: 450px;
+    opacity: 0.90;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    font-family: Lato;
+}
+
+.year span {
+    width: 25%;
+    color: #375aaf;
 }
 
 .login {
-    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.85);
     height: 200px;
     width: 600px;
     max-width: 100%;
@@ -174,15 +201,17 @@ select:-webkit-autofill {
     .container {
         text-align: center;
         height: 80%;
-        width: 90%;
+    }
+    .year {
+        opacity: 0.75;
+        font-size: 30vw;
     }
     .left {
-        width: 464px;
+        width: 411px;
         height: 200px;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 7.5vh;
         margin-bottom: 7.5vh;
     }
     .left img {
@@ -195,6 +224,7 @@ select:-webkit-autofill {
         vertical-align: top;
     }
     .login {
+        opacity: 0.9;
         margin-left: 50%;
         transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
