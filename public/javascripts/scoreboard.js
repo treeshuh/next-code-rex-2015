@@ -8,7 +8,6 @@ for (var i in ringNames) {
 }
 
 const opacityFill = "0.85";
-const opacityEmpty = "0.5";
 const rings = {
     "speed": "rgba(0, 188, 140, " + opacityFill + ")",
     "code": "rgba(55, 90, 142, " + opacityFill + ")",
@@ -20,7 +19,10 @@ const opacities = {
     "code": "0.55"
 }
 
-var hardcode = !/chrome|safari/i.test(navigator.userAgent) || /mac.*chrome/i.test(navigator.userAgent);
+var isOpera = /opr/i.test(navigator.userAgent);
+var isChrome = !!window.chrome;
+var isSafari = /mac.*safari/i.test(navigator.userAgent) && !isChrome;
+var hardcode = !(isOpera || isSafari);
 
 if (hardcode) {
     $(".ring-set").addClass("hardcode");
@@ -161,11 +163,13 @@ $(document).ready(function() {
 
 var firstLoad = true;
 var scoreUpdate = new Firebase("https://next-code-rex-2015.firebaseio.com/solves");
-scoreUpdate.on("value", function(data) {
-    if (!firstLoad) {
-        $(".stats-item").fadeOut(400, function() {
-            location.reload(true);
-        });
-    }
-    firstLoad = false;
-});
+if (username === "scoreboard") {
+    scoreUpdate.on("value", function(data) {
+        if (!firstLoad) {
+            $(".stats-item").fadeOut(400, function() {
+                location.reload(true);
+            });
+        }
+        firstLoad = false;
+    });
+}

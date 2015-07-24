@@ -23,9 +23,12 @@ const opacities = {
     "code": "0.55"
 };
 
-var hardcode = !/chrome|safari/i.test(navigator.userAgent) || /mac.*chrome/i.test(navigator.userAgent);
+var isOpera = /opr/i.test(navigator.userAgent);
+var isChrome = !!window.chrome;
+var isSafari = /mac.*safari/i.test(navigator.userAgent) && !isChrome;
+var hardcode = !(isOpera || isSafari);
 
-if (hardcode) {
+if (hardcode) { 
     $(".ring").addClass("hardcode");
 }
 
@@ -164,7 +167,7 @@ $(document).ready(function() {
         var category = $(this).attr("class").split("-")[1];
         $("#" + category).slideDown("slow");
     }).on("click", function() {
-        var category = $(this).attr("class").split("-")[1];
+        var category = $(this).attr("class").split("-")[1].split(" ")[0];
         $(".panel-slide").slideUp(400, function() {
             $("#" + category).slideDown();
         })

@@ -67,7 +67,7 @@ body.color {
 
 img {
     float: right;
-    padding-right: 15%;
+    padding-right: 5vw;
     height: 200px;
     opacity: 0.9;
 }
@@ -75,18 +75,23 @@ img {
 .year {
     width: 100%;
     top: 50%;
+    -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     text-align: center;
     vertical-align: center;
     margin-top: -20px;
-    height: 450px;
-    font-size: 450px;
+    height: 440px;
+    font-size: 440px;
     opacity: 0.90;
     font-weight: 700;
     position: absolute;
     left: 0;
     z-index: -1;
     font-family: Lato;
+    transition: font-size 0.6s ease-out;
+    -webkit-transition: font-size 0.6s ease-out;
+    -moz-transition: font-size 0.6s ease-out;
+    -ms-transition: font-size 0.6s ease-out;
 }
 
 .year span {
@@ -203,8 +208,10 @@ select:-webkit-autofill {
         height: 80%;
     }
     .year {
-        opacity: 0.75;
         font-size: 30vw;
+        top: 118px;
+        margin: 0;
+        opacity: 0.75;
     }
     .left {
         width: 411px;
@@ -228,6 +235,7 @@ select:-webkit-autofill {
         margin-left: 50%;
         transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
     }
     .error-container {
         top: 45%;
@@ -236,8 +244,24 @@ select:-webkit-autofill {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+    .year {
+        top: 0;
+        font-size: 200px;
+        height: 200px;
+        margin-top: 90px;
+        transition: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+    }
     body {
         background-size: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    .year {
+        display: none;
     }
 }

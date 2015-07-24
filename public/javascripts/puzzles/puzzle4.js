@@ -459,7 +459,7 @@ $(document).ready(function() {
 
         geometry = new THREE.BoxGeometry(100, 100, 100);
         geometrySphere = new THREE.SphereGeometry(75, 16, 16);
-        geometryCube = new THREE.BoxGeometry($(window).height()/20, $(window).height()/20, $(window).height()/20);
+        geometryCube = new THREE.BoxGeometry($(window).height() / 20, $(window).height() / 20, $(window).height() / 20);
         geometryPlane = new THREE.PlaneBufferGeometry(maze.width * maze.cellSize, maze.large * maze.cellSize);
         geometryPlaneBasic = new THREE.PlaneBufferGeometry(maze.cellSize, maze.cellSize, 1, 1);
 
@@ -498,7 +498,6 @@ $(document).ready(function() {
             }));
             cubes[i].position.x = positions[i].x;
             cubes[i].position.z = positions[i].z;
-            //console.log(cubes[i])
         }
 
         plane = new THREE.Mesh(geometryPlane, material);
@@ -581,7 +580,7 @@ $(document).ready(function() {
 
         for (i in cubes) {
             scene.add(cubes[i]);
-        } 
+        }
         scene.add(plane);
         scene.add(plane2);
         pointLight = new THREE.DirectionalLight(0xffffff);
@@ -646,13 +645,15 @@ $(document).ready(function() {
             center.y = 400 * Math.sin(angleY * 80);
         }
         for (var c in cubes) {
-            if (ray.intersectObject(cubes[c]).length > 0) {
-                scene.remove(cubes[c]);
-                if (collected.indexOf(c) < 0) {
-                    collected.push(c);
-                    slider.drawTile(c);
+            try {
+                if (ray.intersectObject(cubes[c]).length > 0) {
+                    scene.remove(cubes[c]);
+                    if (collected.indexOf(c) < 0) {
+                        collected.push(c);
+                        slider.drawTile(c);
+                    }
                 }
-            }
+            } catch (e) {}
         }
         if (collected.length === cubes.length) {
             slider.drawTiles();
@@ -676,9 +677,10 @@ $(document).ready(function() {
         center.z = windowHalfX * 32 * Math.sin(angleX);
         requestAnimationFrame(animate);
         for (var i in cubes) {
-            cubes[i].rotation.x += 0.07;
-            //cubes[i].rotation.y += 0.2;
-            cubes[i].rotation.z += 0.05;
+            try {
+                cubes[i].rotation.x += 20/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2)
+                cubes[i].rotation.z += 15/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2)
+            } catch (e) {}
         }
         camera.lookAt(center);
         renderer.render(scene, camera);
@@ -686,15 +688,15 @@ $(document).ready(function() {
 
     function Slider() {
 
-        const height = Math.min(300, $(window).height()/2.8);
+        const height = Math.min(300, $(window).height() / 2.7);
         $("#left-pane").append("<br><canvas id='slider' height=\"" + height + "px\" width=\"" + height + "px\"></canvas>");
         var context = document.getElementById("slider").getContext('2d');
         var scale;
         const boardSize = $("#slider").width();
         var img = new Image();
         img.src = '/images/maze/totem.png';
-        img.onload = function(){
-            scale = boardSize/img.height;
+        img.onload = function() {
+            scale = boardSize / img.height;
         }
         const tileCount = 3;
         const tileSize = boardSize / tileCount;
@@ -717,7 +719,7 @@ $(document).ready(function() {
                     try {
                         slideTile(emptyLoc, clickLoc);
                         drawTiles();
-                    } catch(e) {
+                    } catch (e) {
                         setBoard();
                         drawTiles();
                         slideTile(emptyLoc, clickLoc)
@@ -768,15 +770,14 @@ $(document).ready(function() {
                 }
             },
 
-        this.drawTiles = drawTiles;
+            this.drawTiles = drawTiles;
 
         this.drawTile = function(n) {
-            console.log(scale)
             var x = Math.floor(n / tileCount);
             var y = (n % tileCount);
             var i = (tileCount - 1) - x;
             var j = (tileCount - 1) - y;
-            context.drawImage(img, x * tileSize/scale, y * tileSize/scale, tileSize/scale, tileSize/scale,
+            context.drawImage(img, x * tileSize / scale, y * tileSize / scale, tileSize / scale, tileSize / scale,
                 i * tileSize, j * tileSize, tileSize, tileSize);
         }
 

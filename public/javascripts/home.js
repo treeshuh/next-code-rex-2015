@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $("input:not([type=image],[type=button],[type=submit])").on("change", function(e) {
         $(".error").text("");
     }).on("focus", function(e) {
@@ -9,16 +10,34 @@ $(document).ready(function() {
             opacity: 1.0
         });
     });
-    
+
+    $(document).mouseup(function(e) {
+        var container = $(".login");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            $(".right").animate({
+                opacity: 0.8
+            });
+            $(".left").animate({
+                opacity: 0.8
+            });
+        }
+    });
+
     countUpYear = function() {
-        var digit = 4;
+        var digit = 5;
         $("#ones").html("5");
         setInterval(function() {
             if (digit++ < 9) {
-                $("#ones").html(digit);
+                $("#ones").animate({
+                    opacity: 0
+                }, function() {
+                    $("#ones").html(digit).animate({
+                        opacity: 1
+                    });
+                })
             }
-        }, 300);
-        setTimeout(countUpYear, 5000);
+        }, 1200);
+        setTimeout(countUpYear, 9000);
     }
 
     countUpYear();

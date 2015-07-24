@@ -1,6 +1,6 @@
 {
-  "name": "NextCodeGolf",
-  "version": "0.0.1",
+  "name": "NextCodeTriathlon",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -12,7 +12,7 @@
     "hbs": "*",
     "passport": "*",
     "passport-local": "*",
-    "bcrypt": "*",
+    "bcryptjs": "*",
     "request": "*"
   }
 }
