@@ -13,3 +13,7 @@
 	font-variant: small-caps;
 }
 
+input[type='text'] {
+	width: 75px;
+	margin-right: 25px;
+}

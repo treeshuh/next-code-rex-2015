@@ -98,7 +98,7 @@ $(document).ready(function() {
         blanks = "";
         for (var i = 0; i < numBlanks; i++) {
             if (i == selectedIndex) {
-                blanks += "&#x2610 ";
+                blanks += "&#x25cb ";
             }
             else {
                 blanks += "&#x2423 "
@@ -107,18 +107,21 @@ $(document).ready(function() {
         return blanks;
     }
 
-    function boxGenerator(numBoxes) {
+    function circleGenerator(numBoxes) {
         boxes = "";
         for (var i = 0; i < numBoxes; i++) {
-            boxes += "&#x2610";
+            boxes += "&#x25cb";
         }
         return boxes;
     }
 
     function cluesAndBlanks() {
-        puzzles = "<br><h3>Clues:</h3>";
+        puzzles = "<br><h3>Clues:</h3><table>";
         for (line in puzzleLines) {
             clueToWrite = puzzleLines[line];
+            puzzles += "<tr><td>";
+            puzzles += "<input type='text' data-bind='value: attempted()[" + line + "], valueUpdate: " + '"afterkeydown"' + ",  style: {backgroundColor: colorings()[" + line + "]}'/>";
+            puzzles += "</td><td>"
             puzzles += "<span class='line-number'>" + String(parseInt(line)+1) + ". </span>";
             blankedText = clueToWrite["pun"].replace(/\d/g, function(match) {
                 return blankGenerator(match[0], 
@@ -126,27 +129,53 @@ $(document).ready(function() {
                 );
             });
             puzzles += blankedText;
-            puzzles += " <span class='extra-clue'>(" + clueToWrite["clue"] + ")</span>";
-            puzzles += "<br>"
+            puzzles += " <span class='extra-clue'>(" + clueToWrite["clue"] + ")</span></td></tr>";
         }
+        puzzles += "</table><br>"
         $("#interactive").append(puzzles);
     }
 
     function finalAnswerClue() {
         finalClue = "<div class='final-clue'>";
         finalClue += "<h3>Answer:</h3>";
-        finalClue += "&#x25cb&#x25cb&#x25cb&#x25cb&#x25cb";
-        finalClue += boxGenerator(6) + "&nbsp;&nbsp;&nbsp;"; //eached
-        finalClue += boxGenerator(1) + "&nbsp;&nbsp;&nbsp;"; //a 
-        finalClue += boxGenerator(10); //conclusion
-        finalClue += "<br><span class='extra-clue'>(conclude)</span>"
+        finalClue += "&#x2610&#x2610&#x2610&#x2610&#x2610";
+        finalClue += circleGenerator(6) + "&nbsp;&nbsp;&nbsp;"; //eached
+        finalClue += circleGenerator(1) + "&nbsp;&nbsp;&nbsp;"; //a 
+        finalClue += circleGenerator(10); //conclusion
+        finalClue += "<br><span class='extra-clue'>(self decision)</span>"
         finalClue += "</div>";
         $("#interactive").append(finalClue);
     }
 
+    var viewmodel = function() {
+        var attempted = ko.observableArray([]);
+        for (var i = 0; i < puzzleLines.length; i ++) {
+            attempted().push(ko.observable());
+        }
+        var colorings = ko.computed(function() {
+            colorsToReturn = [];
+            for (var i = 0; i < attempted().length; i ++) {
+                if (attempted()[i]()) {
+                    guess = attempted()[i]().toUpperCase();
+                }
+                else {
+                    guess = "";
+                }
+                colorsToReturn.push(colors[guess] || "#FFFFFF");
+            }
+
+            return colorsToReturn;
+        });
+        return {
+            attempted: attempted,
+            colorings: colorings
+        };
+    }
 
     showRules();
     colorBank();
     cluesAndBlanks();
     finalAnswerClue();
+    ko.applyBindings(viewmodel());
+
 });
