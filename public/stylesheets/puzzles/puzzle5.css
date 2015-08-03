@@ -1,0 +1,15 @@
+.color-bank {
+	width: 90%;
+}
+.color-bank tr td{
+	width: 16%;
+	height: 50px;
+}
+
+.extra-clue, .line-number {
+	color: #777;
+	font-size: 13px;
+	font-family: "Lato";
+	font-variant: small-caps;
+}
+
