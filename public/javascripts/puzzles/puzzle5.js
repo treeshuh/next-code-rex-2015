@@ -71,6 +71,35 @@ $(document).ready(function() {
         {answer: "MAGENTA", pun: "i 7leman", clue: "chivalrous"}
     ];
 
+    const unicodeHexCircleLetters = {
+        A: "&#x24b6;",
+        B: "&#x24b7;",
+        C: "&#x24b8;",
+        D: "&#x24b9;", 
+        E: "&#x24ba;",
+        F: "&#x24bb;",
+        G: "&#x24bc;",
+        H: "&#x24bd;",
+        I: "&#x24be;",
+        J: "&#x24bf;", 
+        K: "&#x24c0;",
+        L: "&#x24c1;",
+        M: "&#x24c2;",
+        N: "&#x24c3;",
+        O: "&#x24c4;",
+        P: "&#x24c5;", 
+        Q: "&#x24c6;",
+        R: "&#x24c7;",
+        S: "&#x24c8;",
+        T: "&#x24c9;",
+        U: "&#x24ca;", 
+        V: "&#x24cb;",
+        W: "&#x24cc;",
+        X: "&#x24cd;",
+        Y: "&#x24ce;",
+        Z: "&#x24cf;" 
+    }
+
     function showRules() {
         for (i in rules) {
             $("#instruction-panel").append("<li>" + rules[i] + "</li>")
@@ -95,22 +124,22 @@ $(document).ready(function() {
 
     // @param 1 <= numBlanks
     function blankGenerator(numBlanks, selectedIndex) {
-        blanks = "";
+        blanks = [];
         for (var i = 0; i < numBlanks; i++) {
             if (i == selectedIndex) {
-                blanks += "&#x25cb ";
+                blanks.push("&#x25cb;");
             }
             else {
-                blanks += "&#x2423 "
+                blanks.push("&#x2423;");
             }
         }
         return blanks;
     }
 
     function circleGenerator(numBoxes) {
-        boxes = "";
+        boxes = [];
         for (var i = 0; i < numBoxes; i++) {
-            boxes += "&#x25cb";
+            boxes.push("&#x25cb;");
         }
         return boxes;
     }
@@ -123,12 +152,7 @@ $(document).ready(function() {
             puzzles += "<input type='text' data-bind='value: attempted()[" + line + "], valueUpdate: " + '"afterkeydown"' + ",  style: {backgroundColor: colorings()[" + line + "]}'/>";
             puzzles += "</td><td>"
             puzzles += "<span class='line-number'>" + String(parseInt(line)+1) + ". </span>";
-            blankedText = clueToWrite["pun"].replace(/\d/g, function(match) {
-                return blankGenerator(match[0], 
-                    colorsAndLetterIndex[clueToWrite["answer"]]
-                );
-            });
-            puzzles += blankedText;
+            puzzles += "<span data-bind='html: guesses()[" + line + "]'></span>"
             puzzles += " <span class='extra-clue'>(" + clueToWrite["clue"] + ")</span></td></tr>";
         }
         puzzles += "</table><br>"
@@ -139,9 +163,7 @@ $(document).ready(function() {
         finalClue = "<div class='final-clue'>";
         finalClue += "<h3>Answer:</h3>";
         finalClue += "&#x2610&#x2610&#x2610&#x2610&#x2610";
-        finalClue += circleGenerator(6) + "&nbsp;&nbsp;&nbsp;"; //eached
-        finalClue += circleGenerator(1) + "&nbsp;&nbsp;&nbsp;"; //a 
-        finalClue += circleGenerator(10); //conclusion
+        finalClue += "<span data-bind='html: finalClueHtml()'></span>"
         finalClue += "<br><span class='extra-clue'>(self decision)</span>"
         finalClue += "</div>";
         $("#interactive").append(finalClue);
@@ -149,26 +171,112 @@ $(document).ready(function() {
 
     var viewmodel = function() {
         var attempted = ko.observableArray([]);
+        var checker = ko.observableArray();
+        var initialBlanks = []; //arrayy of array
+        var blankTexts = ko.observableArray();
+        var initialFinalClue = circleGenerator(17); // 6 + 1 + 10
+
         for (var i = 0; i < puzzleLines.length; i ++) {
             attempted().push(ko.observable());
+            checker().push(false);
+            clueToWrite = puzzleLines[i];
+            numToBlank = clueToWrite["pun"].match(/\d/g)[0]
+            blankedText = blankGenerator(numToBlank, 
+                    colorsAndLetterIndex[clueToWrite["answer"]]
+                );
+            initialBlanks.push(blankedText);
+            blankTexts(initialBlanks);
         }
-        var colorings = ko.computed(function() {
+
+        var arrayToString = function(array) {
+            finalS = "";
+            for (var i = 0; i < array.length; i ++) {
+                finalS += array[i] + " "; 
+            }
+            return finalS;
+        }
+
+        var finalClueHtml = ko.pureComputed(function(){
+            finalC = ""
+            for (var i = 0; i < initialFinalClue.length; i++) {
+                if (checker()[i]) {
+                    ans = puzzleLines[i].answer;
+                    index = colorsAndLetterIndex[ans];
+                    letter = ans[index];
+                    finalC += unicodeHexCircleLetters[letter];
+                }
+                else {
+                    finalC += initialFinalClue[i];
+                }
+
+                if (i == 5 || i == 6) {
+                    finalC += "&nbsp;&nbsp;&nbsp;";
+                }
+            }
+            return finalC;
+        });
+
+        // DON'T BE FOOLED BY THE DUMB NAME: THIS IS THE CLUE TEXT
+        var guesses = ko.pureComputed(function() {
+            currentGuesses = [];
+            for (var i = 0; i < puzzleLines.length; i ++) {
+                clueToWrite = puzzleLines[i];
+                newBlank = clueToWrite["pun"].replace(/\d/g, function(match) {
+                        return arrayToString(blankTexts()[i]);
+                });
+                currentGuesses.push(
+                    newBlank
+                );
+            }
+            return currentGuesses;
+        })
+
+        var colorings = ko.pureComputed(function() {
             colorsToReturn = [];
-            for (var i = 0; i < attempted().length; i ++) {
-                if (attempted()[i]()) {
-                    guess = attempted()[i]().toUpperCase();
+            checks = [];
+            newBlanks = [];
+            for (var i = 0; i < puzzleLines.length; i ++) {
+                a = attempted()[i]();
+                if (a) {
+                    copy = $.extend(true, [], initialBlanks[i]);
+                    guess = a.toUpperCase();
+                    stringGuess = guess;
+                    currentBlank = []; 
+                    replaceIndex = colorsAndLetterIndex[puzzleLines[i].answer];
+
+                    // sub in
+                    for (var j = 0; j < initialBlanks[i].length; j++) {
+                        if (stringGuess.length > j) {
+                            if (j == replaceIndex) {
+                                currentBlank.push(unicodeHexCircleLetters[stringGuess[j]]);
+                            }
+                            else {
+                                currentBlank.push(stringGuess[j]);
+                            }
+                        }
+                        else {
+                            currentBlank.push(copy[j]);
+                        }
+                    }
+                    newBlanks.push(currentBlank);
                 }
                 else {
                     guess = "";
+                    newBlanks.push(initialBlanks[i]);
                 }
                 colorsToReturn.push(colors[guess] || "#FFFFFF");
+                checks.push(guess == puzzleLines[i].answer)
             }
-
+            blankTexts(newBlanks);
+            checker(checks);
             return colorsToReturn;
         });
+
         return {
             attempted: attempted,
-            colorings: colorings
+            colorings: colorings,
+            finalClueHtml: finalClueHtml,
+            guesses: guesses
         };
     }
 
