@@ -1,7 +1,7 @@
 /** Color Puzzle **/
 $(document).ready(function() {
     const rules = [
-       "Fill in the blanks!"
+       "Provide colorful answers to fill in the blanks and match the clues!"
     ];
 
     const colors = {
