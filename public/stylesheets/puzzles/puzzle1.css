@@ -10,11 +10,13 @@ td {
     text-align: center !important;
     padding: 0px !important;
     margin: 0px !important;
-    width: 2.2vw;
-    height: 2.8vh;
-    font-size: 2.6vh !important;
-    line-height: 2.6vh !important;
-    border: 2px solid black !important;
+    width: 3.0vh;
+    height: 3.0vh;
+    background-image: url('/images/empty.jpg');
+    background-size: 2.8vh 2.8vh;
+    font-size: 2.5vh !important;
+    line-height: 3.0vh !important;
+    border: 2px solid rgba(45, 45, 46, 0.5) !important;
 }
 
 td.constraint {
@@ -29,6 +31,11 @@ td.big {
     font-size: 3.25vh !important;
 }
 
+td.fill {
+    background-image: url('/images/block.jpg');
+}
+
 td.hover {
-    background-color: rgba(130, 0, 0, 0.5) !important;
+    background-image: url('/images/block_alpha.png');
+    /*background-color: rgba(130, 0, 0, 0.5) !important;*/
 }

@@ -10,7 +10,7 @@
                 const targetString = "{{challenge.detail.passage}}";
                 const timeLimit = {{challenge.detail.timeLimit}};
                 const maxScore = {{challenge.maxScore}};
-                const previousScore = {{previousScore}};
+                var previousScore = {{previousScore}};
         </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
@@ -39,11 +39,14 @@
                     <div id="instruction-panel" class="panel-body">
                         Press START, and type the passage as quickly as possible!
                         <br>
-                        You have {{challenge.detail.timeLimit}} seconds.
+                        You have <strong>{{challenge.detail.timeLimit}} seconds</strong>.
                     </div>
                 </div>
 
                 <div id="score-display" class="panel">
+                    <h3>BEST SCORE</h3>
+                    <div id="best-score" class="stat-num">{{previousScore}}</div>
+
                     <h3>COMPLETION SCORE</h3>
                     <div id="max-score" class="stat-num">{{challenge.maxScore}}</div>
                 </div>    
@@ -58,13 +61,13 @@
                 </div>
                 <h1 class="challenge-title">{{challenge.title}}</h1>
                 <div data-bind="if: !challenging()">
-                    <button class="btn btn-lg btn-success" data-bind="click: startChallenge">Start!</button>
+                    <button class="btn btn-lg btn-success" data-bind="click: startChallenge">Tap SPACE to Start</button>
                 </div>    
-                <div data-bind="if: challenging()">
+                <div id="passage" data-bind="if: challenging()">
                     <div data-bind="foreach: targetWords" class="panel interactive">
                         <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
                     </div>
-                    <input type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
+                    <input id="input" type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
                 </div>   
             </div>     
         </div>

@@ -13,6 +13,10 @@ body {
     font-size: 180%;
 }
 
+.challenge-title {
+    font-weight: 700;
+}
+
 .header {
     font-size: 20px;
     background-color: rgba(0, 188, 140, 0.9);
@@ -42,6 +46,10 @@ body {
 
 #right-pane div {
     text-align: center;
+}
+
+#right-pane #passage div {
+    padding: 5px 10px;
 }
 
 @media (max-width: 1172px) {
@@ -79,16 +87,8 @@ body {
     padding: 1px 0 0 15px;
 }
 
-#input {
-    font-size: 125%;
-    margin-top: 10px;
-    min-width: 250px;
-    max-width: 500px;
-}
-
-#input:focus {
-    border: none;
-    outline: none;
+#input.invalid {
+    background-color: rgba(231, 76, 60, 0.5);
 }
 
 #score-display h3 {
@@ -108,6 +108,10 @@ body {
 .green {
     white-space: nowrap;
     color: #00bc8c !important;
+}
+
+#best-score {
+    color: #375a7f;
 }
 
 a {
@@ -132,7 +136,7 @@ a {
 }
 
 .interactive {
-    font-size: 30px;
+    font-size: 28px;
 }
 
 button.btn-success{

@@ -52,7 +52,7 @@
                     <div id="speed" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each speedChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item col-md-6 score-{{this.score}}">{{this.title}} <br>
+                                <a href="/challenge/{{this.id}}.nxt" class="speed list-group-item col-md-4 score-{{this.score}}">{{this.title}} <br>
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}
@@ -73,7 +73,7 @@
                     <div id="puzzle" class="panel-slide list-group">
                         <div class="panel-body">
                             {{#each puzzleChallenges}}
-                                <a href="/challenge/{{this.id}}.nxt" class="puzzle list-group-item col-md-6 score-{{this.score}}">{{this.title}} <br>
+                                <a href="/challenge/{{this.id}}.nxt" class="puzzle list-group-item col-md-4 score-{{this.score}}">{{this.title}} <br>
                                     <span class="challenge-score score-{{this.score}}">[<strong><span class="team-score">{{this.score}}</span></strong> / {{this.maxScore}}]</span>
                                 </a>
                             {{/each}}

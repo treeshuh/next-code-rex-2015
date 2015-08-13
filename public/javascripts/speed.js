@@ -2,7 +2,7 @@ $(document).ready(function(){
 	var viewmodel = function(){
 		var maxTime = timeLimit;
 		var startTime;
-		var targetWords = targetString.split(" ");
+		var targetWords = targetString.replace(/\&\#x27;/g, "\'").split(" ");
 		var index = ko.observable(0);
 	 	var targetText = ko.observable(targetWords[0]);
 		var inputText = ko.observable("");
@@ -21,6 +21,8 @@ $(document).ready(function(){
 				$(".timer-progress").stop();
 				challenging(false);
 				index(0);
+				inputText("");
+				targetText(targetWords[0]);
 				$.ajax({
 			        type: "POST",
 			        url: "/submit",
@@ -33,8 +35,9 @@ $(document).ready(function(){
 			            }
 			        },
 			        success: function(data) {
+			        	handleResult(data.result);
 			            $("#max-score").addClass("max");
-			            alertSuccess("Success!", "You passed the speed challenge.")
+			            alertSuccess("Congrats!", "You passed the speed challenge.")
 			        }
 			    })
 				return true
@@ -42,22 +45,35 @@ $(document).ready(function(){
 			else if (inputText()[inputText().length - 1] == " " && targetText() == inputText().substring(0, inputText().length-1)){
 				//valid input
 				index(index()+1);
-				$(".input-progress").animate({"width": "+=" + oneSegmentWidth});
 				if (index() != targetWords.length){
+					inputText("");
 					targetText(targetWords[index()]);	
-					inputText("")
 				}
+				$(".input-progress").animate({"width": "+=" + oneSegmentWidth});
+			} else if (targetText().indexOf(inputText()) < 0) {
+				$("#input").addClass("invalid");
+			} else {
+				$("#input").removeClass("invalid");
 			}
 			return false
 		})
 
 		var startChallenge = function(){
 			challenging(true);
-		 	setUpTimer();
-		 	$("input[type=text]").focus();
-		 	$(".timer-progress").css("width", "0");
+			index(0);
+			targetText(targetWords[0]);
+			$(".timer-progress").css("width", "0");
 		 	$(".input-progress").css("width", "0");
+		 	$("input[type=text]").focus();
+		 	setTimeout(setUpTimer, 750);
 		}
+
+		$('body').keydown(function(e){ 
+		   if (e.keyCode == 32 && !challenging()) {
+		   	e.preventDefault();
+		   	startChallenge();
+		   }
+		});
 
 		var setUpTimer = function(){
 			startTime = Date.now();
@@ -77,13 +93,21 @@ $(document).ready(function(){
 			            	time: (Date.now()-startTime)/1000
 			        	}
 			    	},
+			    	success: function(data) {
+			    		handleResult(data.result)
+			    	}
 			    });
+			    $(".alert").hide();
 			    alertError("You ran out of time!", "You scored " + completionScore + " points. Press START to try again.");
-
-				index(0);
 				challenging(false);
-
 			})
+		}
+
+		var handleResult = function(result) {
+			if (result.score > previousScore) {
+				$("#best-score").html(result.score);
+				previousScore = result.score;
+			}
 		}
 
 		return{

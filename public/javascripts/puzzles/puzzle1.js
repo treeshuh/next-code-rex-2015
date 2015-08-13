@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     /* UI constants */
     const empty = "rgb(255, 255, 255)" // white;
-    const fill = "rgb(130, 0, 0)" // MIT maroon;
+    const fill = "rgb(219, 20, 26)" // MIT maroon;
     const hover = "rgba(130, 0, 0, 0.5)" // transparent maroon;
     const borderWidth = 3 // pixels;
 
@@ -120,12 +120,12 @@ $(document).ready(function() {
     var mousedownCell = [false, false]; // for toggling multiple cells with mouse drag
 
     const rules = [
-        "Color the grid according to the numbers at the side by following " +
-        "<a href='https://en.wikipedia.org/wiki/Nonogram'>Nonogram rules</a>, to reveal a hidden picture and secret message.",
-        "In particular, the numbers measure how many <emph>unbroken</emph> lines of filled-in squares there are in any given row or column." +
-        " For example, a clue of \"5 2 1\" would mean there are sets of five, two, and one filled squares, in that order, " +
-        "with at least one blank square between successive groups.",
-        "This is a long puzzle! To help you out, we've filled in some squares for you." +
+        "Fill in the lego blocks according to the numbers at the side by following " +
+        "<a href='https://en.wikipedia.org/wiki/Nonogram'>Nonogram rules</a>, to reveal a hidden structure and secret message.",
+        "In particular, the numbers measure how many <emph>unbroken</emph> lines of lego blocks there are in any given row or column." +
+        " For example, a clue of \"5 2 1\" would mean there are sets of five, two, and one connected blocks, in that order, " +
+        "with at least one blank cell between successive groups.",
+        "This is a long puzzle! To help you out, we've filled in some blocks for you." +
         " In addition, once you complete any row correctly, it will be <b class='green'>LOCKED IN</b> (the clue will turn green)."
     ];
 
@@ -162,7 +162,7 @@ $(document).ready(function() {
                     // this square gets filled in the final solution;
                     // with assitRate probability, fill in this square to help them out;
                     $("#row-" + r).append("<td class='solved' id='cell-" + r + "-" + c + "'></td>");
-                    $("#cell-" + r + "-" + c).css("background-color", fill);
+                    $("#cell-" + r + "-" + c).addClass("fill");
                 } else {
                     $("#row-" + r).append("<td class='cell' id='cell-" + r + "-" + c + "'></td>");
                     if (solved[r][c] && !letter && Math.random() < junkLetterRate) {
@@ -247,13 +247,13 @@ $(document).ready(function() {
     function toggleCell(r, c) {
         me = $("#cell-" + r + "-" + c);
         if (me.hasClass("cell")) {
-            me.css("background-color", me.css("background-color") == fill ? empty : fill);
+            me.toggleClass("fill");
         }
     }
 
     function isFilled(r, c) {
         me = $("#cell-" + r + "-" + c);
-        return (me.css("background-color") == fill);
+        return me.hasClass("fill");
     }
     correctRows = []
 

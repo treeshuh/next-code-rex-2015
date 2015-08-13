@@ -22,4 +22,6 @@ td {
   min-height: 40px;
   padding: 0px !important;
   margin: 0px !important;
+  background-image: url('/images/empty.jpg');
+  background-size: 3.8vw 3.8vw;
 }

@@ -150,13 +150,18 @@ exports.submitSpeed = function(user, challengeId, data, callback) {
             return;
         }
         firebase.getSolvedChallenges(user, function(err, solvedChallenges) {
-            improved = false;
+            var improved = false;
+            if (err) {
+                console.log(err);
+                callback(true, {})
+                return;
+            }
             if (!solvedChallenges || !(challengeId in solvedChallenges)) {
                 previousScore = 0;
                 improved = true;
             } else {
                 previousScore = solvedChallenges[challengeId].score;
-                improved = (data.score > previousScore);
+                improved = (parseInt(data.score) > parseInt(previousScore));
             }
             achievedMaxScore = (Math.max(previousScore, data.score) == challenge.maxScore);
             if (improved) {
@@ -167,7 +172,7 @@ exports.submitSpeed = function(user, challengeId, data, callback) {
                 achievedMaxScore: achievedMaxScore,
                 score: data.score,
                 previousScore: previousScore
-            })
+            });
         });
     });
 }
@@ -294,7 +299,7 @@ exports.submitCode = function(user, challengeId, input, ext, callback) {
                                 improved = true;
                             } else {
                                 previousScore = solvedChallenges[challengeId].score;
-                                improved = (score > previousScore);
+                                improved = (parseInt(score) > parseInt(previousScore));
                             }
                             achievedMaxScore = (Math.max(previousScore, score) == challenge.maxScore);
                             if (improved) {
