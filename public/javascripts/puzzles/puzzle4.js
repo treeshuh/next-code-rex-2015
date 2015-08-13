@@ -678,8 +678,8 @@ $(document).ready(function() {
         requestAnimationFrame(animate);
         for (var i in cubes) {
             try {
-                cubes[i].rotation.x += 20/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2)
-                cubes[i].rotation.z += 15/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2)
+                cubes[i].rotation.x += Math.min(20/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2), 0.33);
+                cubes[i].rotation.z += Math.min(15/((cubes[i].position.x-camera.position.x)^2 + (cubes[i].position.z-camera.position.z)^2), 0.33);
             } catch (e) {}
         }
         camera.lookAt(center);
@@ -687,7 +687,6 @@ $(document).ready(function() {
     };
 
     function Slider() {
-
         const height = Math.min(300, $(window).height() / 2.7);
         $("#left-pane").append("<br><canvas id='slider' height=\"" + height + "px\" width=\"" + height + "px\"></canvas>");
         var context = document.getElementById("slider").getContext('2d');
@@ -759,7 +758,7 @@ $(document).ready(function() {
                                 var y = boardParts[i][j].y;
                                 if (i != emptyLoc.x || j != emptyLoc.y || solved == true) {
                                     context.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize,
-                                        i * tileSize / scale, j * tileSize / scale, tileSize, tileSize);
+                                        i * tileSize / scale, j * tileSize / scale, tileSize / scale, tileSize / scale);
                                 }
                             }
                         }
@@ -812,14 +811,14 @@ $(document).ready(function() {
 
         solve = function() {
             context.clearRect(0, 0, boardSize, boardSize);
-            context.drawImage(img, 0, 0);
+            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, height, height);
         }
 
     }
 
     window.onbeforeunload = function() {
         if (collected.length > 0 && !solved) {
-            return "Are you sure you want to leave the dream? All your progress will be lost!";
+            return "Are you sure you want to leave the lego dream? All your progress will be lost!";
         }
     };
 

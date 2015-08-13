@@ -18,3 +18,8 @@ canvas {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+
+#slider {
+	opacity: 0.8;
+	border: solid #333 4px;
+}
