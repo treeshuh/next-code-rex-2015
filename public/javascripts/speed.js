@@ -10,7 +10,7 @@ $(document).ready(function(){
 		var maxTimerWidth = $(".timer").width();
 		var oneSegmentWidth = String(maxTimerWidth/targetWords.length) + "px";
 
-		if (previousScore) {
+		if (previousScore == maxScore) {
 			alertSuccess("You have already completed this challenge.", "");
 			$("#max-score").addClass("max");
 		}
@@ -64,9 +64,25 @@ $(document).ready(function(){
 			$(".timer-progress").animate({
 				"width": "100%"
 			}, maxTime*1000, "linear", function(){
-				alertError("You ran out of time!", "Press START to try again.");
+				completionPercent = index()/targetWords.length;
+				completionScore = Math.round((maxScore*0.75) * completionPercent);
+				$.ajax({
+			        type: "POST",
+			        url: "/submit",
+			        data: {
+			            challengeId: challengeId,
+			            data: {
+			            	score: completionScore,
+			            	completion: completionPercent,
+			            	time: (Date.now()-startTime)/1000
+			        	}
+			    	},
+			    });
+			    alertError("You ran out of time!", "You scored " + completionScore + " points. Press START to try again.");
+
 				index(0);
 				challenging(false);
+
 			})
 		}
 
