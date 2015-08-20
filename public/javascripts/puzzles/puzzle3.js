@@ -178,16 +178,10 @@ $(document).ready(function() {
 
     function animate() {
         requestAnimationFrame(animate);
-        if (!paused) {
-            if (slow) {
-                cube.rotation.x += .005;
-                cube.rotation.y += .005;
-                cube.rotation.z += .005;
-            } else {
-                cube.rotation.x += .03;
-                cube.rotation.y += .03;
-                cube.rotation.z += .03;
-            }
+        if (!paused && !slow) {
+            cube.rotation.x += .03;
+            cube.rotation.y += .03;
+            cube.rotation.z += .03;
         }
         renderer.render(scene, camera);
     }
