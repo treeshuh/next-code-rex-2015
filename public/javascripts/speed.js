@@ -3,6 +3,7 @@ $(document).ready(function(){
 		var maxTime = timeLimit;
 		var startTime;
 		var targetWords = targetString.replace(/\&\#x27;/g, "\'").split(" ");
+		var totalWords = targetWords.length;
 		var index = ko.observable(0);
 	 	var targetText = ko.observable(targetWords[0]);
 		var inputText = ko.observable("");
@@ -15,8 +16,32 @@ $(document).ready(function(){
 			$("#max-score").addClass("max");
 		}
 
-		var valid = ko.computed(function(){
-			if (index() == targetWords.length - 1 && targetText() == inputText()) {
+		var validate = function(data, event){
+			target = targetText();
+			input = inputText();
+			if (event.keyCode == 32) {
+				if (target != input) {
+					$("#input").addClass("invalid");
+				}
+				else if (index() == totalWords - 1) {
+					submitSuccess()
+				}
+				else {
+					index(index() + 1)
+					targetText(targetWords[index()]);
+					inputText("");
+					$(".input-progress").animate({"width": String(index()/totalWords*maxTimerWidth) + "px"});
+					return false;
+				}
+			} else {
+				if (target.indexOf(input) < 0) {
+					$("#input").addClass("invalid");
+				} else {
+					$("#input").removeClass("invalid");
+				}
+			}
+			return true
+/*			if (index() == targetWords.length - 1 && targetText() == inputText()) {
 				$(".input-progress").animate({"width": maxTimerWidth});
 				$(".timer-progress").stop();
 				challenging(false);
@@ -55,8 +80,8 @@ $(document).ready(function(){
 			} else {
 				$("#input").removeClass("invalid");
 			}
-			return false
-		})
+			return false*/
+		}
 
 		var startChallenge = function(){
 			challenging(true);
@@ -110,11 +135,37 @@ $(document).ready(function(){
 			}
 		}
 
+		var submitSuccess = function() {
+			$(".input-progress").animate({"width": maxTimerWidth});
+				$(".timer-progress").stop();
+				challenging(false);
+				index(0);
+				inputText("");
+				targetText(targetWords[0]);
+				$.ajax({
+			        type: "POST",
+			        url: "/submit",
+			        data: {
+			            challengeId: challengeId,
+			            data: {
+			            	score: maxScore,
+			            	completion: 100,
+			            	time: (Date.now()-startTime)/1000
+			            }
+			        },
+			        success: function(data) {
+			        	handleResult(data.result);
+			            $("#max-score").addClass("max");
+			            alertSuccess("Congrats!", "You passed the speed challenge.")
+			        }
+			    })
+		}
+
 		return{
 			challenging: challenging,
 			targetText: targetText,
 			inputText: inputText,
-			valid: valid,
+			validate: validate,
 			targetWords: targetWords,
 			index: index,
 			startChallenge: startChallenge,

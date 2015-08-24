@@ -67,7 +67,7 @@
                     <div data-bind="foreach: targetWords" class="panel interactive">
                         <span data-bind="text: $data + ' ', css: {'chosen': $index() == $parent.index()}"></span>
                     </div>
-                    <input id="input" type="text" data-bind="value: inputText, valueUpdate: 'afterkeydown'"/>
+                    <input id="input" type="text" data-bind="event: {keydown: validate}, textInput: inputText"/>
                 </div>   
             </div>     
         </div>
