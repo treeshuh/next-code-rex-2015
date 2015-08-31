@@ -9,32 +9,32 @@ $(document).ready(function() {
             "images": ["6R", "6B", "6V"],
             "state": 2,
             "solve": 0
-        },
+        }, // RED
         "1": {
             "images": ["3Y", "3G", "3V"],
             "state": 1,
             "solve": 2
-        },
+        }, // VIOLET
         "2": {
             "images": ["1R", "1G", "1B"],
             "state": 2,
             "solve": 2
-        },
+        }, // BLUE
         "3": {
             "images": ["4R", "4O", "4Y"],
             "state": 0,
             "solve": 1
-        },
+        }, // ORANGE
         "4": {
             "images": ["2R", "2Y", "2G"],
             "state": 2,
             "solve": 1
-        },
+        }, // YELLOW
         "5": {
-            "images": ["5O", "5Y", "5G"],
+            "images": ["5O", "5G"],
             "state": 0,
-            "solve": 2
-        }
+            "solve": 1
+        } // GREEN
     };
 
     const rules = [

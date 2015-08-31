@@ -13,7 +13,7 @@ $(document).ready(function() {
         "CORAL": "#FF7F50",
         "ORANGE": "#FFA500",
         "GOLD": "#FFD700",
-        "BRONZE": "#cd7f32",
+        "BRONZE": "#965a38",
         "YELLOW": "#FFFF00",
         "OLIVE": "#808000",
         "TEAL": "#16a085",
@@ -24,6 +24,16 @@ $(document).ready(function() {
         "FUCHSIA": "#FF00FF",
         "MAGENTA": "#FF0090"
     };
+
+    function getLabel(code) {
+        for (var i in colors) {
+            if (colors[i] == code) {
+                return i;
+            }
+        }
+    } 
+
+    const label = {"VIOLET": true, "BRONZE": true, "AQUA": true, "CRIMSON": true, "RED": true, "ROSE": true}
 
     const colorCodes = [];
     for (i in colors) {
@@ -113,7 +123,7 @@ $(document).ready(function() {
             if (i%6 == 0) {
                 table += "<tr>";
             }
-            table += "<td style='background-color: " + colorCodes[i] + "'></td>";
+            table += "<td style='text-align:center; background-color: " + colorCodes[i] + "'>" + (typeof label[getLabel(colorCodes[i])] !== "undefined" ? getLabel(colorCodes[i]) : "") + "</td>";
             if (i%6 == 5) {
                 table += "</tr>"
             }
