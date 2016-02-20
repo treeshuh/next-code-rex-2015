@@ -24,8 +24,9 @@ $(document).ready(function() {
     });
 
     countUpYear = function() {
-        var digit = 5;
-        $("#ones").html("5");
+        var digit = 6;
+        $("#ones").html("6");
+        $("#tens").html("1");
         setInterval(function() {
             if (digit++ < 9) {
                 $("#ones").animate({
@@ -34,7 +35,23 @@ $(document).ready(function() {
                     $("#ones").html(digit).animate({
                         opacity: 1
                     });
-                })
+                });
+            } else if (digit <= 10) {
+                // 2020
+                $("#ones").animate({
+                    opacity: 0
+                }, function() {
+                    $("#ones").html("0").animate({
+                        opacity: 1
+                    });
+                });
+                $("#tens").animate({
+                    opacity: 0
+                }, function() {
+                    $("#tens").html("2").animate({
+                        opacity: 1
+                    });
+                });
             }
         }, 1200);
         setTimeout(countUpYear, 9000);
