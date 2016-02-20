@@ -8,7 +8,7 @@ var app = express();
 
 // all environments
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 2020);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 app.engine('html', require('hbs').__express);
