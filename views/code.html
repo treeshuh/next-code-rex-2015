@@ -10,6 +10,10 @@
     <script src="/javascripts/lib/bootstrap/bootstrap.min.js"></script>
     <script src="/javascripts/lib/ace/src-min-noconflict/ace.js"></script>
     <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/code.js"></script>
+    <script src="/javascripts/utils/charcount.min.js"></script>
+    <script src="/javascripts/utils/sanitize.min.js"></script>
+    <script src="/javascripts/utils/readonly.min.js"></script>
 </head>
 
 <body>
@@ -310,10 +314,5 @@
     }
     const hints = {{{json challenge.hints}}}
     var previousScore = {{previousScore}} 
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = "/javascripts/code.js";
-    script.async = true;
-    $('body').append(script);
 </script>
 </html>

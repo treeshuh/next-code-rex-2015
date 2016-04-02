@@ -9,11 +9,11 @@ $(document).ready(function() {
         }
     });
 
-    var script = document.createElement('script');
+    /*var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = "/javascripts/puzzles/" + challengeId + ".js";
     script.async = true;
-    $('body').append(script);
+    $('body').append(script);*/
 
     if (previousScore) {
         $("#max-score").addClass("max");

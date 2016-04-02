@@ -39,7 +39,7 @@ $(document).ready(function() {
 
     /* Setup UI */
     language = /static/.test($("#editor").html()) ? JAVA : PYTHON;
-    loadUtils();
+    //loadUtils();
     setupEditor();
     setupTask();
     updateScorebar();
@@ -229,7 +229,7 @@ $(document).ready(function() {
         }
     }
 
-    function loadUtils() {
+    /*function loadUtils() {
         files = ["readonly", "charcount", "sanitize"];
         for (filename in files) {
             var script = document.createElement('script');
@@ -238,7 +238,7 @@ $(document).ready(function() {
             script.async = true;
             $('body').append(script);
         }
-    }
+    }*/
 
 });
 
