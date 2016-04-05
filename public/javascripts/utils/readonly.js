@@ -10,12 +10,14 @@ $(document).ready(function() {
             if (hash === -1 || (keyCode <= 40 && keyCode >= 37)) return false;
             i = editor.getSelectionRange();
             if (i.start.row < 2 || i.end.row < 2) {
-                $(".alert").hide();
-                alertError("DO NOT modify the function signature.", "");
-                return {
-                    command: "null",
-                    passEvent: false
-                };
+                if (keyCode != 13) {
+                    $(".alert").hide();
+                    alertError("DO NOT modify the function signature.", "");
+                    return {
+                        command: "null",
+                        passEvent: false
+                    };
+                }
             }
             if (i.end.row > 50) {
                 $(".alert").fadeOut();
